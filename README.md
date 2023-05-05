@@ -11,7 +11,7 @@ Homepage
 - Julius : recommendations(App gives options to the user on the type of activities he likes.  close ended options (Cycling, Scenery))
 - Jesiah: Language translator
 - Edison: No of available carpark lots
-- Naveed: Display and favourite location - 
+- Naveed: Display and favourite location 
 
 Stage 2 features:
 - Edison: bus timings
