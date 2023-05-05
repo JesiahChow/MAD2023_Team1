@@ -3,20 +3,20 @@
 Members: 
 Jesiah, Julius, Edison, Naveed
 
-Topic: Travel and local app
+App Category: Travel and local app
 
 Stage 1 features:
 
 Homepage 
-Recommendations - Julius
-Language translator - Jesiah
-No of available carpark lots - Edison
-Display and favourite location - Naveed
+- Julius : recommendations(App gives options to the user on the type of activities he likes.  close ended options (Cycling, Scenery))
+- Jesiah: Language translator
+- Edison: No of available carpark lots
+- Naveed: Display and favourite location - 
 
 Stage 2 features:
-Bus timings - Edison
-Weather forecast - Naveed
-Currency rate converter - Jesiah
-Washroom finder - Julius
+- Edison: bus timings
+- Naveed: Weather forecast
+- Jesiah: Currency rate converter
+- Julius: Washroom finder
 
 
