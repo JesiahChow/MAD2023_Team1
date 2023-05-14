@@ -2,7 +2,7 @@
 
 Members: 
 Jesiah, Julius, Edison, Naveed
-
+App Name: CityGuideSG
 App Category: Travel and local app
 
 Discover the best of Singapore with CityGuideSG - the ultimate travel and local app. Our user-friendly interface and advanced features make planning and navigating your trip a breeze. With real-time bus timings, you'll never miss a ride, and our GPS system ensures you always take the fastest route to your destination. Easily search for hotels and must-visit tourist spots, and save your favorite locations for easy access later.
@@ -13,19 +13,16 @@ With CityGuideSG, your Singapore adventure starts here. Download our app now and
 
 
 Stage 1  Features:
-Login feature
-Bus timings
-Search for hotels/places
-Favourite locations 
+- Jesiah Chow: Login feature
+- Edison: Bus timings
+- Julius: Recommendations of places/hotels
+- Naveed: Favourite locations 
 
 Stage 2 Features:
-Recommendations of places/hotels 
-Language translator
-Currency rate converter
-Fastest route
-Carpark finder
-Washroom finder
-World clock
-Auto itinerary builder
+- Jesiah: Language translator
+- Julius: Search for hotels/places
+- Edison: Carpark finder
+- Naveed: Fastest route
+
 
 
