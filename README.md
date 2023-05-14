@@ -5,18 +5,27 @@ Jesiah, Julius, Edison, Naveed
 
 App Category: Travel and local app
 
-Stage 1 features:
+Discover the best of Singapore with CityGuideSG - the ultimate travel and local app. Our user-friendly interface and advanced features make planning and navigating your trip a breeze. With real-time bus timings, you'll never miss a ride, and our GPS system ensures you always take the fastest route to your destination. Easily search for hotels and must-visit tourist spots, and save your favorite locations for easy access later.
 
-Homepage 
-- Julius : recommendations(App gives options to the user on the type of activities he likes.  close ended options (Cycling, Scenery))
-- Jesiah: Language translator
-- Edison: No of available carpark lots
-- Naveed: Display and favourite location 
+But that's not all - CityGuideSG offers innovative features like personalized recommendations based on your preferences, so you can explore Singapore like a local. Use our language translator and currency rate converter to easily communicate and manage your finances, and find the nearest carpark or washroom with our convenient finder features. Need to keep track of time across different time zones? Our world clock has you covered. Plus, our auto itinerary builder takes the hassle out of planning your trip.
 
-Stage 2 features:
-- Edison: bus timings
-- Naveed: Weather forecast
-- Jesiah: Currency rate converter
-- Julius: Washroom finder
+With CityGuideSG, your Singapore adventure starts here. Download our app now and experience the city like never before.
+
+
+Stage 1  Features:
+Login feature
+Bus timings
+Search for hotels/places
+Favourite locations 
+
+Stage 2 Features:
+Recommendations of places/hotels 
+Language translator
+Currency rate converter
+Fastest route
+Carpark finder
+Washroom finder
+World clock
+Auto itinerary builder
 
 
