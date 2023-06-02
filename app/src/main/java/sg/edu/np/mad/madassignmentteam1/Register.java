@@ -1,26 +1,50 @@
 package sg.edu.np.mad.madassignmentteam1;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class Register extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+public class Register extends AppCompatActivity {
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        TextView link = findViewById(R.id.textView5);
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Register.this, Login.class);
+                startActivity(intent);
+
+            }
+        });
     }
+
     @Override
     protected void onResume(){
         super.onResume();
-        EditText username1 = findViewById(R.id.editTextText);
+        EditText email = findViewById(R.id.editTextTextEmailAddress);
         EditText password1 = findViewById(R.id.editTextTextPassword);
         Button register1 = findViewById(R.id.button5);
         Button back1 = findViewById(R.id.button6);
@@ -30,8 +54,8 @@ public class Register extends AppCompatActivity {
             //login validation
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(username1.getText().toString())){
-                    username1.setError("Please enter username");
+                if(TextUtils.isEmpty(email.getText().toString())){
+                    email.setError("Please enter username");
                     return;
 
                 }
@@ -39,7 +63,25 @@ public class Register extends AppCompatActivity {
                     password1.setError("Please enter password");
                     return;
                 }
-                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                //initialise firebase auth
+                mAuth = FirebaseAuth.getInstance();
+                mAuth.createUserWithEmailAndPassword(email.getText().toString(), password1.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success
+                                    Toast.makeText(Register.this,"Account created",Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(Register.this, "Account already exists or password is less than 6 characters.",
+                                            Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
 
                 /*Intent myIntent = new Intent(.this, MainActivity2.class);
                 myIntent.putExtra("Username",usernameStr);
