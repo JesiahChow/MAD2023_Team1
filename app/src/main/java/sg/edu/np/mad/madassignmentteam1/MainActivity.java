@@ -3,6 +3,7 @@ package sg.edu.np.mad.madassignmentteam1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,5 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
     }
 }

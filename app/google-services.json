@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "426885109112",
+    "project_id": "madlogin-fdd39",
+    "storage_bucket": "madlogin-fdd39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426885109112:android:e6886bcfe4d1dd3312248d",
+        "android_client_info": {
+          "package_name": "sg.edu.np.mad.madassignmentteam1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426885109112-53gsdfj9pcpqik0q9807bcuu75gmv9om.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYWev2uxNiIkfEJJ4qKdKamHtmMVtc0Gk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426885109112-53gsdfj9pcpqik0q9807bcuu75gmv9om.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
