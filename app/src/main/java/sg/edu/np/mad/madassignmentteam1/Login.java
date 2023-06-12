@@ -67,7 +67,7 @@ AlertDialog.Builder builder;
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Login.this, Settings.class);
+                Intent intent1 = new Intent(Login.this, ForgotPassword.class);
                 startActivity(intent1);
             }
         });

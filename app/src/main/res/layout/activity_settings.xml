@@ -85,14 +85,13 @@
     </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout"
         android:layout_width="140dp"
         android:layout_height="49dp"
         android:layout_marginTop="0dp"
         android:background="#911F29"
-        android:id="@+id/logout"
         android:text="Log Out"
-        android:textColor="@color/white"
-        />
+        android:textColor="@color/white" />
 
 </LinearLayout>
 
