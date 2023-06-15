@@ -138,30 +138,9 @@ AlertDialog.Builder builder;
                             //email verification
                             //if(firebaseUser.isEmailVerified()){
                                 Toast.makeText(Login.this,"Login successful",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, Settings.class);
+                                Intent intent = new Intent(Login.this, HomeActivity.class);
                                 startActivity(intent);
                             }
-                            //else{
-                                //mAuth.signOut();//sign out user
-                                //builder = new AlertDialog.Builder(Login.this);
-                                //builder.setTitle("Email verified");
-                                //builder.setMessage("Please your verify email.");
-                                //open email app if user press continue
-                                //builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                                   // @Override
-                                   // public void onClick(DialogInterface dialog, int which) {
-                                        //Intent intent = new Intent(Intent.ACTION_MAIN);
-                                        //intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                                        //ensure email app starts in a new window not within the app
-                                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        //startActivity(intent);
-                                    //}
-                                //});
-                                //builder.create();
-                                //builder.show();
-                            //}
-
-
                         else {
                             try
                             {
@@ -196,7 +175,7 @@ AlertDialog.Builder builder;
        FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             Toast.makeText(Login.this,"Already logged in",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Login.this, Settings.class);
+            Intent intent = new Intent(Login.this, HomeActivity.class);
             startActivity(intent);
             finish();
         }
