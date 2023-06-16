@@ -133,11 +133,7 @@ AlertDialog.Builder builder;
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //get instance of current user
-                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                            //email verification
-                            //if(firebaseUser.isEmailVerified()){
-                                Toast.makeText(Login.this,"Login successful",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this,"Login successful",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, HomeActivity.class);
                                 startActivity(intent);
                             }
