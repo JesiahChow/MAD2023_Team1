@@ -7,4 +7,5 @@
     <string name="back">Back</string>
     <string name="reset">Reset Password</string>
     <string name="favourite_locations_header_text">Your Favourite Locations</string>
+    <string name="favourite_location_list_element_location_placeholder_address">Location Address</string>
 </resources>
