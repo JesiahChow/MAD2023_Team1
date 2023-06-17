@@ -46,14 +46,7 @@ public class Settings extends AppCompatActivity {
         else{
             showUserProfile(firebaseUser);
         }
-        //when user clicks on profile image to upload a pic
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Settings.this,UploadProfile.class);
-                startActivity(intent);
-            }
-        });
+        
 
         //when user goes back to dashboard
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -109,10 +102,10 @@ public class Settings extends AppCompatActivity {
             Intent intent = new Intent(Settings.this,UpdateEmail.class);
             startActivity(intent);
         }
-        /*else if(id == R.id.change_name){
-            Intent intent = new Intent(Settings.this,UpdateName.class);
+        else if(id == R.id.change_name){
+            Intent intent = new Intent(Settings.this,UpdateUsername.class);
             startActivity(intent);
-        }*/
+        }
         else if(id == R.id.update_password){
             Intent intent = new Intent(Settings.this,UpdatePassword.class);
             startActivity(intent);

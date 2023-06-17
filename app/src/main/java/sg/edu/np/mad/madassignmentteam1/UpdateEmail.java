@@ -175,10 +175,10 @@ public class UpdateEmail extends AppCompatActivity {
             Intent intent = new Intent(UpdateEmail.this,UpdateEmail.class);
             startActivity(intent);
         }
-        /*else if(id == R.id.change_name){
-            Intent intent = new Intent(Settings.this,UpdateName.class);
+        else if(id == R.id.change_name){
+            Intent intent = new Intent(UpdateEmail.this,UpdateUsername.class);
             startActivity(intent);
-        }*/
+        }
         else if(id == R.id.update_password){
             Intent intent = new Intent(UpdateEmail.this,UpdatePassword.class);
             startActivity(intent);

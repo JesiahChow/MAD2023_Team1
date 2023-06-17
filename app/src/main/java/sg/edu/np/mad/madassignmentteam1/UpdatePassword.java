@@ -181,10 +181,10 @@ private String userPwdCurrent;
             Intent intent = new Intent(UpdatePassword.this,UpdateEmail.class);
             startActivity(intent);
         }
-        /*else if(id == R.id.change_name){
-            Intent intent = new Intent(Settings.this,UpdateName.class);
+        else if(id == R.id.change_name){
+            Intent intent = new Intent(UpdatePassword.this,UpdateUsername.class);
             startActivity(intent);
-        }*/
+        }
         else if(id == R.id.update_password){
             Intent intent = new Intent(UpdatePassword.this,UpdatePassword.class);
             startActivity(intent);
