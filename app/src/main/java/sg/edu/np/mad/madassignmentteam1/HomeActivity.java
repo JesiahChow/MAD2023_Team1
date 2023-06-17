@@ -47,9 +47,22 @@ public class HomeActivity extends AppCompatActivity {
         });
         //when user clicks on favourite locations card
         favourites.setOnClickListener(new View.OnClickListener() {
+            /*
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, Settings.class);
+                startActivity(intent);
+            }
+            */
+
+            /*
+            Redirects user to the Favourite Locations activity when the favourite locations card
+            is clicked.
+            */
+            @Override public void onClick(View view)
+            {
+                Intent intent = new Intent(HomeActivity.this, FavouriteLocationsActivity.class);
+
                 startActivity(intent);
             }
         });
