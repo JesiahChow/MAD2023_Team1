@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1EDEC"
+    tools:context=".HomeActivity">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="407dp"
+        android:layout_height="176dp"
+        android:src="@drawable/merlion_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif-medium"
+        android:text="Welcome to CityGuidesSG"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="179dp"></TextView>
+<!--<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/imageView5">-->
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/imageView5"
+    android:rowCount="3"
+    android:columnCount="2">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="120dp"
+        android:id="@+id/bus_timings"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_rowWeight="1"
+        android:layout_column="0"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Bus Timings"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_rowWeight="1"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical|center_horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/place" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Favourite Locations"
+                android:textAlignment="center"
+                />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/recommended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_rowWeight="1"
+        android:layout_column="0"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical|center_horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/recommended" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Recommended Places"
+                android:textAlignment="center"
+                />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile"
+        android:layout_row="1"
+        android:layout_rowWeight="0"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical|center_horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_profile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Profile"
+                android:textAlignment="center"
+                />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</GridLayout>
+<!--</ScrollView>-->
+    <!--<androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_recycler"
+        android:layout_width="405dp"
+        android:layout_height="555dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"></androidx.recyclerview.widget.RecyclerView>-->
+
+
+</RelativeLayout>

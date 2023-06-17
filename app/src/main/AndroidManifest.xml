@@ -8,10 +8,22 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MADAssignmentTeam1"
         tools:targetApi="31">
+        <activity
+            android:name=".UpdatePassword"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateEmail"
+            android:exported="false" />
+        <activity
+            android:name=".UploadProfile"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
         <activity
             android:name=".FavouriteLocationsActivity"
             android:exported="false" />

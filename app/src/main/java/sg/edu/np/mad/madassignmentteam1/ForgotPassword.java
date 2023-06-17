@@ -15,9 +15,12 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class ForgotPassword extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class ForgotPassword extends AppCompatActivity {
     }
 
     private void newPassword(String email)
-    {
+    { EditText editEmail = findViewById(R.id.editTextTextEmailAddress);
         mAuth = FirebaseAuth.getInstance();
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -55,9 +58,20 @@ public class ForgotPassword extends AppCompatActivity {
                     Toast.makeText(ForgotPassword.this,"Please check your inbox for password reset link", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ForgotPassword.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
-                else{
-                    Toast.makeText(ForgotPassword.this,"Something went wrong!", Toast.LENGTH_SHORT).show();
+                else
+                {
+                    try {
+                    throw task.getException();
+                }
+                    catch(FirebaseAuthInvalidUserException e){
+                        editEmail.setError("User does not exist or is no longer valid. Please register again. ");
+                    }
+                    catch(Exception e){
+                        Toast.makeText(ForgotPassword.this,e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
                 }
             }
         });
