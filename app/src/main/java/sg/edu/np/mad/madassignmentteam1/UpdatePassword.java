@@ -38,7 +38,7 @@ private String userPwdCurrent;
         setContentView(R.layout.activity_update_password);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Profile");
+        getSupportActionBar().setTitle("Change Password");
 
         currentPwd = findViewById(R.id.current_password);
         newPwd = findViewById(R.id.new_password);
@@ -65,7 +65,7 @@ private String userPwdCurrent;
             reAuthenticate(firebaseUser);
         }
     }
-
+    //reauthenticate before changing password
     private void reAuthenticate(FirebaseUser firebaseUser) {
         buttonAuth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,28 +177,33 @@ private String userPwdCurrent;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if(id == R.id.profile){
+            Intent intent = new Intent(UpdatePassword.this,Settings.class);
+            startActivity(intent);
+            finish();
+        }
         if(id == R.id.update_email){
             Intent intent = new Intent(UpdatePassword.this,UpdateEmail.class);
             startActivity(intent);
-        }
-        else if(id == R.id.change_name){
-            Intent intent = new Intent(UpdatePassword.this,UpdateUsername.class);
-            startActivity(intent);
+            finish();
         }
         else if(id == R.id.update_password){
             Intent intent = new Intent(UpdatePassword.this,UpdatePassword.class);
             startActivity(intent);
+            finish();
         }
         if(id == R.id.logout_menu){
             //sign out the firebase user
             mAuth.getInstance().signOut();
             Intent intent = new Intent(UpdatePassword.this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
-        /*else if(id == R.id.delete_profile){
-            Intent intent = new Intent(Settings.this,DeleteProfile.class);
+        else if(id == R.id.delete_profile){
+            Intent intent = new Intent(UpdatePassword.this,DeleteProfile.class);
             startActivity(intent);
-        }*/
+            finish();
+        }
 
 
         return super.onOptionsItemSelected(item);

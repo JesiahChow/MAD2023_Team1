@@ -1,21 +1,30 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,27 +33,31 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Settings extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String name,emailAddress;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         mAuth = FirebaseAuth.getInstance();
-        ImageView profilePic = findViewById(R.id.profile_pic);
         ImageView backButton = findViewById(R.id.back_button);
+        TextView name1 = findViewById(R.id.titleName);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Profile");
         //when user logs in to display user details
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        if(firebaseUser == null){
+        final FirebaseUser[] firebaseUser = {mAuth.getCurrentUser()};
+        if(firebaseUser[0] == null){
             Toast.makeText(this, "Something went wrong! User's details unavailable", Toast.LENGTH_LONG).show();
         }
         else{
-            showUserProfile(firebaseUser);
+            showUserProfile(firebaseUser[0]);
         }
         
 
@@ -56,7 +69,51 @@ public class Settings extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        //user clicks on name
+        name1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
+                        builder.setTitle("Change Username");
+                        final EditText input = new EditText(Settings.this);
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                        builder.setView(input);
+                        builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String username = input.getText().toString();
+                                if(TextUtils.isEmpty(username)){
+                                    input.setError("Please enter a new username");
+                                    input.requestFocus();
+                                }
+                                else{
+                                mAuth = FirebaseAuth.getInstance();
+                                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                //Enter user data into database
+                                UserDetails newUserDetails = new UserDetails();
+                                String userID = firebaseUser.getUid();
+                                //extract user reference from database for "registered users"
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Registered Users").child(userID);
+                                //initiate hashmap class to store data in key-value pairs
+                                Map<String,Object>username1 = new HashMap<>();
+                                username1.put("name",username);
+                                databaseReference.updateChildren(username1);
+                                Toast.makeText(Settings.this,"Username changed",Toast.LENGTH_SHORT).show();
+                                finish();}
+
+                            }
+                        });
+                        builder .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                        builder.create().show();
+            }
+        });
     }
 
     private void showUserProfile(FirebaseUser firebaseUser) {
@@ -98,12 +155,13 @@ public class Settings extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if(id == R.id.profile){
+            Intent intent = new Intent(Settings.this,Settings.class);
+            startActivity(intent);
+
+        }
        if(id == R.id.update_email){
             Intent intent = new Intent(Settings.this,UpdateEmail.class);
-            startActivity(intent);
-        }
-        else if(id == R.id.change_name){
-            Intent intent = new Intent(Settings.this,UpdateUsername.class);
             startActivity(intent);
         }
         else if(id == R.id.update_password){
@@ -116,10 +174,10 @@ public class Settings extends AppCompatActivity {
             Intent intent = new Intent(Settings.this,MainActivity.class);
             startActivity(intent);
         }
-        /*else if(id == R.id.delete_profile){
+        else if(id == R.id.delete_profile){
             Intent intent = new Intent(Settings.this,DeleteProfile.class);
             startActivity(intent);
-        }*/
+        }
 
 
         return super.onOptionsItemSelected(item);

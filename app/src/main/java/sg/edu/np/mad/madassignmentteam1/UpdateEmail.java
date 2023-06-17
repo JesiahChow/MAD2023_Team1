@@ -23,11 +23,13 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class UpdateEmail extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String userOldEmail,userNewEmail,userPassword;
     private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class UpdateEmail extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         //get current user
         firebaseUser = mAuth.getCurrentUser();
-        //set old email ID on textview
+        //set old email ID on EditText
         userOldEmail = firebaseUser.getEmail();
         currentEmail.setText(userOldEmail);
 
@@ -158,7 +160,9 @@ public class UpdateEmail extends AppCompatActivity {
                 }
             }
         });
+
     }
+
     //creating menu
 
     @Override
@@ -171,28 +175,34 @@ public class UpdateEmail extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if(id == R.id.profile){
+            Intent intent = new Intent(UpdateEmail.this,Settings.class);
+            startActivity(intent);
+            finish();
+        }
         if(id == R.id.update_email){
             Intent intent = new Intent(UpdateEmail.this,UpdateEmail.class);
             startActivity(intent);
+            finish();
         }
-        else if(id == R.id.change_name){
-            Intent intent = new Intent(UpdateEmail.this,UpdateUsername.class);
-            startActivity(intent);
-        }
+
         else if(id == R.id.update_password){
             Intent intent = new Intent(UpdateEmail.this,UpdatePassword.class);
             startActivity(intent);
+            finish();
         }
         if(id == R.id.logout_menu){
             //sign out the firebase user
             mAuth.getInstance().signOut();
             Intent intent = new Intent(UpdateEmail.this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
-        /*else if(id == R.id.delete_profile){
-            Intent intent = new Intent(Settings.this,DeleteProfile.class);
+        else if(id == R.id.delete_profile){
+            Intent intent = new Intent(UpdateEmail.this,DeleteProfile.class);
             startActivity(intent);
-        }*/
+            finish();
+        }
 
 
         return super.onOptionsItemSelected(item);
