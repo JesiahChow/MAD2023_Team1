@@ -10,7 +10,6 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
     RecyclerView favouriteLocationsRecyclerView = null;
 
     FavouriteLocations favouriteLocations = new FavouriteLocations();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
