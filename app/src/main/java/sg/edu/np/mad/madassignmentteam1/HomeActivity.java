@@ -2,18 +2,11 @@ package sg.edu.np.mad.madassignmentteam1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-
-import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
    /*private RecyclerView recyclerView;
@@ -41,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         recommendations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, Settings.class);
+                Intent intent = new Intent(HomeActivity.this, GetInterest.class);
                 startActivity(intent);
             }
         });
