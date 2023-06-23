@@ -1,24 +1,24 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 public class Programme {
-    private String name;
+    private String title;
     private String description;
     private String category;
 
     // Constructor
-    public Programme(String name, String description, String category) {
-        this.name = name;
+    public Programme(String title, String description, String category) {
+        this.title = title;
         this.description = description;
         this.category = category;
     }
 
     // Getters and Setters
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

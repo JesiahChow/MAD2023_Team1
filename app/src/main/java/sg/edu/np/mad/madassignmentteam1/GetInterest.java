@@ -45,15 +45,15 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
 
     // Function to sort activities based on category
     private List<Programme> sortProgrammesByCategory(List<Programme> programmesList, List<String> selectedGenres) {
-        List<Programme> sortedProgrammes = new ArrayList<>();
+        List<Programme> chosenProgrammes = new ArrayList<>();
 
         for (Programme programme : programmesList) {
             if (selectedGenres.contains(programme.getCategory())) {
-                sortedProgrammes.add(programme);
+                chosenProgrammes.add(programme);
             }
         }
 
-        return sortedProgrammes;
+        return chosenProgrammes;
     }
 
     // Handle button click events
@@ -62,31 +62,21 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         Button clickedButton = (Button) view;
         String genre = clickedButton.getText().toString();
 
-        if (selectedGenres.contains(genre)) {
-            // Genre already selected, remove it
+        if (view.getId() == R.id.button6) {
+            // Pass the selected genres to Recommend activity
+            Intent intent = new Intent(GetInterest.this, Recommend.class);
+            intent.putStringArrayListExtra("selectedGenres", (ArrayList<String>) selectedGenres);
+            startActivity(intent);
+        } else if (selectedGenres.contains(genre)) {
+            // Remove genres that are selected
             selectedGenres.remove(genre);
-            clickedButton.setBackgroundColor(Color.parseColor("#FF6750A3"));
+            clickedButton.setBackgroundColor(Color.parseColor("#FF991A1A"));
         } else {
             // Genre not selected, add it
             selectedGenres.add(genre);
             Log.v(TAG, "Selected Genres: " + selectedGenres.toString());
-            clickedButton.setBackgroundColor(Color.RED); // Change button color to red
-        }
-
-        if (view.getId() == R.id.button6) {
-            // Update the sorted activities based on the selected genres
-            List<Programme> sortedProgrammes = sortProgrammesByCategory(programmeDatabase.getProgrammes(), selectedGenres);
-
-            // Print the sorted activities
-            for (Programme programme : sortedProgrammes) {
-                Log.v(TAG, "Programme Name: " + programme.getName() + ", Programme Description: " + programme.getDescription() + ", Programme Category: " + programme.getCategory());
-            }
-
-            // Pass the selected genres to HomeActivity
-            Intent intent = new Intent(GetInterest.this, Recommend.class);
-            intent.putStringArrayListExtra("selectedGenres", (ArrayList<String>) selectedGenres);
-            startActivity(intent);
+            clickedButton.setBackgroundColor(Color.parseColor("#800080")); // Change button color to red
         }
     }
-}
 
+}

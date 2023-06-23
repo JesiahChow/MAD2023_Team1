@@ -20,7 +20,7 @@
             android:paddingBottom="16dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recommendationRecyclerView"
+            android:id="@+id/recommendRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
