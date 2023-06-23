@@ -1,6 +1,7 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -70,12 +71,12 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         } else if (selectedGenres.contains(genre)) {
             // Remove genres that are selected
             selectedGenres.remove(genre);
-            clickedButton.setBackgroundColor(Color.parseColor("#FF991A1A"));
+            clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(GetInterest.this,R.color.red));
         } else {
             // Genre not selected, add it
             selectedGenres.add(genre);
             Log.v(TAG, "Selected Genres: " + selectedGenres.toString());
-            clickedButton.setBackgroundColor(Color.parseColor("#800080")); // Change button color to red
+            clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(GetInterest.this,R.color.dark_green)); // Change button color to red
         }
     }
 

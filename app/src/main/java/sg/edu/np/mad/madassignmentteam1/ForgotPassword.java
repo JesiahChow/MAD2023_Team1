@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +30,18 @@ public class ForgotPassword extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
         Button resetPassword = findViewById(R.id.resetPassword);
         EditText editEmail = findViewById(R.id.editTextTextEmailAddress);
+        ImageView backButton = findViewById(R.id.back_button);
+
+        //when user clicks back button
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ForgotPassword.this,Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        //password validation
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +51,7 @@ public class ForgotPassword extends AppCompatActivity {
                     editEmail.requestFocus();
 
                 }
+                //to check if email is in correct expression
                 else if(!Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
                     editEmail.setError("Please enter valid email");
                     editEmail.requestFocus();
@@ -50,7 +65,9 @@ public class ForgotPassword extends AppCompatActivity {
 
     private void newPassword(String email)
     { EditText editEmail = findViewById(R.id.editTextTextEmailAddress);
+        //initialise firebase authentication
         mAuth = FirebaseAuth.getInstance();
+        //send reset password email to user email
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -65,6 +82,7 @@ public class ForgotPassword extends AppCompatActivity {
                     try {
                     throw task.getException();
                 }
+                    //if user does not exists within firebase
                     catch(FirebaseAuthInvalidUserException e){
                         editEmail.setError("User does not exist or is no longer valid. Please register again. ");
                     }

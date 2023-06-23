@@ -51,10 +51,11 @@ private String userPwdCurrent;
         newPwd.setEnabled(false);
         confirmPwd.setEnabled(false);
         buttonUpdate.setEnabled(false);
-
+        //get firebase authentication
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
+        //if user does not exists
         if(firebaseUser == null){
             Toast.makeText(UpdatePassword.this,"Something went wrong!User details not available",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(UpdatePassword.this, Settings.class);
@@ -62,6 +63,7 @@ private String userPwdCurrent;
             finish();
         }
         else{
+            //if user exists reauthenticate user
             reAuthenticate(firebaseUser);
         }
     }
@@ -78,6 +80,7 @@ private String userPwdCurrent;
                 }
                 else{
                     //Reauthenticate user
+                    //a credential in firebase authentication server can use to authenticate user
                     AuthCredential credential = EmailAuthProvider.getCredential(firebaseUser.getEmail(),userPwdCurrent);
                     firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -120,7 +123,7 @@ private String userPwdCurrent;
     private void changePassword(FirebaseUser firebaseUser) {
         String userNewPwd = newPwd.getText().toString();
         String userCfmNewPwd = confirmPwd.getText().toString();
-
+        //new password validation
         if(TextUtils.isEmpty(userNewPwd)){
             Toast.makeText(UpdatePassword.this,"New password is needed",Toast.LENGTH_SHORT).show();
             newPwd.setError("Please enter new password");
@@ -131,7 +134,7 @@ private String userPwdCurrent;
             confirmPwd.setError("Please re-enter your new password");
             confirmPwd.requestFocus();
         }
-        //if new password matches confirm password
+        //if new password does not match confirm password
         else if(!userNewPwd.matches(userCfmNewPwd)){
             Toast.makeText(UpdatePassword.this,"Password did not match",Toast.LENGTH_SHORT).show();
             confirmPwd.setError("Please re-enter the same password");
@@ -144,6 +147,7 @@ private String userPwdCurrent;
             newPwd.requestFocus();
         }
         else{
+            //firebase updates password of user
             firebaseUser.updatePassword(userNewPwd).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

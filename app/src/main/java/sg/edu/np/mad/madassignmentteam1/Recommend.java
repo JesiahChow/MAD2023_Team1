@@ -3,6 +3,8 @@ package sg.edu.np.mad.madassignmentteam1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,15 @@ public class Recommend extends AppCompatActivity implements RecommendViewInterfa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
+        ImageView backButton = findViewById(R.id.imageView6);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Recommend.this,GetInterest.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Retrieve selected genres from the intent
         selectedGenres = getIntent().getStringArrayListExtra("selectedGenres");

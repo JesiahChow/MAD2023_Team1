@@ -170,6 +170,7 @@ AlertDialog.Builder builder;
         mAuth = FirebaseAuth.getInstance();
        FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
+            //if user is logged in, the user will be redirected to home activity
             Toast.makeText(Login.this,"Already logged in",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Login.this, HomeActivity.class);
             startActivity(intent);

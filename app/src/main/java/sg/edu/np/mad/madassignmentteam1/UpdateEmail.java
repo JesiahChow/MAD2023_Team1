@@ -29,12 +29,11 @@ public class UpdateEmail extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String userOldEmail,userNewEmail,userPassword;
     private FirebaseUser firebaseUser;
-    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_email);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.email_toolbar);
+        Toolbar myToolbar = findViewById(R.id.email_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Update Email");
         EditText currentEmail = findViewById(R.id.current_email);
@@ -51,11 +50,12 @@ public class UpdateEmail extends AppCompatActivity {
         //set old email ID on EditText
         userOldEmail = firebaseUser.getEmail();
         currentEmail.setText(userOldEmail);
-
+        //if user data does not exist
         if(firebaseUser == null){
             Toast.makeText(UpdateEmail.this,"Something went wrong!User details not available.",Toast.LENGTH_LONG).show();
         }
         else{
+            //if user data exists reauthenticate the user
             reAuthenticate(firebaseUser);
         }
 
@@ -109,11 +109,13 @@ public class UpdateEmail extends AppCompatActivity {
                                             newEmail.setError("Please enter new email");
                                             newEmail.requestFocus();
                                         }
+                                        //regular expression to check if email is in correct format
                                         else if(!Patterns.EMAIL_ADDRESS.matcher(userNewEmail).matches()){
                                             Toast.makeText(UpdateEmail.this,"Invalid Email",Toast.LENGTH_SHORT).show();
                                             newEmail.setError("Please enter a valid email");
                                             newEmail.requestFocus();
                                         }
+                                        //if old email matches new email
                                         else if(userOldEmail.matches(userNewEmail)){
                                             Toast.makeText(UpdateEmail.this,"New email matches old email.",Toast.LENGTH_SHORT).show();
                                             newEmail.setError("Please enter a new email");
@@ -140,6 +142,7 @@ public class UpdateEmail extends AppCompatActivity {
     }
 
     private void updateNewEmail(FirebaseUser firebaseUser) {
+        //initialise updating of user email
         firebaseUser.updateEmail(userNewEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
