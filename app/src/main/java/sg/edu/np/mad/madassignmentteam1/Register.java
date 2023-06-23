@@ -111,10 +111,6 @@ public class Register extends AppCompatActivity {
                    registerUser(username, email,password1);
                }
 
-                /*Intent myIntent = new Intent(.this, MainActivity2.class);
-                myIntent.putExtra("Username",usernameStr);
-                myIntent.putExtra("UserPassword", userPasswordStr);
-                startActivity(myIntent);*/
             }
         });
         //back button
@@ -130,7 +126,9 @@ public class Register extends AppCompatActivity {
     }
 
     private void registerUser(EditText username, EditText email, EditText password1) {
+        //initialise firebase authentication
         mAuth = FirebaseAuth.getInstance();
+        //set email and password as registration
         mAuth.createUserWithEmailAndPassword(email.getText().toString(), password1.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -143,7 +141,7 @@ public class Register extends AppCompatActivity {
                             UserDetails userDetails = new UserDetails(username.getText().toString(),email.getText().toString(),password1.getText().toString());
                             //extract user reference from database for registered users
                             DatabaseReference profile = FirebaseDatabase.getInstance().getReference("Registered Users");
-
+                            //set the values of email, username and password into the realtime database
                             profile.child(user.getUid()).setValue(userDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -158,12 +156,7 @@ public class Register extends AppCompatActivity {
 
 
 
-                        } //else {
-                        // If sign in fails, display a message to the user.
-                        //Toast.makeText(Register.this, "Authentication failed.",
-                        //Toast.LENGTH_SHORT).show();
-
-                        //}
+                        }
                         else{
                             try{
                                 throw task.getException();

@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, Settings.class);
+                Intent intent = new Intent(HomeActivity.this, BusArrivalAdapter.class);
                 startActivity(intent);
             }
         });
@@ -67,28 +67,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-        //add the names of features to featureList
-        /*featureList.add("Recommendations");
-        featureList.add("Favourite locations");
-        featureList.add("Bus timings");
-        featureList.add("Profile");
-
-        //add images to imageList
-        imageList.add(R.drawable.recommended);
-        imageList.add(R.drawable.place);
-        imageList.add(R.drawable.bus);
-        imageList.add(R.drawable.profile_icon);
-
-        &recyclerView = findViewById(R.id.home_recycler);
-        Adapter  = new Adapter(this,featureList,imageList);
-        //set a gridlayoutmanager to set the positioning of the views
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(Adapter);*/
-
-
     }
 
 }
