@@ -42,6 +42,10 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         for (Button button : buttons) {
             button.setOnClickListener(this);
         }
+
+        Button doneButton = findViewById(R.id.button6);
+        doneButton.setEnabled(false);
+        doneButton.setVisibility(View.GONE);
     }
 
     // Function to sort activities based on category
@@ -77,6 +81,15 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
             selectedGenres.add(genre);
             Log.v(TAG, "Selected Genres: " + selectedGenres.toString());
             clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(GetInterest.this,R.color.dark_green)); // Change button color to red
+        }
+        //The enable
+        Button doneButton = findViewById(R.id.button6);
+        if (selectedGenres.size() >= 3) {
+            doneButton.setEnabled(true);
+            doneButton.setVisibility(View.VISIBLE);
+        } else {
+            doneButton.setEnabled(false);
+            doneButton.setVisibility(View.GONE);
         }
     }
 
