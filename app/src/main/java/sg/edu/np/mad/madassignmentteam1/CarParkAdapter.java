@@ -1,4 +1,4 @@
-package sg.edu.np.mad.madassignmentteam1;
+/*package sg.edu.np.mad.madassignmentteam1;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.List;*/
 
-public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkViewHolder> {
+/*public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkViewHolder> {
     private List<CarParkAvailability> carParkAvailabilityList;
     private LayoutInflater inflater;
 
@@ -26,16 +26,18 @@ public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkV
         View itemView = inflater.inflate(R.layout.activity_carpark_layout, parent, false);
         return new CarParkViewHolder(itemView);
     }
-/*
-    @Override
-    public void onBindViewHolder(CarParkViewHolder holder, int position) {
-        CarParkAvailability carParkAvailability = carParkAvailabilityList.get(position);
-        holder.carparkDescTextView.setText(carParkAvailability.getDescription());
-        holder.carAvailableTextView.setText(String.valueOf(carParkAvailability.getCarAvailability()));
-        holder.motorAvailableTextView.setText(String.valueOf(carParkAvailability.getMotorcycleAvailability()));
-        holder.truckAvailableTextView.setText(String.valueOf(carParkAvailability.getTruckAvailability()));
-    }
-*/
+
+
+
+        @Override
+        public void onBindViewHolder(CarParkViewHolder holder, int position) {
+            CarParkAvailability carParkAvailability = carParkAvailabilityList.get(position);
+            holder.carparkDescTextView.setText(carParkAvailabilityList.get(position).getDescription());
+            holder.carAvailableTextView.setText(String.valueOf(carParkAvailability.getCarAvailability()));
+            holder.motorAvailableTextView.setText(String.valueOf(carParkAvailability.getMotorcycleAvailability()));
+            holder.truckAvailableTextView.setText(String.valueOf(carParkAvailability.getTruckAvailability()));
+        }
+
     @Override
     public int getItemCount() {
         return carParkAvailabilityList.size();
@@ -61,7 +63,7 @@ public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkV
             truckImageView = itemView.findViewById(R.id.truckImageView);
         }
 
-        public void bind(CarParkAvailability carParkAvailability) {
+        public void BindViewHolder(CarParkAvailability carParkAvailability) {
             carparkDescTextView.setText(carParkAvailability.getCarParkId());
             carAvailableTextView.setText(String.valueOf(carParkAvailability.getLotsAvailable()));
             motorAvailableTextView.setText(String.valueOf(carParkAvailability.getLotsAvailable()));
@@ -93,4 +95,4 @@ public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkV
             }
         }
     }
-}
+}*/

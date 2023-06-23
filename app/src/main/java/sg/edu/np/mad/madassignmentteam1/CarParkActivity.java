@@ -1,4 +1,4 @@
-package sg.edu.np.mad.madassignmentteam1;
+/*package sg.edu.np.mad.madassignmentteam1;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,4 +58,4 @@ public class CarParkActivity extends AppCompatActivity {
             }
         }
     }
-}
+}*/
