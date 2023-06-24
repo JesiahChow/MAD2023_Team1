@@ -50,6 +50,7 @@
                     android:layout_marginTop="0dp"
                     android:background="@drawable/edit_text_design"
                     android:ems="10"
+                    android:textColorHint="#838282"
                     android:importantForAutofill="no"
                     android:hint="@string/edit_password"
                     android:inputType="textPassword"
