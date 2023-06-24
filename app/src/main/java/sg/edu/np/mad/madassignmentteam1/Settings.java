@@ -38,7 +38,7 @@ public class Settings extends AppCompatActivity {
         ImageView backButton = findViewById(R.id.back_button);
         TextView name1 = findViewById(R.id.titleName);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Profile");
         //when user logs in to display user details

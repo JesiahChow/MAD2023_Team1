@@ -21,8 +21,6 @@
         <activity
             android:name=".CarParkActivity"
             android:exported="false"/>
-
-
         <activity
             android:name=".UpdateEmail"
             android:exported="false" />
