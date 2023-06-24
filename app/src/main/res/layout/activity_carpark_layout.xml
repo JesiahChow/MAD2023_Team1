@@ -9,7 +9,7 @@
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/carparkRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +22,8 @@
 
             <TextView
                 android:id="@+id/carparkdescription"
-                android:layout_width="127dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:paddingLeft="8dp"
                 android:paddingTop="8dp"
@@ -134,11 +134,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/carparkRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="676dp"
+        android:layout_height="0dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
