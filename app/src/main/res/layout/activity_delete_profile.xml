@@ -86,18 +86,22 @@ Please enter your password and verify before continuing."
                 android:background="@color/white"
                 android:padding="5dp">
 
+
                 <TextView
                     android:id="@+id/delete_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="55dp"
                     android:layout_marginLeft="35dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="51dp"
                     android:padding="6dp"
                     android:text="Your profile is not authenticated yet!"
                     android:textAlignment="center"
                     android:textSize="16sp" />
-
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/delete_profile"

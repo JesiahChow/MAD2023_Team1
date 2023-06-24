@@ -52,12 +52,12 @@ public class Settings extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Profile");
         //when user logs in to display user details
-        final FirebaseUser[] firebaseUser = {mAuth.getCurrentUser()};
-        if(firebaseUser[0] == null){
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if(firebaseUser == null){
             Toast.makeText(this, "Something went wrong! User's details unavailable", Toast.LENGTH_LONG).show();
         }
         else{
-            showUserProfile(firebaseUser[0]);
+            showUserProfile(firebaseUser);
         }
         
 

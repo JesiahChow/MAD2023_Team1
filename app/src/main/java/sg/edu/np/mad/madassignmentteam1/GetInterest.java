@@ -5,10 +5,12 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,15 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getinterest);
+        ImageView backButton = findViewById(R.id.imageView7);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GetInterest.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Initialize ProgrammeDatabase
         programmeDatabase = new ProgrammeDatabase();
@@ -42,6 +53,10 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         for (Button button : buttons) {
             button.setOnClickListener(this);
         }
+
+        Button doneButton = findViewById(R.id.button6);
+        doneButton.setEnabled(false);
+        doneButton.setVisibility(View.GONE);
     }
 
     // Function to sort activities based on category
@@ -77,6 +92,15 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
             selectedGenres.add(genre);
             Log.v(TAG, "Selected Genres: " + selectedGenres.toString());
             clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(GetInterest.this,R.color.dark_green)); // Change button color to red
+        }
+        //The enable
+        Button doneButton = findViewById(R.id.button6);
+        if (selectedGenres.size() >= 3) {
+            doneButton.setEnabled(true);
+            doneButton.setVisibility(View.VISIBLE);
+        } else {
+            doneButton.setEnabled(false);
+            doneButton.setVisibility(View.GONE);
         }
     }
 
