@@ -1,4 +1,4 @@
-/*package sg.edu.np.mad.madassignmentteam1;
+package sg.edu.np.mad.madassignmentteam1;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -6,9 +6,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,4 +51,4 @@ public class CarParkActivity extends AppCompatActivity {
             }
         }
     }
-}*/
+}

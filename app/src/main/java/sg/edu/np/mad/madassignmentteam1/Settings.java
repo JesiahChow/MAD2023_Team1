@@ -4,14 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,27 +16,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Settings extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String name,emailAddress;
-    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +40,7 @@ public class Settings extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Profile");
         //when user logs in to display user details
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         if(firebaseUser == null){
@@ -91,14 +81,16 @@ public class Settings extends AppCompatActivity {
                                 else{
                                 mAuth = FirebaseAuth.getInstance();
                                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                                //Enter user data into database
-                                UserDetails newUserDetails = new UserDetails();
-                                String userID = firebaseUser.getUid();
+                                //get unique id
+                                    assert firebaseUser != null;
+                                    String userID = firebaseUser.getUid();
                                 //extract user reference from database for "registered users"
                                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Registered Users").child(userID);
                                 //initiate hashmap class to store data in key-value pairs
                                 Map<String,Object>username1 = new HashMap<>();
+                                //Enter user data into database
                                 username1.put("name",username);
+                                //update user data in database
                                 databaseReference.updateChildren(username1);
                                 Toast.makeText(Settings.this,"Username changed",Toast.LENGTH_SHORT).show();
                                 finish();}
@@ -170,7 +162,7 @@ public class Settings extends AppCompatActivity {
         }
         if(id == R.id.logout_menu){
             //sign out the firebase user
-            mAuth.getInstance().signOut();
+            mAuth.signOut();
             Intent intent = new Intent(Settings.this,MainActivity.class);
             startActivity(intent);
         }

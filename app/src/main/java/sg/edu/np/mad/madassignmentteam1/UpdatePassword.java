@@ -16,14 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.internal.Objects;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class UpdatePassword extends AppCompatActivity {
 private FirebaseAuth mAuth;
@@ -38,7 +39,7 @@ private String userPwdCurrent;
         setContentView(R.layout.activity_update_password);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Change Password");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Change Password");
 
         currentPwd = findViewById(R.id.current_password);
         newPwd = findViewById(R.id.new_password);
@@ -47,7 +48,7 @@ private String userPwdCurrent;
         buttonAuth = findViewById(R.id.authenticate);
         buttonUpdate = findViewById(R.id.change_password);
 
-        //disable EditText for new password, confirm new password and make pwd button unclickable till user is authenticated
+        //disable EditText for new password, confirm new password and make pwd button un-clickable till user is authenticated
         newPwd.setEnabled(false);
         confirmPwd.setEnabled(false);
         buttonUpdate.setEnabled(false);
@@ -63,11 +64,11 @@ private String userPwdCurrent;
             finish();
         }
         else{
-            //if user exists reauthenticate user
+            //if user exists re-authenticate user
             reAuthenticate(firebaseUser);
         }
     }
-    //reauthenticate before changing password
+    //re-authenticate before changing password
     private void reAuthenticate(FirebaseUser firebaseUser) {
         buttonAuth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,9 +80,9 @@ private String userPwdCurrent;
                     currentPwd.requestFocus();
                 }
                 else{
-                    //Reauthenticate user
+                    //Re-authenticate user
                     //a credential in firebase authentication server can use to authenticate user
-                    AuthCredential credential = EmailAuthProvider.getCredential(firebaseUser.getEmail(),userPwdCurrent);
+                    AuthCredential credential = EmailAuthProvider.getCredential(Objects.requireNonNull(firebaseUser.getEmail()),userPwdCurrent);
                     firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -108,7 +109,7 @@ private String userPwdCurrent;
                             }
                             else{
                                 try{
-                                    throw task.getException();
+                                    throw Objects.requireNonNull(task.getException());
                                 }catch (Exception e){
                                     Toast.makeText(UpdatePassword.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                 }
@@ -159,7 +160,7 @@ private String userPwdCurrent;
                     }
                     else{
                         try{
-                            throw task.getException();
+                            throw Objects.requireNonNull(task.getException());
                         }catch (Exception e){
                             Toast.makeText(UpdatePassword.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                         }
@@ -198,7 +199,7 @@ private String userPwdCurrent;
         }
         if(id == R.id.logout_menu){
             //sign out the firebase user
-            mAuth.getInstance().signOut();
+            mAuth.signOut();
             Intent intent = new Intent(UpdatePassword.this,MainActivity.class);
             startActivity(intent);
             finish();

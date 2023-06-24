@@ -2,18 +2,15 @@ package sg.edu.np.mad.madassignmentteam1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class HomeActivity extends AppCompatActivity {
-   /*private RecyclerView recyclerView;
-   ArrayList<String>featureList = new ArrayList<>();
-   ArrayList<Integer>imageList = new ArrayList<>();*/
 
-    private RecyclerView.Adapter Adapter;
+public class HomeActivity extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,24 +66,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        //add the names of features to featureList
-        /*featureList.add("Recommendations");
-        featureList.add("Favourite locations");
-        featureList.add("Bus timings");
-        featureList.add("Profile");
-
-        //add images to imageList
-        imageList.add(R.drawable.recommended);
-        imageList.add(R.drawable.place);
-        imageList.add(R.drawable.bus);
-        imageList.add(R.drawable.profile_icon);
-
-        &recyclerView = findViewById(R.id.home_recycler);
-        Adapter  = new Adapter(this,featureList,imageList);
-        //set a gridlayoutmanager to set the positioning of the views
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(Adapter);*/
 
 
     }

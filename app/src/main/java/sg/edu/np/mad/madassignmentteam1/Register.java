@@ -27,7 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.regex.Pattern;
+import java.util.Objects;
+
 
 public class Register extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -105,7 +106,7 @@ public class Register extends AppCompatActivity {
                 }
                if(!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
                     email.setError("Invalid email. Please enter a valid email");
-                    return;
+
                 }
                else{
                    registerUser(username, email,password1);
@@ -116,7 +117,7 @@ public class Register extends AppCompatActivity {
         //back button
         back1.setOnClickListener(new View.OnClickListener() {
             @Override
-            //jesiah once user clicks back it directs user to mainActivity page
+            //once user clicks back it directs user to mainActivity page
             public void onClick(View v) {
                 Intent backIntent = new Intent(Register.this, MainActivity.class);
                 startActivity(backIntent);
@@ -142,12 +143,15 @@ public class Register extends AppCompatActivity {
                             //extract user reference from database for registered users
                             DatabaseReference profile = FirebaseDatabase.getInstance().getReference("Registered Users");
                             //set the values of email, username and password into the realtime database
+                            assert user != null;
                             profile.child(user.getUid()).setValue(userDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         user.sendEmailVerification();
                                         Toast.makeText(Register.this, "User registered successfully.", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(Register.this,HomeActivity.class);
+                                        startActivity(intent);
                                     } else {
                                         Toast.makeText(Register.this, "User register failed, please try again.", Toast.LENGTH_LONG).show();
                                     }
@@ -159,7 +163,7 @@ public class Register extends AppCompatActivity {
                         }
                         else{
                             try{
-                                throw task.getException();
+                                throw Objects.requireNonNull(task.getException());
                             }
                             //catch error when user uses existing email to register
                             catch(FirebaseAuthUserCollisionException e){

@@ -12,15 +12,16 @@
         android:layout_width="407dp"
         android:layout_height="176dp"
         android:src="@drawable/merlion_icon"
+        android:contentDescription="@string/nth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="Welcome to CityGuidesSG"
+        android:text="@string/home_text"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,13 +64,15 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/nth"
                 android:src="@drawable/bus" />
 
             <TextView
+                android:id="@+id/bus_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="Bus Timings"
+                android:text="@string/bus_timing"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -98,13 +101,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/nth"
                 android:src="@drawable/place" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="Favourite Locations"
+                android:text="@string/fav_locations"
                 android:textAlignment="center"
                 />
 
@@ -133,13 +137,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/nth"
                 android:src="@drawable/recommended" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="Recommended Places"
+                android:text="@string/rec_places"
                 android:textAlignment="center"
                 />
 
@@ -168,13 +173,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/nth"
                 android:src="@drawable/menu_profile" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="Profile"
+                android:text="@string/profile"
                 android:textAlignment="center"
                 />
 

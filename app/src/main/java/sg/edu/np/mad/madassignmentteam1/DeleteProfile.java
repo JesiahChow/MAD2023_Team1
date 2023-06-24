@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,8 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
+
 
 public class DeleteProfile extends AppCompatActivity {
 private FirebaseAuth mAuth;
@@ -46,7 +45,7 @@ private Button authButton, deleteButton;
         setContentView(R.layout.activity_delete_profile);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Delete Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Delete Profile");
         editTextUserPwd = findViewById(R.id.password_input);
         deleteAuth = findViewById(R.id.delete_text);
         authButton = findViewById(R.id.authenticate);
@@ -69,7 +68,7 @@ private Button authButton, deleteButton;
         }
 
     }
-//reauthenticate user password before continuing
+//re-authenticate user password before continuing
     private void reAuthenticate(FirebaseUser firebaseUser) {
         authButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +80,8 @@ private Button authButton, deleteButton;
                     editTextUserPwd.requestFocus();
                 }
                 else{
-                    //Reauthenticate user
-                    AuthCredential credential = EmailAuthProvider.getCredential(firebaseUser.getEmail(),userPwd);
+                    //Re-authenticate user
+                    AuthCredential credential = EmailAuthProvider.getCredential(Objects.requireNonNull(firebaseUser.getEmail()),userPwd);
                     firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -108,7 +107,7 @@ private Button authButton, deleteButton;
                             }
                             else{
                                 try{
-                                    throw task.getException();
+                                    throw Objects.requireNonNull(task.getException());
                                 }catch (Exception e){
                                     Toast.makeText(DeleteProfile.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                 }
@@ -138,16 +137,17 @@ private Button authButton, deleteButton;
                 finish();
             }
         });
-       AlertDialog alertDialog =  builder.create();
-        //change continue button
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+       AlertDialog alertDialog = builder.create();
+        //change "Yes" button
+       alertDialog .setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
+                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
             }
         });
-
         builder.show();
+
     }
 //delete user object
     private void deleteUser() {
@@ -163,7 +163,7 @@ private Button authButton, deleteButton;
                 }
                 else{
                     try{
-                        throw task.getException();
+                        throw Objects.requireNonNull(task.getException());
                     }
                     catch(Exception e){
                         Toast.makeText(DeleteProfile.this,e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -209,7 +209,7 @@ private Button authButton, deleteButton;
         }
         if(id == R.id.logout_menu){
             //sign out the firebase user
-            mAuth.getInstance().signOut();
+            mAuth.signOut();
             Intent intent = new Intent(DeleteProfile.this,MainActivity.class);
             startActivity(intent);
             finish();
