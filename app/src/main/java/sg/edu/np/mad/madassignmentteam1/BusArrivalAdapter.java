@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
+/*
 public class BusArrivalAdapter extends RecyclerView.Adapter<BusArrivalAdapter.ViewHolder> {
     private ArrayList<BusArrivalResponse> busArrivalList;
 
@@ -57,3 +57,4 @@ public class BusArrivalAdapter extends RecyclerView.Adapter<BusArrivalAdapter.Vi
         }
     }
 }
+*/

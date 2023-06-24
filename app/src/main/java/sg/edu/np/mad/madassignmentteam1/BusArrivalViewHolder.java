@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
+/*
 public class BusArrivalViewHolder extends RecyclerView.ViewHolder {
     public TextView busStopCodeTextView;
     public TextView serviceNoTextView;
@@ -22,3 +22,4 @@ public class BusArrivalViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
+*/

@@ -1,31 +1,20 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 public class CarParkAvailability {
-    private String carParkId;
-    private int totalLots;
-    private int lotsAvailable;
 
-    public String getCarParkId() {
-        return carParkId;
-    }
+    public String CarparkID;
+    public String Area;
+    public String Development;
+    public String AvailableLots;
+    public String LotType;
 
-    public void setCarParkId(String carParkId) {
-        this.carParkId = carParkId;
-    }
+    public CarParkAvailability(){}
 
-    public int getTotalLots() {
-        return totalLots;
-    }
-
-    public void setTotalLots(int totalLots) {
-        this.totalLots = totalLots;
-    }
-
-    public int getLotsAvailable() {
-        return lotsAvailable;
-    }
-
-    public void setLotsAvailable(int lotsAvailable) {
-        this.lotsAvailable = lotsAvailable;
+    public CarParkAvailability(String carparkID,String area, String development, String availableLots, String lotType){
+        CarparkID = carparkID;
+        Area = area;
+        Development = development;
+        AvailableLots = availableLots;
+        LotType = lotType;
     }
 }

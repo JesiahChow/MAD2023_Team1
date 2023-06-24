@@ -42,13 +42,13 @@ public class CarParkAvailabilityAPI {
 
                 for (int i = 0; i < itemsArray.length(); i++) {
                     JSONObject itemObject = itemsArray.getJSONObject(i);
-
-                    CarParkAvailability carParkAvailability = new CarParkAvailability();
-                    carParkAvailability.setCarParkId(itemObject.getString("carpark_number"));
-                    carParkAvailability.setTotalLots(itemObject.getInt("total_lots"));
-                    carParkAvailability.setLotsAvailable(itemObject.getInt("lots_available"));
-
-                    carParkAvailabilityList.add(carParkAvailability);
+                    String carparkID =  itemObject.getString("CarParkID");
+                    String area = itemObject.get("Area").toString();
+                    String development = itemObject.get("Development").toString();
+                    String availablelots = itemObject.getString("AvailableLots");
+                    String lotType = itemObject.get("LotType").toString();
+                    //Adding object to array
+                    carParkAvailabilityList.add(new CarParkAvailability(carparkID, area, development, availablelots, lotType));
                 }
             }
         } catch (IOException | JSONException e) {

@@ -4,40 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarParkAdapter">
+    tools:context=".CarParkActivity">
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="412dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/carparkRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/carparkDesc"
+                android:id="@+id/carparkdescription"
                 android:layout_width="157dp"
                 android:layout_height="56dp"
-                android:text="Description"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:paddingLeft="8dp"
                 android:paddingTop="8dp"
-                />
+                android:text="Description"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/carImageView"
+                    android:id="@+id/carImage"
                     android:layout_width="33dp"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
@@ -49,7 +47,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/carAvailable"
+                    android:id="@+id/carLots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -59,7 +57,7 @@
                     android:text="Lots"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/carImageView"
+                    app:layout_constraintStart_toEndOf="@+id/carImage"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -69,7 +67,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/motorImageView"
+                    android:id="@+id/motorImage"
                     android:layout_width="33dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="8dp"
@@ -81,7 +79,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/motorAvailable"
+                    android:id="@+id/motorLots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -91,7 +89,7 @@
                     android:text="Lots"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/motorImageView"
+                    app:layout_constraintStart_toEndOf="@+id/motorImage"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -101,7 +99,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/truckImageView"
+                    android:id="@+id/truckImage"
                     android:layout_width="33dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="8dp"
@@ -113,7 +111,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/truckAvailable"
+                    android:id="@+id/truckLots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -123,12 +121,26 @@
                     android:text="Lots"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/truckImageView"
+                    app:layout_constraintStart_toEndOf="@+id/truckImage"
                     app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </TableRow>
 
     </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/carparkRecyclerView"
+        android:layout_width="410dp"
+        android:layout_height="676dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

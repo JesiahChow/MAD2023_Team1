@@ -4,26 +4,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CarParkViewHolder extends RecyclerView.ViewHolder {
-    private TextView carparkDescTextView;
-    private TextView carAvailableTextView;
-    private TextView motorAvailableTextView;
-    private TextView truckAvailableTextView;
-    private ImageView carImageView;
-    private ImageView motorImageView;
-    private ImageView truckImageView;
+    TextView CarparkDescription;
+    TextView CarLotsAvailable;
+    TextView MotorLotsAvailable;
+    TextView TruckLotsAvailable;
+    ImageView CarImageView;
+    ImageView MotorImageView;
+    ImageView TruckImageView;
 
-    public CarParkViewHolder(View itemView) {
-        super(itemView);
-        carparkDescTextView = itemView.findViewById(R.id.carparkDesc);
-        carAvailableTextView = itemView.findViewById(R.id.carAvailable);
-        motorAvailableTextView = itemView.findViewById(R.id.motorAvailable);
-        truckAvailableTextView = itemView.findViewById(R.id.truckAvailable);
-        carImageView = itemView.findViewById(R.id.carImageView);
-        motorImageView = itemView.findViewById(R.id.motorImageView);
-        truckImageView = itemView.findViewById(R.id.truckImageView);
+    public CarParkViewHolder(@NonNull View item) {
+        super(item);
+        CarparkDescription = item.findViewById(R.id.carparkdescription);
+        CarLotsAvailable = item.findViewById(R.id.carLots);
+        MotorLotsAvailable = item.findViewById(R.id.motorLots);
+        TruckLotsAvailable = item.findViewById(R.id.truckLots);
+        CarImageView = item.findViewById(R.id.carImage);
+        MotorImageView = item.findViewById(R.id.motorImage);
+        TruckImageView = item.findViewById(R.id.truckImage);
     }
-    // Rest of the code
+
+
 }

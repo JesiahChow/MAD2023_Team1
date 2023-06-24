@@ -1,5 +1,5 @@
 package sg.edu.np.mad.madassignmentteam1;
-
+/*
 public class BusArrivalResponse {
     private String busStopCode;
     private String serviceNo;
@@ -47,4 +47,4 @@ public class BusArrivalResponse {
         this.nextBus3 = nextBus3;
     }
 }
-
+*/
