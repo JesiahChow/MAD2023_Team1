@@ -121,7 +121,7 @@ private Button authButton, deleteButton;
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(DeleteProfile.this);
-        builder.setTitle("Change User Profile");
+        builder.setTitle("Delete User Profile");
         builder.setMessage("Do you really want to delete your account? All your data will be lost forever!");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -137,17 +137,7 @@ private Button authButton, deleteButton;
                 finish();
             }
         });
-
-       AlertDialog alertDialog = builder.create();
-        //change "Yes" button
-       alertDialog .setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
-            }
-        });
-        builder.show();
-
+        builder.create().show();
     }
 //delete user object
     private void deleteUser() {
@@ -181,7 +171,6 @@ private Button authButton, deleteButton;
         deleteUser();
     }
     //creating menu
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //inflate menu items

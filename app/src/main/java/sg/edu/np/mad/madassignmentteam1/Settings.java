@@ -37,7 +37,6 @@ public class Settings extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         ImageView backButton = findViewById(R.id.back_button);
         TextView name1 = findViewById(R.id.titleName);
-
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Profile");

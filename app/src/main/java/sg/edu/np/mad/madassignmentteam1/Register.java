@@ -67,7 +67,7 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+
     }
 
     @Override

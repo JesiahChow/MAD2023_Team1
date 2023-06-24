@@ -209,8 +209,6 @@ private String userPwdCurrent;
             startActivity(intent);
             finish();
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 }

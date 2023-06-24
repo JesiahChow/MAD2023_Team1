@@ -111,7 +111,7 @@ public class UpdateEmail extends AppCompatActivity {
                                             newEmail.setError("Please enter new email");
                                             newEmail.requestFocus();
                                         }
-                                        //regular expression to check if email is in correct format
+                                        //to check if email is in correct expression
                                         else if(!Patterns.EMAIL_ADDRESS.matcher(userNewEmail).matches()){
                                             Toast.makeText(UpdateEmail.this,"Invalid Email",Toast.LENGTH_SHORT).show();
                                             newEmail.setError("Please enter a valid email");
