@@ -51,6 +51,9 @@
             android:name=".Recommend"
             android:exported="false" />
         <activity
+            android:name=".RecommendDetails"
+            android:label="RecommendDetails" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

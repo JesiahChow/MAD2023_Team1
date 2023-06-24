@@ -59,7 +59,7 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         doneButton.setVisibility(View.GONE);
     }
 
-    // Function to sort activities based on category
+    // Function to sort activities based on category (Future implementation when data in database.)
     private List<Programme> sortProgrammesByCategory(List<Programme> programmesList, List<String> selectedGenres) {
         List<Programme> chosenProgrammes = new ArrayList<>();
 
@@ -95,7 +95,7 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         }
         //The enable
         Button doneButton = findViewById(R.id.button6);
-        if (selectedGenres.size() >= 3) {
+        if (selectedGenres.size() >= 1) {
             doneButton.setEnabled(true);
             doneButton.setVisibility(View.VISIBLE);
         } else {

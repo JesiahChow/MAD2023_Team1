@@ -1,5 +1,7 @@
 package sg.edu.np.mad.madassignmentteam1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,56 +14,61 @@ import java.util.List;
 
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.ViewHolder> {
 
-    private final RecommendViewInterface recommendViewInterface;
-    private List<Programme> programmeList;
+    private List<Programme> programmes;
+    private Context context;
 
-    public RecommendAdapter(List<Programme> programmeList, RecommendViewInterface recommendViewInterface) {
-        this.programmeList = programmeList;
-        this.recommendViewInterface = recommendViewInterface;
+    public RecommendAdapter(List<Programme> programmes, Context context) {
+        this.programmes = programmes;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommend_view, parent, false);
-        return new ViewHolder(view, recommendViewInterface);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recommendview, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Programme programme = programmeList.get(position);
+        Programme programme = programmes.get(position);
         holder.titleTextView.setText(programme.getTitle());
         holder.descriptionTextView.setText(programme.getDescription());
-        // Set other views as needed
     }
 
     @Override
     public int getItemCount() {
-        return programmeList.size();
+        return programmes.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleTextView;
         TextView descriptionTextView;
 
-        public ViewHolder(@NonNull View itemView, RecommendViewInterface recommendViewInterface) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.title);
             descriptionTextView = itemView.findViewById(R.id.description);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recommendViewInterface != null){
-                        int pos = getAdapterPosition();
+            itemView.setOnClickListener(this);
+        }
 
-                        if(pos != RecyclerView.NO_POSITION){
-                            recommendViewInterface.onItemClick(pos);
-                        }
-                    }
-                }
-            });
+        @Override
+        public void onClick(View v) {
+            // Get the clicked item's position
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                // Get the selected item from the list
+                Programme selectedProgramme = programmes.get(position);
+
+                // Create an intent to start the RecommendDetails activity
+                Intent intent = new Intent(context, RecommendDetails.class);
+                intent.putExtra("title", selectedProgramme.getTitle());
+                intent.putExtra("description", selectedProgramme.getDescription());
+
+                // Start the RecommendDetails activity
+                context.startActivity(intent);
+            }
         }
     }
 }
-
