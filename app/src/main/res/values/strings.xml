@@ -8,4 +8,9 @@
     <string name="reset">Reset Password</string>
     <string name="favourite_locations_header_text">Your Favourite Locations</string>
     <string name="favourite_location_list_element_location_placeholder_address">Location Address</string>
+    <string name="view_map_button_text">View map</string>
+    <string name="map_viewer_activity_search_bar_hint_text">Search for locations here...</string>
+    <string name="toggle_location_favourite_status_button_add_mode_text">Add to favourite locations</string>
+    <string name="toggle_location_favourite_status_button_remove_mode_text">Remove from favourite locations</string>
+    <string name="return_to_favourite_locations_activity_button">Return to favourite locations</string>
 </resources>

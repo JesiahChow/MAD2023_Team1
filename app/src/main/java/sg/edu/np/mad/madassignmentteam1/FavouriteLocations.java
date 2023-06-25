@@ -2,36 +2,28 @@ package sg.edu.np.mad.madassignmentteam1;
 
 import java.util.ArrayList;
 
+import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
+
 public class FavouriteLocations {
-    ArrayList<String> favouriteLocationAddresses = new ArrayList<String>();
+    public static FavouriteLocations instance = new FavouriteLocations();
+
+    public ArrayList<LocationInfo> favouriteLocationsLocationInfoArrayList = new ArrayList<>();
 
     public FavouriteLocations()
     {
 
     }
 
-    public void CreatePlaceholderFavouriteLocationAddresses()
+    public boolean hasLocation(LocationInfo locationInfo)
     {
-        favouriteLocationAddresses.add("Sembawang");
+        for (int currentFavouriteLocationInfoIndex = 0; currentFavouriteLocationInfoIndex < this.favouriteLocationsLocationInfoArrayList.size(); currentFavouriteLocationInfoIndex++)
+        {
+            if (this.favouriteLocationsLocationInfoArrayList.get(currentFavouriteLocationInfoIndex).equals(locationInfo) == true)
+            {
+                return true;
+            }
+        }
 
-        favouriteLocationAddresses.add("Yishun");
-
-        favouriteLocationAddresses.add("Khatib");
-
-        favouriteLocationAddresses.add("Canberra");
-
-        favouriteLocationAddresses.add("Admiralty");
-
-        favouriteLocationAddresses.add("Sun Plaza");
-
-        favouriteLocationAddresses.add("Woodlands");
-
-        favouriteLocationAddresses.add("Causeway Point");
-
-        favouriteLocationAddresses.add("Jurong East");
-
-        favouriteLocationAddresses.add("Junction 8");
-
-        favouriteLocationAddresses.add("Clementi Secondary School");
+        return false;
     }
 }

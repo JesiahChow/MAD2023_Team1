@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".FavouriteLocationsActivity">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ViewMapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_design"
+        android:paddingLeft="10sp"
+        android:paddingTop="10sp"
+        android:paddingRight="10sp"
+        android:paddingBottom="10sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/view_map_button_text" />
+
     <TextView
         android:id="@+id/FavouriteLocationsHeaderTextView"
         android:layout_width="wrap_content"
@@ -17,7 +33,7 @@
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ViewMapButton" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/FavouriteLocationsRecyclerView"
@@ -31,4 +47,5 @@
         android:paddingBottom="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FavouriteLocationsHeaderTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
