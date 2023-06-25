@@ -58,13 +58,10 @@ public class Recommend extends AppCompatActivity implements RecommendViewInterfa
     private List<Programme> filterProgrammesByGenre(List<Programme> programmes, List<String> selectedGenres) {
         List<Programme> filteredProgrammes = new ArrayList<>();
         for (Programme programme : programmes) {
-            Log.d("programme", "Programme Category: " + programme.getCategory());
-            Log.d("Comparing", "First variable: " + selectedGenres + "Program variable: " + programme.getCategory());
+            //Loop to run through all programmes in the database for comparison.
             if (selectedGenres.contains(programme.getCategory())) {
-                Log.d("filtergod", "Adding programme: " + programme.getTitle());
+                //Add programmes into filteredProgrammes if selectedGenres matches the programmes in database.
                 filteredProgrammes.add(programme);
-            } else {
-                Log.d("Status", "Failure");
             }
         }
         return filteredProgrammes;
@@ -76,8 +73,6 @@ public class Recommend extends AppCompatActivity implements RecommendViewInterfa
         // Start RecommendDetails activity
         Intent intent = new Intent(Recommend.this, RecommendDetails.class);
         // Pass any necessary data to RecommendDetails activity
-        // intent.putExtra("key", value);
         startActivity(intent);
-
     }
 }

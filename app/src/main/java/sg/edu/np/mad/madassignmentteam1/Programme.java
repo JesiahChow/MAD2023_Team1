@@ -4,12 +4,14 @@ public class Programme {
     private String title;
     private String description;
     private String category;
+    private String imageFileName;
 
     // Constructor
-    public Programme(String title, String description, String category) {
+    public Programme(String title, String description, String category, String imageFileName) {
         this.title = title;
         this.description = description;
         this.category = category;
+        this.imageFileName = imageFileName;
     }
 
     // Getters and Setters
@@ -35,4 +37,13 @@ public class Programme {
 
     public void setCategory(String category) {
         this.category = category;
-    }}
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+}
