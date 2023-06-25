@@ -25,13 +25,13 @@ Stage 2 Features:
 - Naveed: Fastest route
 
 -Appendices
-<br>
+<br><br>
 ![login_ss](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/0ac49645-06fa-4e61-821a-67ea229873a8)
-<br>
+<br><br>
 ![recommended_pg](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/c75de723-ca41-463a-bab7-839eef9a4166)
-<br>
+<br><br>
 ![interest](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/5136abe0-0f2f-4aed-950d-caa97827307d)
-<br>
+<br><br>
 ![home](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/0b938777-94d7-4ab1-9631-b8eb8c239db0)
 
 
