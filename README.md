@@ -14,14 +14,14 @@ With CityGuideSG, your Singapore adventure starts here. Download our app now and
 
 Stage 1  Features:
 - Jesiah Chow: Login feature
-- Edison: Bus timings
+- Edison: Carpark finder
 - Julius: Recommendations of places/hotels
 - Naveed: Favourite locations 
 
 Stage 2 Features:
 - Jesiah: Language translator
 - Julius: Search for hotels/places
-- Edison: Carpark finder
+- Edison: Bus timing
 - Naveed: Fastest route
 
 

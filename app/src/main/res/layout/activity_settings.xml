@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/name"
+        android:fontFamily="sans-serif-medium"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/welcome"
         app:layout_constraintHorizontal_bias="0.486"
@@ -85,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-medium"
             android:padding="1dp"
             android:hint="@string/loading"
             android:textColorHint="#808080"
@@ -107,6 +109,7 @@
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
             android:hint="@string/loading"
             android:textColorHint="#808080"
             android:textSize="18sp"/>
@@ -117,6 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/nth"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:src="@drawable/arrow_back" />
 
