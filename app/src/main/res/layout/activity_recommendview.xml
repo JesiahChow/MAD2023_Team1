@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="150dp"
     android:layout_marginTop="10dp"
-    android:background="#F8E68B">
+    android:background="#F8E68B"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageview"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="10dp"
-        android:layout_centerVertical="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/image_description"
         android:src="@drawable/place"
-        android:contentDescription="@string/image_description"/>
-
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_toEndOf="@id/imageview"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="@string/title_text"
         android:textColor="@color/black"
         android:textSize="20sp" />
@@ -29,13 +30,10 @@
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@id/imageview"
+        android:gravity="center_horizontal"
         android:maxLines="1"
+        android:ellipsize="end"
         android:text="@string/description_text"
         android:textColor="@color/black" />
 
-
-</RelativeLayout>
+</LinearLayout>
