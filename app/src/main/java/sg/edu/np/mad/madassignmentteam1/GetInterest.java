@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +18,6 @@ import java.util.List;
 public class GetInterest extends AppCompatActivity implements View.OnClickListener {
     final String TAG = "Recommendation";
     public List<String> selectedGenres = new ArrayList<>(); // List to store selected genres
-    private ProgrammeDatabase programmeDatabase; // Instance of ProgrammeDatabase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +33,6 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-        // Initialize ProgrammeDatabase
-        programmeDatabase = new ProgrammeDatabase();
 
         // Set click listeners for the genre buttons
         Button[] buttons = new Button[]{
@@ -54,12 +49,12 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
             button.setOnClickListener(this);
         }
 
-        Button doneButton = findViewById(R.id.button6);
+        Button doneButton = buttons[5];
         doneButton.setEnabled(false);
         doneButton.setVisibility(View.GONE);
     }
 
-    // Function to sort activities based on category (Future implementation when data in database.)
+    /* Function to sort activities based on category (Future implementation when data in database.)
     private List<Programme> sortProgrammesByCategory(List<Programme> programmesList, List<String> selectedGenres) {
         List<Programme> chosenProgrammes = new ArrayList<>();
 
@@ -70,7 +65,7 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         }
 
         return chosenProgrammes;
-    }
+    }*/
 
     // Handle button click events
     @Override

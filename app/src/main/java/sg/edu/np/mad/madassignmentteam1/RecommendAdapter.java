@@ -2,9 +2,11 @@ package sg.edu.np.mad.madassignmentteam1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,9 +33,15 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String TAG = "Check Image";
         Programme programme = programmes.get(position);
         holder.titleTextView.setText(programme.getTitle());
         holder.descriptionTextView.setText(programme.getDescription());
+
+        int imageResourceId = context.getResources().getIdentifier(programme.getImageFileName(), "drawable", context.getPackageName());
+        holder.imageView.setImageResource(imageResourceId);
+        Log.d(TAG, "onBindViewHolder: " + imageResourceId);
+
     }
 
     @Override
@@ -44,11 +52,13 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleTextView;
         TextView descriptionTextView;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.title);
             descriptionTextView = itemView.findViewById(R.id.description);
+            imageView = itemView.findViewById(R.id.imageview);
 
             itemView.setOnClickListener(this);
         }
@@ -65,6 +75,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
                 Intent intent = new Intent(context, RecommendDetails.class);
                 intent.putExtra("title", selectedProgramme.getTitle());
                 intent.putExtra("description", selectedProgramme.getDescription());
+                intent.putExtra("imageFileName", selectedProgramme.getImageFileName());
 
                 // Start the RecommendDetails activity
                 context.startActivity(intent);
