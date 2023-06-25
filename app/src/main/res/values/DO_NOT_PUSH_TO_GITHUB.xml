@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+DISCLAIMER: Before pushing anything to Github, ensure that this file is ignored by Git first so that it
+does not get pushed to the public repository, you can do this by setting the file to not be tracked
+by Git.
+-->
+<resources>
+    <string name="GOOGLE_MAPS_API_KEY">AIzaSyCIhAOt49x6bRzzoY9S2YAJI0BD0ZmZ_qM</string>
+</resources>

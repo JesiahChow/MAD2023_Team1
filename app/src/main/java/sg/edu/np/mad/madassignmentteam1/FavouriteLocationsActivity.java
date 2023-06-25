@@ -14,6 +14,8 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
 
     AppCompatButton viewMapButton = null;
 
+    AppCompatButton returnToHomeActivityButton = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +27,19 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
         -> Close page for activities containing RecyclerViews to prevent excessive and
         unnecessary usage of memory (implement such functionality for this activity).
         */
-        favouriteLocationsRecyclerView = findViewById(R.id.FavouriteLocationsRecyclerView);
+        this.favouriteLocationsRecyclerView = findViewById(R.id.FavouriteLocationsRecyclerView);
 
         FavouriteLocationsAdapter favouriteLocationsAdapter = new FavouriteLocationsAdapter();
 
-        favouriteLocationsRecyclerView.setAdapter(favouriteLocationsAdapter);
+        this.favouriteLocationsRecyclerView.setAdapter(favouriteLocationsAdapter);
 
-        favouriteLocationsRecyclerView.setLayoutManager(
+        this.favouriteLocationsRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this)
         );
 
-        viewMapButton = findViewById(R.id.ViewMapButton);
+        this.viewMapButton = findViewById(R.id.ViewMapButton);
 
-        viewMapButton.setOnClickListener(
+        this.viewMapButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -49,6 +51,22 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
+        );
+
+        this.returnToHomeActivityButton = findViewById(R.id.FavouriteLocationsActivityReturnToHomeActivityButton);
+
+        this.returnToHomeActivityButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(
+                        FavouriteLocationsActivity.this,
+                        HomeActivity.class
+                    );
+
+                    startActivity(intent);
+                }
+            }
         );
     }
 }

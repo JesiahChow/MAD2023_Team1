@@ -2,6 +2,7 @@ package sg.edu.np.mad.madassignmentteam1.utilities;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -18,8 +19,10 @@ import com.google.maps.model.PlacesSearchResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 import sg.edu.np.mad.madassignmentteam1.LocationInfo;
+import sg.edu.np.mad.madassignmentteam1.R;
 import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 
 public class LocationInfoUtility
@@ -33,10 +36,7 @@ public class LocationInfoUtility
             try
             {
                 googleMapsGeoApiContext = new GeoApiContext.Builder().apiKey(
-                    context.getPackageManager().getApplicationInfo(
-                        context.getPackageName(),
-                        PackageManager.GET_META_DATA
-                    ).metaData.getString("com.google.android.geo.API_KEY")
+                    context.getString(R.string.GOOGLE_MAPS_API_KEY)
                 ).build();
             }
             catch (Exception exception)
@@ -126,5 +126,15 @@ public class LocationInfoUtility
         // LoggerUtility.logInformation("Finished retrieving corresponding locations successfully.");
 
         return locationInfoArrayList;
+    }
+
+    public static void getCorrespondingLocationsForLocationNameAsync(String locationName, Context context, OnLocationInfoResultsReadyListener onLocationInfoResultsReadyListener)
+    {
+
+    }
+
+    public interface OnLocationInfoResultsReadyListener
+    {
+        public void onLocationInfoResultsReady(ArrayList<LocationInfo> locationInfoResults);
     }
 }

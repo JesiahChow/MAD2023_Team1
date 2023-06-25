@@ -50,4 +50,5 @@
     <string name="toggle_location_favourite_status_button_add_mode_text">Add to favourite locations</string>
     <string name="toggle_location_favourite_status_button_remove_mode_text">Remove from favourite locations</string>
     <string name="return_to_favourite_locations_activity_button">Return to favourite locations</string>
+    <string name="return_to_home_activity_button_text">Return to homepage</string>
 </resources>

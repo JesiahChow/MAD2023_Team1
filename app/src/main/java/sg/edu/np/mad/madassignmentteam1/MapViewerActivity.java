@@ -114,7 +114,7 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
         this.selectedLocationScrollView = findViewById(R.id.SelectedLocationScrollView);
 
         this.selectedLocationScrollView.setVisibility(
-            View.GONE
+            View.INVISIBLE
         );
 
         this.toggleLocationFavouriteStatusButton = findViewById(R.id.ToggleLocationFavouriteStatusButton);
