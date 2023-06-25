@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/MainSupportMapFragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
@@ -42,7 +42,8 @@
                 android:textColorHint="#838282"
                 android:hint="@string/map_viewer_activity_search_bar_hint_text"
                 android:inputType="text"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:imeOptions="actionSearch"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/SearchBarResultsRecyclerView"

@@ -22,23 +22,15 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
 
     private GoogleMap googleMap = null;
 
-    private ArrayList<OnBindViewHolderListener> onBindViewHolderListeners = new ArrayList<>();
+    public ArrayList<OnBindViewHolderListener> onBindViewHolderListeners = new ArrayList<>();
+
+    public ArrayList<OnSearchBarResultClickListener> onSearchBarResultClickListeners = new ArrayList<>();
 
     public SearchBarResultsAdapter(ArrayList<LocationInfo> searchResultsLocationInfoArrayList, GoogleMap googleMap)
     {
         this.resultsLocationInfoArrayList = searchResultsLocationInfoArrayList;
 
         this.googleMap = googleMap;
-    }
-
-    public void addOnBindViewHolderListener(OnBindViewHolderListener onBindViewHolderListener)
-    {
-        this.onBindViewHolderListeners.add(onBindViewHolderListener);
-    }
-
-    public void removeOnBindViewHolderListener(OnBindViewHolderListener onBindViewHolderListener)
-    {
-        this.onBindViewHolderListeners.remove(onBindViewHolderListener);
     }
 
     @Override
@@ -114,6 +106,16 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
                                 ).zoom(14).build()
                             )
                         );
+
+                        int searchBarResultIndex = ViewHolder.this.getAdapterPosition();
+
+                        for (int currentIndex = 0; currentIndex < SearchBarResultsAdapter.this.onSearchBarResultClickListeners.size(); currentIndex++)
+                        {
+                            SearchBarResultsAdapter.this.onSearchBarResultClickListeners.get(currentIndex).onSearchBarResultClick(
+                                ViewHolder.this.resultLocationLinearLayout,
+                                searchBarResultIndex
+                            );
+                        }
                     }
                 }
             );
@@ -127,5 +129,10 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
     public interface OnBindViewHolderListener
     {
         public void onBindViewHolder(SearchBarResultsAdapter.ViewHolder viewHolder, int position);
+    }
+
+    public interface OnSearchBarResultClickListener
+    {
+        public void onSearchBarResultClick(View searchBarResultView, int searchBarResultIndex);
     }
 }
