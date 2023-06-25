@@ -30,10 +30,21 @@ project's main folder. If you do not see the file there or do not have it, it wi
 sent to you through other means (e.g. Microsoft Teams or Whatsapp) instead of being pushed to the
 public Github repository.
 */
+
+/**
+ * This class provides helper methods for managing and working with LocationInfo objects.
+ */
 public class LocationInfoUtility
 {
     private static GeoApiContext googleMapsGeoApiContext = null;
 
+    /**
+     * Returns a list of LocationInfo objects associated with locations that have names that are similar
+     * to or the same as the specified location name.
+     * @param locationName
+     * @param context
+     * @return An ArrayList of LocationInfo objects.
+     */
     public static ArrayList<LocationInfo> getCorrespondingLocationsForLocationName(String locationName, Context context)
     {
         if (googleMapsGeoApiContext == null)
@@ -134,11 +145,23 @@ public class LocationInfoUtility
         return locationInfoArrayList;
     }
 
+    /**
+     * An asynchronous implementation of the getCorrespondingLocationsForLocationName method of the
+     * LocationInfoUtility class.
+     * @param locationName
+     * @param context
+     * @param onLocationInfoResultsReadyListener
+     */
     public static void getCorrespondingLocationsForLocationNameAsync(String locationName, Context context, OnLocationInfoResultsReadyListener onLocationInfoResultsReadyListener)
     {
 
     }
 
+    /**
+     * Returns a JSON-formatted string representation of a LocationInfo object.
+     * @param locationInfo
+     * @return A String object.
+     */
     public static String getLocationInfoAsJsonString(LocationInfo locationInfo)
     {
         JSONObject locationInfoJsonObject = new JSONObject();
@@ -169,6 +192,12 @@ public class LocationInfoUtility
         return locationInfoJsonObject.toString();
     }
 
+    /**
+     * Parses a JSON-formatted String and returns a LocationInfo object.
+     * This method will return null in the event of an error occurring during its execution.
+     * @param locationInfoJsonString
+     * @return A LocationInfo object.
+     */
     public static LocationInfo getLocationInfoFromJsonString(String locationInfoJsonString)
     {
         LoggerUtility.logInformation(
@@ -208,8 +237,18 @@ public class LocationInfoUtility
         return locationInfo;
     }
 
+    /**
+     * An interface that allows for the registration of callback methods to be executed when the
+     * getCorrespondingLocationsForLocationNameAsync method of the LocationInfoUtility class
+     * is about to finish executing.
+     */
     public interface OnLocationInfoResultsReadyListener
     {
+        /**
+         * The method that is called when the getCorrespondingLocationsForLocationNameAsync method
+         * of the LocationInfoUtility class is about to finish executing.
+         * @param locationInfoResults
+         */
         void onLocationInfoResultsReady(ArrayList<LocationInfo> locationInfoResults);
     }
 }

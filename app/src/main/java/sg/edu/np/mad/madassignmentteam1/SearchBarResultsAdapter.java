@@ -26,6 +26,11 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
 
     public ArrayList<OnSearchBarResultClickListener> onSearchBarResultClickListeners = new ArrayList<>();
 
+    /**
+     * The default constructor method for the SearchBarResultsAdapter class.
+     * @param searchResultsLocationInfoArrayList
+     * @param googleMap
+     */
     public SearchBarResultsAdapter(ArrayList<LocationInfo> searchResultsLocationInfoArrayList, GoogleMap googleMap)
     {
         this.resultsLocationInfoArrayList = searchResultsLocationInfoArrayList;
@@ -89,6 +94,10 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
 
         public LatLng resultLocationLatLng = new LatLng(0, 0);
 
+        /**
+         * The default constructor method of the SearchBarResultsAdapter.ViewHolder class.
+         * @param itemView
+         */
         public ViewHolder(View itemView)
         {
             super(itemView);
@@ -126,13 +135,32 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
         }
     }
 
+    /**
+     * An interface allowing for the registration of callback methods to be executed when the
+     * onBindViewHolder method of the SearchBarResultsAdapter.ViewHolder class is called.
+     */
     public interface OnBindViewHolderListener
     {
-        public void onBindViewHolder(SearchBarResultsAdapter.ViewHolder viewHolder, int position);
+        /**
+         * The method that is called when the onBindViewHolder method of the
+         * SearchBarResultsAdapter.ViewHolder class is called.
+         * @param viewHolder
+         * @param position
+         */
+        void onBindViewHolder(SearchBarResultsAdapter.ViewHolder viewHolder, int position);
     }
 
+    /**
+     * An interface allowing for the registration of callback methods to be executed when a search
+     * bar result is clicked on by a user.
+     */
     public interface OnSearchBarResultClickListener
     {
-        public void onSearchBarResultClick(View searchBarResultView, int searchBarResultIndex);
+        /**
+         * The method that is called when a search bar result is clicked on by a user.
+         * @param searchBarResultView
+         * @param searchBarResultIndex
+         */
+        void onSearchBarResultClick(View searchBarResultView, int searchBarResultIndex);
     }
 }

@@ -12,6 +12,12 @@ import java.net.URL;
 
 public class HttpRequestUtility
 {
+    /**
+     * Reads all characters from an InputStream object and returns the result of doing so as a String
+     * object. This method is solely meant to be used within the HttpRequestUtility class for now.
+     * @param inputStream
+     * @return A String object.
+     */
     private static String ReadStream(InputStream inputStream)
     {
         String text = "";
@@ -37,13 +43,12 @@ public class HttpRequestUtility
 
 
     /**
-     * Sends a HTTP/HTTPS request using the specified URL, method (e.g. GET, POST etc), and request
-     * data. Returns the response body of the response received as a result of sending the request
-     * as a raw String.
+     * Sends a HTTP/HTTPS request using the specified URL, method (e.g. GET, POST etc) and request
+     * data. Returns the response body of the response received as a String object.
      * @param url
      * @param method
      * @param requestData
-     * @return The response body as a raw String.
+     * @return A String object.
      */
     public static String SendHttpRequest(String url, String method, String requestData)
     {
@@ -89,8 +94,15 @@ public class HttpRequestUtility
         return responseText;
     }
 
-    public static void SendHttpRequest(String url, String method)
+    /**
+     * Sends a HTTP/HTTPS request using the specified URL and method (e.g. GET, POST etc).
+     * Returns the response body of the response received as a String object.
+     * @param url
+     * @param method
+     * @return A String object.
+     */
+    public static String SendHttpRequest(String url, String method)
     {
-        SendHttpRequest(url, method, "");
+        return SendHttpRequest(url, method, "");
     }
 }

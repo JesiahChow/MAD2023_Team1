@@ -26,11 +26,6 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
             FavouriteLocations.instance = new FavouriteLocations(this);
         }
 
-        /*
-        TODOs:
-        -> Close page for activities containing RecyclerViews to prevent excessive and
-        unnecessary usage of memory (implement such functionality for this activity).
-        */
         this.favouriteLocationsRecyclerView = findViewById(R.id.FavouriteLocationsRecyclerView);
 
         FavouriteLocationsAdapter favouriteLocationsAdapter = new FavouriteLocationsAdapter();

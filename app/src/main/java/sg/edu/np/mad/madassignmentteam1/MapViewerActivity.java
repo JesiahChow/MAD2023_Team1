@@ -33,10 +33,6 @@ import java.util.ArrayList;
 import sg.edu.np.mad.madassignmentteam1.utilities.LocationInfoUtility;
 import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 
-/*
-Note: An alternative free approach that could be considered is using the OSMDroid library
-for displaying maps and GraphHopper for calculating routes between 2 given points/locations on a map.
- */
 public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 

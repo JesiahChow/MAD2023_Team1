@@ -23,6 +23,11 @@ public class FavouriteLocations {
 
     public ArrayList<LocationInfo> favouriteLocationsLocationInfoArrayList = new ArrayList<>();
 
+    /**
+     * Generates and returns a JSON-formatted string representation of the value of the
+     * favouriteLocationsLocationInfoArrayList field of the FavouriteLocations instance.
+     * @return A String instance.
+     */
     private String getFavouriteLocationsAsJsonString()
     {
         JSONObject rootJsonObject = new JSONObject();
@@ -57,6 +62,13 @@ public class FavouriteLocations {
         return rootJsonObject.toString();
     }
 
+    /**
+     * Parses a JSON string and extracts location information for each of the favourite locations
+     * of a user. The JSON string should preferably be generated using the
+     * getFavouriteLocationsAsJsonString method of the FavouriteLocations class.
+     * @param favouriteLocationsJsonString
+     * @return An ArrayList of LocationInfo instances.
+     */
     private ArrayList<LocationInfo> getFavouriteLocationsFromJsonString(String favouriteLocationsJsonString)
     {
         LoggerUtility.logInformation("Currently in getFavouriteLocationsFromJsonString method");
@@ -122,6 +134,10 @@ public class FavouriteLocations {
         return favouriteLocations;
     }
 
+    /**
+     * Retrieves the file used to store data about a user's favourite locations locally.
+     * @return A File instance.
+     */
     private File getFavouriteLocationsFile()
     {
         File internalStorageDirectory = this.context.getFilesDir();
@@ -139,6 +155,14 @@ public class FavouriteLocations {
         );
     }
 
+    /**
+     * The default constructor method for the FavouriteLocations class. This constructor method
+     * should be called and have its return value be assigned to the instance field of the
+     * FavouriteLocations class as soon as an Activity has been started. This action only needs
+     * to be performed once and should preferably be performed when the onCreate method of the
+     * FavouriteLocationsActivity class is called.
+     * @param context
+     */
     public FavouriteLocations(Context context)
     {
         this.context = context;
@@ -146,6 +170,12 @@ public class FavouriteLocations {
         this.loadFromUserDeviceInternalStorage();
     }
 
+    /**
+     * Checks if a location is one of the favourite locations of a user. Returns true if the location
+     * is one of the user's favourite locations, returns false otherwise.
+     * @param locationInfo
+     * @return A boolean value.
+     */
     public boolean hasLocation(LocationInfo locationInfo)
     {
         for (int currentFavouriteLocationInfoIndex = 0; currentFavouriteLocationInfoIndex < this.favouriteLocationsLocationInfoArrayList.size(); currentFavouriteLocationInfoIndex++)
@@ -160,6 +190,13 @@ public class FavouriteLocations {
         return false;
     }
 
+    /**
+     * Loads the saved data regarding the favourite locations of a user, this data is stored in a file
+     * that is stored locally on the user's device. This method returns true if the saved data has
+     * been loaded successfully, otherwise it returns false if the saved data has not been loaded
+     * successfully or if the file containing the saved data has not been found.
+     * @return A boolean value.
+     */
     public boolean loadFromUserDeviceInternalStorage()
     {
         File favouriteLocationsFile = this.getFavouriteLocationsFile();
@@ -224,45 +261,6 @@ public class FavouriteLocations {
             return false;
         }
 
-        try
-        {
-            LoggerUtility.logInformation("Favourite locations bytes as String: " + new String(favouriteLocationsFileBytes, StandardCharsets.UTF_8));
-        }
-        catch (Exception exception)
-        {
-            LoggerUtility.logException(exception);
-        }
-
-        /*
-        try
-        {
-            this.favouriteLocationsLocationInfoArrayList = this.getFavouriteLocationsFromJsonString(
-                new String(favouriteLocationsFileBytes, StandardCharsets.UTF_8)
-            );
-
-            if (this.favouriteLocationsLocationInfoArrayList == null)
-            {
-                LoggerUtility.logInformation(
-                    "Attempted to initialize favourite locations ArrayList of a FavouriteLocations instance. Got null value instead. Updating field accordingly..."
-                );
-
-                this.favouriteLocationsLocationInfoArrayList = new ArrayList<>();
-            }
-        }
-        catch (Exception exception)
-        {
-            LoggerUtility.logInformation(
-                "Error: Exception occurred while attempting to initialize favourite locations ArrayList of a FavouriteLocations instance."
-            );
-
-            LoggerUtility.logInformation("Exception type: " + exception.getClass().getName());
-
-            LoggerUtility.logException(exception);
-
-            return false;
-        }
-        */
-
         this.favouriteLocationsLocationInfoArrayList = this.getFavouriteLocationsFromJsonString(
                 new String(favouriteLocationsFileBytes, StandardCharsets.UTF_8)
         );
@@ -284,6 +282,19 @@ public class FavouriteLocations {
     user currently logged into the application). Will be updated to support multiple users in
     the future.
     */
+
+    /**
+     * Saves the data regarding a user's favourite locations to a file that is then stored locally
+     * on the user's device. This method returns true if the data was saved successfully, otherwise
+     * it returns false.
+     * @return A boolean value.
+     * @implNote The current implementation of this method only supports saving the data regarding
+     * the favourite locations of the user currently logged into the application, this method
+     * does not support saving data regarding the favourite locations of multiple users yet
+     * (in the case of someone who might log in and out of different accounts while using the
+     * application on the same device). However, this functionality is planned to be introduced
+     * and included in future releases.
+     */
     public boolean saveToUserDeviceInternalStorage()
     {
         File favouriteLocationsFile = this.getFavouriteLocationsFile();
