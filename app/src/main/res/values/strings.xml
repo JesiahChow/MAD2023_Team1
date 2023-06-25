@@ -54,4 +54,8 @@
     <string name="title_text">title</string>
     <string name="description_text">description</string>
     <string name="return_to_home_activity_button_text">Return to homepage</string>
+    <string name="car_park_description">Description</string>
+    <string name="carlots">Lots</string>
+    <string name="motorlots">Lots</string>
+    <string name="trucklots">Lots</string>
 </resources>

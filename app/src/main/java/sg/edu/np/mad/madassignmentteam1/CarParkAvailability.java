@@ -8,7 +8,6 @@ public class CarParkAvailability {
     public String AvailableLots;
     public String LotType;
 
-    public CarParkAvailability(){}
 
     public CarParkAvailability(String carparkID,String area, String development, String availableLots, String lotType){
         CarparkID = carparkID;
