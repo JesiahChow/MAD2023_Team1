@@ -196,35 +196,37 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                 this.googleMap
         );
 
-        this.searchBarResultsAdapter.addOnBindViewHolderListener(
-            new SearchBarResultsAdapter.OnBindViewHolderListener() {
+        this.searchBarResultsAdapter.onSearchBarResultClickListeners.add(
+            new SearchBarResultsAdapter.OnSearchBarResultClickListener() {
                 @Override
-                public void onBindViewHolder(SearchBarResultsAdapter.ViewHolder viewHolder, int position)
+                public void onSearchBarResultClick(View searchBarResultView, int searchBarResultIndex)
                 {
-                    MapViewerActivity.this.selectedLocationInfo = MapViewerActivity.this.currentSearchBarResultsLocationInfoArrayList.get(position);
+                    MapViewerActivity.this.selectedLocationInfo = MapViewerActivity.this.currentSearchBarResultsLocationInfoArrayList.get(
+                        searchBarResultIndex
+                    );
 
                     MapViewerActivity.this.selectedLocationNameTextView.setText(
-                        MapViewerActivity.this.selectedLocationInfo.name
+                            MapViewerActivity.this.selectedLocationInfo.name
                     );
 
                     MapViewerActivity.this.selectedLocationAddressTextView.setText(
-                        "Address: " + MapViewerActivity.this.selectedLocationInfo.address
+                            "Address: " + MapViewerActivity.this.selectedLocationInfo.address
                     );
 
                     MapViewerActivity.this.selectedLocationPostalCodeTextView.setText(
-                        "Postal code: " + MapViewerActivity.this.selectedLocationInfo.postalCode
+                            "Postal code: " + MapViewerActivity.this.selectedLocationInfo.postalCode
                     );
 
                     if (FavouriteLocations.instance.hasLocation(MapViewerActivity.this.selectedLocationInfo) == true)
                     {
                         MapViewerActivity.this.toggleLocationFavouriteStatusButton.setText(
-                            getString(R.string.toggle_location_favourite_status_button_remove_mode_text)
+                                getString(R.string.toggle_location_favourite_status_button_remove_mode_text)
                         );
                     }
                     else
                     {
                         MapViewerActivity.this.toggleLocationFavouriteStatusButton.setText(
-                            getString(R.string.toggle_location_favourite_status_button_add_mode_text)
+                                getString(R.string.toggle_location_favourite_status_button_add_mode_text)
                         );
                     }
 

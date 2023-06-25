@@ -25,6 +25,15 @@ import sg.edu.np.mad.madassignmentteam1.LocationInfo;
 import sg.edu.np.mad.madassignmentteam1.R;
 import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 
+/*
+For future reference:
+- In case an error occurs related to the Google Maps API key not being found or when setting up
+the project to test it out, ensure that you have an XML file named
+"DO_NOT_PUSH_TO_GITHUB.xml" in the "values" folder located in the "res" folder of this
+project's main folder. If you do not see the file there or do not have it, it will need to be
+sent to you through other means (e.g. Microsoft Teams or Whatsapp) instead of being pushed to the
+public Github repository.
+*/
 public class LocationInfoUtility
 {
     private static GeoApiContext googleMapsGeoApiContext = null;
