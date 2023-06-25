@@ -48,6 +48,11 @@
     <string name="view_map_button_text">View map</string>
     <string name="map_viewer_activity_search_bar_hint_text">Search for locations here...</string>
     <string name="toggle_location_favourite_status_button_add_mode_text">Add to favourite locations</string>
+    <string name="selected_location_name">Selected Location</string>
+    <string name="address_placeholder">Address:</string>
+    <string name="postal_code">Postal:</string>
+    <string name="recommended_items">Recommended items</string>
+    <string name="location_name">Location name</string>
     <string name="toggle_location_favourite_status_button_remove_mode_text">Remove from favourite locations</string>
     <string name="return_to_favourite_locations_activity_button">Return to favourite locations</string>
     <string name="image_description">image description</string>

@@ -39,6 +39,7 @@
                 android:autofillHints="postalAddress"
                 android:background="@drawable/edit_text_design"
                 android:ems="10"
+                android:textColorHint="#838282"
                 android:hint="@string/map_viewer_activity_search_bar_hint_text"
                 android:inputType="text"
                 android:textAlignment="center" />
@@ -83,7 +84,7 @@
                         android:layout_marginBottom="10dp"
                         android:maxLines="100"
                         android:scrollHorizontally="false"
-                        android:text="Selected location name"
+                        android:text="@string/selected_location_name"
                         android:textAlignment="center"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -96,7 +97,7 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:scrollHorizontally="false"
-                        android:text="Address: Placeholder Avenue 10"
+                        android:text="@string/address_placeholder"
                         android:textAlignment="textStart"
                         android:textSize="16sp" />
 
@@ -109,7 +110,7 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:scrollHorizontally="false"
-                        android:text="Postal code: 443761"
+                        android:text="@string/postal_code"
                         android:textAlignment="textStart"
                         android:textSize="16sp" />
 
@@ -120,6 +121,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="10dp"
+                        android:textColor="@color/white"
                         android:background="@drawable/button_design"
                         android:text="@string/toggle_location_favourite_status_button_add_mode_text" />
                 </LinearLayout>
@@ -143,6 +145,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/white"
                     android:background="@drawable/button_design"
                     android:text="@string/return_to_favourite_locations_activity_button" />
             </LinearLayout>
