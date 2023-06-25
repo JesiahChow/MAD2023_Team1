@@ -42,7 +42,8 @@
                 android:textColorHint="#838282"
                 android:hint="@string/map_viewer_activity_search_bar_hint_text"
                 android:inputType="text"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:imeOptions="actionSearch"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/SearchBarResultsRecyclerView"

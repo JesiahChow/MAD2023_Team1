@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 import sg.edu.np.mad.madassignmentteam1.utilities.LocationInfoUtility;
+import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 
 /*
 Note: An alternative free approach that could be considered is using the OSMDroid library
@@ -90,15 +92,15 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
             new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN))
                     {
                         currentSearchBarResultsLocationInfoArrayList.clear();
 
                         currentSearchBarResultsLocationInfoArrayList.addAll(
-                            LocationInfoUtility.getCorrespondingLocationsForLocationName(
-                                v.getText().toString(),
-                                v.getContext()
-                            )
+                                LocationInfoUtility.getCorrespondingLocationsForLocationName(
+                                        v.getText().toString(),
+                                        v.getContext()
+                                )
                         );
 
                         searchBarResultsAdapter.notifyDataSetChanged();
