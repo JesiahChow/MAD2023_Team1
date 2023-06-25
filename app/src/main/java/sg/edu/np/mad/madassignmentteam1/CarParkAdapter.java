@@ -1,4 +1,4 @@
-/*package sg.edu.np.mad.madassignmentteam1;
+package sg.edu.np.mad.madassignmentteam1;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;*/
+import java.util.List;
 
-/*public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkViewHolder> {
+public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkViewHolder> {
     private List<CarParkAvailability> carParkAvailabilityList;
     private LayoutInflater inflater;
 
@@ -22,77 +22,56 @@ import java.util.List;*/
 
     @NonNull
     @Override
-    public CarParkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.activity_carpark_layout, parent, false);
-        return new CarParkViewHolder(itemView);
+    public CarParkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View item = inflater.inflate(R.layout.activity_carpark_layout, parent, false);
+        return new CarParkViewHolder(item);
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull CarParkViewHolder holder, int position) {
+        //getCarParkAvailability();
+        CarParkAvailability carpark_lots = carParkAvailabilityList.get(position);
 
+        holder.CarparkDescription.setText(carpark_lots.Development);
 
-        @Override
-        public void onBindViewHolder(CarParkViewHolder holder, int position) {
-            CarParkAvailability carParkAvailability = carParkAvailabilityList.get(position);
-            holder.carparkDescTextView.setText(carParkAvailabilityList.get(position).getDescription());
-            holder.carAvailableTextView.setText(String.valueOf(carParkAvailability.getCarAvailability()));
-            holder.motorAvailableTextView.setText(String.valueOf(carParkAvailability.getMotorcycleAvailability()));
-            holder.truckAvailableTextView.setText(String.valueOf(carParkAvailability.getTruckAvailability()));
+        if (carpark_lots.LotType.equals("C")) {
+            holder.CarLotsAvailable.setText(carpark_lots.AvailableLots);
+            holder.MotorLotsAvailable.setText("---");
+            holder.TruckLotsAvailable.setText("---");
+        } else if (carpark_lots.LotType.equals("Y")) {
+            holder.CarLotsAvailable.setText("---");
+            holder.MotorLotsAvailable.setText(carpark_lots.AvailableLots);
+            holder.TruckLotsAvailable.setText("---");
+        } else {
+            holder.CarLotsAvailable.setText("---");
+            holder.MotorLotsAvailable.setText("---");
+            holder.TruckLotsAvailable.setText(carpark_lots.AvailableLots);
         }
+    }
 
     @Override
     public int getItemCount() {
         return carParkAvailabilityList.size();
     }
 
-    static class CarParkViewHolder extends RecyclerView.ViewHolder {
-        private TextView carparkDescTextView;
-        private TextView carAvailableTextView;
-        private TextView motorAvailableTextView;
-        private TextView truckAvailableTextView;
-        private ImageView carImageView;
-        private ImageView motorImageView;
-        private ImageView truckImageView;
+    public class CarParkViewHolder extends RecyclerView.ViewHolder {
+        TextView CarparkDescription;
+        TextView CarLotsAvailable;
+        TextView MotorLotsAvailable;
+        TextView TruckLotsAvailable;
+        ImageView CarImageView;
+        ImageView MotorImageView;
+        ImageView TruckImageView;
 
-        public CarParkViewHolder(@NonNull View itemView) {
-            super(itemView);
-            carparkDescTextView = itemView.findViewById(R.id.carparkDesc);
-            carAvailableTextView = itemView.findViewById(R.id.carAvailable);
-            motorAvailableTextView = itemView.findViewById(R.id.motorAvailable);
-            truckAvailableTextView = itemView.findViewById(R.id.truckAvailable);
-            carImageView = itemView.findViewById(R.id.carImageView);
-            motorImageView = itemView.findViewById(R.id.motorImageView);
-            truckImageView = itemView.findViewById(R.id.truckImageView);
-        }
-
-        public void BindViewHolder(CarParkAvailability carParkAvailability) {
-            carparkDescTextView.setText(carParkAvailability.getCarParkId());
-            carAvailableTextView.setText(String.valueOf(carParkAvailability.getLotsAvailable()));
-            motorAvailableTextView.setText(String.valueOf(carParkAvailability.getLotsAvailable()));
-            truckAvailableTextView.setText(String.valueOf(carParkAvailability.getLotsAvailable()));
-
-            // Set the visibility of image views based on the lot availability
-            if (carParkAvailability.getLotsAvailable() > 0) {
-                carImageView.setVisibility(View.VISIBLE);
-                carAvailableTextView.setVisibility(View.VISIBLE);
-            } else {
-                carImageView.setVisibility(View.GONE);
-                carAvailableTextView.setVisibility(View.GONE);
-            }
-
-            if (carParkAvailability.getLotsAvailable() > 0) {
-                motorImageView.setVisibility(View.VISIBLE);
-                motorAvailableTextView.setVisibility(View.VISIBLE);
-            } else {
-                motorImageView.setVisibility(View.GONE);
-                motorAvailableTextView.setVisibility(View.GONE);
-            }
-
-            if (carParkAvailability.getLotsAvailable() > 0) {
-                truckImageView.setVisibility(View.VISIBLE);
-                truckAvailableTextView.setVisibility(View.VISIBLE);
-            } else {
-                truckImageView.setVisibility(View.GONE);
-                truckAvailableTextView.setVisibility(View.GONE);
-            }
+        public CarParkViewHolder(@NonNull View item) {
+            super(item);
+            CarparkDescription = item.findViewById(R.id.carparkdescription);
+            CarLotsAvailable = item.findViewById(R.id.carLots);
+            MotorLotsAvailable = item.findViewById(R.id.motorLots);
+            TruckLotsAvailable = item.findViewById(R.id.truckLots);
+            CarImageView = item.findViewById(R.id.carImage);
+            MotorImageView = item.findViewById(R.id.motorImage);
+            TruckImageView = item.findViewById(R.id.truckImage);
         }
     }
-}*/
+}

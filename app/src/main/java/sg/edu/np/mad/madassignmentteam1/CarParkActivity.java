@@ -1,4 +1,4 @@
-/*package sg.edu.np.mad.madassignmentteam1;
+package sg.edu.np.mad.madassignmentteam1;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,10 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarParkActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private CarParkAdapter adapter;
-    private List<CarParkAvailability> carParkAvailabilityList;
+    ArrayList<CarParkAvailability> carParkAvailabilityList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,10 +26,6 @@ public class CarParkActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
 
         // Fetch car park availability data
         FetchCarParkAvailabilityTask fetchCarParkAvailabilityTask = new FetchCarParkAvailabilityTask();
@@ -49,6 +42,7 @@ public class CarParkActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<CarParkAvailability> result) {
+            CarParkAdapter adapter = new CarParkAdapter(CarParkActivity.this, carParkAvailabilityList);
             if (result != null) {
                 carParkAvailabilityList.clear();
                 carParkAvailabilityList.addAll(result);
@@ -58,4 +52,4 @@ public class CarParkActivity extends AppCompatActivity {
             }
         }
     }
-}*/
+}

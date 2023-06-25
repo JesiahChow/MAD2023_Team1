@@ -20,8 +20,8 @@ public class ProgrammeDatabase {
                 {"Snorkeling Adventure in Coral Reef", "Dive into the crystal-clear waters and explore vibrant coral reefs, encountering diverse marine life in their natural habitat.", "Adventure & Outdoor Activities"},
                 {"Full-Day Pass to Adventure World", "Enjoy a full day of excitement and fun at Adventure World, a thrilling theme park with roller coasters, water slides, and live shows.", "Theme Parks & Attractions"},
                 {"Historical Walking Tour of Old Town", "Take a guided walking tour through the historical streets of the Old Town, discovering its fascinating stories and landmarks.", "Theme Parks & Attractions"},
-                {"City Highlights Bus Tour", "Hop on a comfortable sightseeing bus and explore the city's iconic landmarks, learning about its history and culture from an expert guide.", "SightSeeing & Tours"},
-                {"Day Trip to Spectacular Waterfalls", "Embark on a day trip to visit breathtaking waterfalls, immersing yourself in nature and witnessing the power and beauty of cascading water.", "SightSeeing & Tours"},
+                {"City Highlights Bus Tour", "Hop on a comfortable sightseeing bus and explore the city's iconic landmarks, learning about its history and culture from an expert guide.", "Sightseeing & Tours"},
+                {"Day Trip to Spectacular Waterfalls", "Embark on a day trip to visit breathtaking waterfalls, immersing yourself in nature and witnessing the power and beauty of cascading water.", "Sightseeing & Tours"},
                 {"Broadway Musical: The Magical Journey", "Experience the enchantment of a captivating Broadway musical, featuring talented performers, stunning sets, and memorable songs.", "Shows & Entertainment"},
                 {"Cultural Dance Performance: Rhythms of Tradition", "Attend a vibrant cultural dance performance, showcasing traditional dances, music, and costumes from the region.", "Shows & Entertainment"}
         };

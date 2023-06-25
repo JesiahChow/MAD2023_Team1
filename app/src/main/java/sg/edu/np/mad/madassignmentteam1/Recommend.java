@@ -27,7 +27,7 @@ public class Recommend extends AppCompatActivity implements RecommendViewInterfa
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Recommend.this,GetInterest.class);
+                Intent intent = new Intent(Recommend.this, GetInterest.class);
                 startActivity(intent);
                 finish();
             }
@@ -44,43 +44,40 @@ public class Recommend extends AppCompatActivity implements RecommendViewInterfa
             Log.d("GetInterest", "Selected Genre: " + genre);
         }
 
-
         // Set up RecyclerView
         recyclerView = findViewById(R.id.recommendRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        Log.d("Genres", "Selected Genres: " + selectedGenres);
 
         List<Programme> filteredProgrammes = filterProgrammesByGenre(programmeDatabase.getProgrammes(), selectedGenres);
 
         programmeAdapter = new RecommendAdapter(filteredProgrammes, this);
         recyclerView.setAdapter(programmeAdapter);
-
-
     }
 
-
-    //Method for filtering programmes based on GetInterest
+    // Method for filtering programmes based on GetInterest
     private List<Programme> filterProgrammesByGenre(List<Programme> programmes, List<String> selectedGenres) {
         List<Programme> filteredProgrammes = new ArrayList<>();
         for (Programme programme : programmes) {
             Log.d("programme", "Programme Category: " + programme.getCategory());
-            Log.d("Comparing","First variable: "+ selectedGenres + "Program variable: " + programme.getCategory());
+            Log.d("Comparing", "First variable: " + selectedGenres + "Program variable: " + programme.getCategory());
             if (selectedGenres.contains(programme.getCategory())) {
                 Log.d("filtergod", "Adding programme: " + programme.getTitle());
                 filteredProgrammes.add(programme);
-            }
-            else{
-                Log.d("Status","Failure");
+            } else {
+                Log.d("Status", "Failure");
             }
         }
         return filteredProgrammes;
-
     }
 
     @Override
     public void onItemClick(int position) {
 
+        // Start RecommendDetails activity
+        Intent intent = new Intent(Recommend.this, RecommendDetails.class);
+        // Pass any necessary data to RecommendDetails activity
+        // intent.putExtra("key", value);
+        startActivity(intent);
 
     }
 }

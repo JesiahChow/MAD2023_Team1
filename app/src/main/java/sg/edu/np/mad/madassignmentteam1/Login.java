@@ -1,7 +1,6 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,10 +25,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
-
-AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +114,7 @@ AlertDialog.Builder builder;
         });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            //jesiah once user clicks back it directs user to mainActivity page
+            //once user clicks back it directs user to mainActivity page
             public void onClick(View v) {
                 Intent backIntent = new Intent(Login.this, MainActivity.class);
                 startActivity(backIntent);
@@ -140,7 +139,7 @@ AlertDialog.Builder builder;
                         else {
                             try
                             {
-                                throw task.getException();
+                                throw Objects.requireNonNull(task.getException());
                             }
                             //when user does not exist or no longer available
                             catch (FirebaseAuthInvalidUserException e){
@@ -181,5 +180,5 @@ AlertDialog.Builder builder;
         }
     }
 
-    ;
+
 }

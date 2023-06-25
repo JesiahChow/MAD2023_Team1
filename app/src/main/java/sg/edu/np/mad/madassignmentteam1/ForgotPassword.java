@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -17,8 +16,9 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+
+import java.util.Objects;
 
 public class ForgotPassword extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -80,7 +80,7 @@ public class ForgotPassword extends AppCompatActivity {
                 else
                 {
                     try {
-                    throw task.getException();
+                    throw Objects.requireNonNull(task.getException());
                 }
                     //if user does not exists within firebase
                     catch(FirebaseAuthInvalidUserException e){

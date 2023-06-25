@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         Button register = findViewById(R.id.button2);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
-            //jesiah once user clicks login it directs user to login page
+            //once user clicks login it directs user to login page
             public void onClick(View v) {
                 Intent loginIntent = new Intent(MainActivity.this, Login.class);
                 startActivity(loginIntent);
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
-            //jesiah once user clicks register it directs user to register page
+            //once user clicks register it directs user to register page
             public void onClick(View v) {
                 Intent registerIntent = new Intent(MainActivity.this, Register.class);
                 startActivity(registerIntent);

@@ -25,6 +25,9 @@
             android:name=".UpdatePassword"
             android:exported="false" />
         <activity
+            android:name=".CarParkActivity"
+            android:exported="false"/>
+        <activity
             android:name=".UpdateEmail"
             android:exported="false" />
         <activity
@@ -51,6 +54,9 @@
         <activity
             android:name=".Recommend"
             android:exported="false" />
+        <activity
+            android:name=".RecommendDetails"
+            android:label="RecommendDetails" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

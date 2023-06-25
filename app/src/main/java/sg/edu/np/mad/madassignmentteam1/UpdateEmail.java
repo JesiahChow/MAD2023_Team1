@@ -23,7 +23,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
+
+import java.util.Objects;
 
 public class UpdateEmail extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -35,7 +36,7 @@ public class UpdateEmail extends AppCompatActivity {
         setContentView(R.layout.activity_update_email);
         Toolbar myToolbar = findViewById(R.id.email_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Update Email");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Update Email");
         EditText currentEmail = findViewById(R.id.current_email);
         EditText newEmail = findViewById(R.id.new_email);
         Button updateEmail = findViewById(R.id.change_email);
@@ -48,6 +49,7 @@ public class UpdateEmail extends AppCompatActivity {
         //get current user
         firebaseUser = mAuth.getCurrentUser();
         //set old email ID on EditText
+        assert firebaseUser != null;
         userOldEmail = firebaseUser.getEmail();
         currentEmail.setText(userOldEmail);
         //if user data does not exist
@@ -55,14 +57,14 @@ public class UpdateEmail extends AppCompatActivity {
             Toast.makeText(UpdateEmail.this,"Something went wrong!User details not available.",Toast.LENGTH_LONG).show();
         }
         else{
-            //if user data exists reauthenticate the user
+            //if user data exists re-authenticate the user
             reAuthenticate(firebaseUser);
         }
 
 
 
     }
-//reauthenticate user before updating email
+//re-authenticate user before updating email
     private void reAuthenticate(FirebaseUser firebaseUser) {
         Button authenticate = findViewById(R.id.authenticate);
         EditText newEmail = findViewById(R.id.new_email);
@@ -109,7 +111,7 @@ public class UpdateEmail extends AppCompatActivity {
                                             newEmail.setError("Please enter new email");
                                             newEmail.requestFocus();
                                         }
-                                        //regular expression to check if email is in correct format
+                                        //to check if email is in correct expression
                                         else if(!Patterns.EMAIL_ADDRESS.matcher(userNewEmail).matches()){
                                             Toast.makeText(UpdateEmail.this,"Invalid Email",Toast.LENGTH_SHORT).show();
                                             newEmail.setError("Please enter a valid email");
@@ -129,7 +131,7 @@ public class UpdateEmail extends AppCompatActivity {
                             }
                            else{
                                try{
-                                   throw task.getException();
+                                   throw Objects.requireNonNull(task.getException());
                                }catch(Exception e){
                                    Toast.makeText(UpdateEmail.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                                 }
@@ -156,7 +158,7 @@ public class UpdateEmail extends AppCompatActivity {
                 }
                 else {
                     try {
-                        throw task.getException();
+                        throw Objects.requireNonNull(task.getException());
                     } catch (Exception e) {
                         Toast.makeText(UpdateEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -196,7 +198,7 @@ public class UpdateEmail extends AppCompatActivity {
         }
         if(id == R.id.logout_menu){
             //sign out the firebase user
-            mAuth.getInstance().signOut();
+            mAuth.signOut();
             Intent intent = new Intent(UpdateEmail.this,MainActivity.class);
             startActivity(intent);
             finish();
