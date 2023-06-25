@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MADAssignmentTeam1</string>
-    <string name="nth"></string>
+    <string name="nth">image</string>
     <string name="name">Name</string>
     <string name="login">Login</string>
     <string name="change_pwd">Change Password</string>
@@ -10,7 +10,7 @@
     <string name="home_text">Welcome to CityGuidesSG</string>
     <string name="btn1">Log in</string>
     <string name="loading">Loading</string>
-    <string name="bus_timing">Bus Timings</string>
+    <string name="car_park">Carpark Finder</string>
     <string name="fav_locations">Favourite Locations</string>
     <string name="rec_places">Recommended Places</string>
     <string name="welcome">Welcome</string>
@@ -46,7 +46,7 @@
     <string name="favourite_locations_header_text">Your Favourite Locations</string>
     <string name="favourite_location_list_element_location_placeholder_address">Location Address</string>
     <string name="view_map_button_text">View map</string>
-    <string name="map_viewer_activity_search_bar_hint_text">Search for locations here...</string>
+    <string name="map_viewer_activity_search_bar_hint_text">Search for locations here</string>
     <string name="toggle_location_favourite_status_button_add_mode_text">Add to favourite locations</string>
     <string name="selected_location_name">Selected Location</string>
     <string name="address_placeholder">Address:</string>

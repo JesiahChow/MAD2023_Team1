@@ -69,14 +69,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/nth"
-                android:src="@drawable/bus" />
+                android:src="@drawable/parking_car" />
 
             <TextView
                 android:id="@+id/bus_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/bus_timing"
+                android:text="@string/car_park"
                 android:textAlignment="center" />
 
         </LinearLayout>
