@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -70,6 +71,8 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
 
     private AppCompatButton returnToFavouriteLocationsActivityButton = null;
 
+    private ImageButton selectedLocationCloseButton = null;
+
     /*
     List of Google Maps APIs required for core functionality (for finalized implementation):
     1. Maps SDK for Android (required for displaying maps on Android devices).
@@ -104,6 +107,10 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                         );
 
                         searchBarResultsAdapter.notifyDataSetChanged();
+
+                        searchBarResultsRecyclerView.setVisibility(
+                            View.VISIBLE
+                        );
 
                         return true;
                     }
@@ -170,6 +177,19 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                 }
             }
         );
+
+        this.selectedLocationCloseButton = findViewById(R.id.SelectedLocationCloseButton);
+
+        this.selectedLocationCloseButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MapViewerActivity.this.selectedLocationScrollView.setVisibility(
+                        View.INVISIBLE
+                    );
+                }
+            }
+        );
     }
 
     @Override
@@ -233,6 +253,10 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                     }
 
                     MapViewerActivity.this.selectedLocationScrollView.setVisibility(View.VISIBLE);
+
+                    MapViewerActivity.this.searchBarResultsRecyclerView.setVisibility(
+                        View.INVISIBLE
+                    );
                 }
             }
         );
