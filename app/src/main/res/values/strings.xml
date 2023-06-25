@@ -17,7 +17,7 @@
     <string name="profile">Profile</string>
     <string name="username">Username</string>
     <string name="acc_exist_text">Already have an account? Click here to log in</string>
-    <string name="btn2">Register</string>
+    <string name="btn2">Sign Up</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="reset_pwd">Reset Password</string>
