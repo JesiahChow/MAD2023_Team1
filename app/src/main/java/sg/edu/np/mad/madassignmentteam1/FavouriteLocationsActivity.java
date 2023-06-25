@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 public class FavouriteLocationsActivity extends AppCompatActivity {
     RecyclerView favouriteLocationsRecyclerView = null;
@@ -21,6 +20,11 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_favourite_locations);
+
+        if (FavouriteLocations.instance == null)
+        {
+            FavouriteLocations.instance = new FavouriteLocations(this);
+        }
 
         /*
         TODOs:
@@ -40,25 +44,22 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
         this.viewMapButton = findViewById(R.id.ViewMapButton);
 
         this.viewMapButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(
-                            FavouriteLocationsActivity.this,
-                            MapViewerActivity.class
-                        );
+                v -> {
+                    Intent intent = new Intent(
+                        FavouriteLocationsActivity.this,
+                        MapViewerActivity.class
+                    );
 
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
                 }
         );
 
         this.returnToHomeActivityButton = findViewById(R.id.FavouriteLocationsActivityReturnToHomeActivityButton);
 
         this.returnToHomeActivityButton.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                v -> {
+                    FavouriteLocations.instance.saveToUserDeviceInternalStorage();
+
                     Intent intent = new Intent(
                         FavouriteLocationsActivity.this,
                         HomeActivity.class
@@ -66,7 +67,6 @@ public class FavouriteLocationsActivity extends AppCompatActivity {
 
                     startActivity(intent);
                 }
-            }
         );
     }
 }

@@ -1,29 +1,25 @@
 package sg.edu.np.mad.madassignmentteam1.utilities;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import com.google.maps.FindPlaceFromTextRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
-import com.google.maps.GeocodingApiRequest;
 import com.google.maps.PlacesApi;
-import com.google.maps.errors.ApiException;
 import com.google.maps.model.AddressComponentType;
 import com.google.maps.model.FindPlaceFromText;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.PlacesSearchResult;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Stack;
 
 import sg.edu.np.mad.madassignmentteam1.LocationInfo;
 import sg.edu.np.mad.madassignmentteam1.R;
-import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 
 /*
 For future reference:
@@ -108,7 +104,8 @@ public class LocationInfoUtility
                 {
                     for (int currentAddressComponentIndex = 0; currentAddressComponentIndex < currentLocationGeocodingResults[0].addressComponents.length; currentAddressComponentIndex++)
                     {
-                        if (Arrays.stream(currentLocationGeocodingResults[0].addressComponents[currentAddressComponentIndex].types).anyMatch(x -> x == AddressComponentType.POSTAL_CODE) == true)
+                        // if (Arrays.stream(currentLocationGeocodingResults[0].addressComponents[currentAddressComponentIndex].types).anyMatch(x -> x == AddressComponentType.POSTAL_CODE) == true)
+                        if (Arrays.stream(currentLocationGeocodingResults[0].addressComponents[currentAddressComponentIndex].types).anyMatch(x -> x == AddressComponentType.POSTAL_CODE))
                         {
                             currentLocationResultPostalCode = currentLocationGeocodingResults[0].addressComponents[currentAddressComponentIndex].shortName;
                         }
@@ -142,8 +139,77 @@ public class LocationInfoUtility
 
     }
 
+    public static String getLocationInfoAsJsonString(LocationInfo locationInfo)
+    {
+        JSONObject locationInfoJsonObject = new JSONObject();
+
+        try
+        {
+            locationInfoJsonObject.put("name", locationInfo.name);
+
+            locationInfoJsonObject.put("address", locationInfo.address);
+
+            locationInfoJsonObject.put("latitude", locationInfo.latLng.latitude);
+
+            locationInfoJsonObject.put("longitude", locationInfo.latLng.longitude);
+
+            locationInfoJsonObject.put("postal_code", locationInfo.postalCode);
+
+            locationInfoJsonObject.put("google_maps_place_id", locationInfo.googleMapsPlaceID);
+        }
+        catch (Exception exception)
+        {
+            LoggerUtility.logInformation(
+                    "Error: Unable to put value into JSONObject for current LocationInfo instance."
+            );
+
+            LoggerUtility.logException(exception);
+        }
+
+        return locationInfoJsonObject.toString();
+    }
+
+    public static LocationInfo getLocationInfoFromJsonString(String locationInfoJsonString)
+    {
+        LoggerUtility.logInformation(
+            "Currently in getLocationInfoFromJsonString method."
+        );
+
+        JSONObject locationInfoJsonObject;
+
+        LocationInfo locationInfo = null;
+
+        try
+        {
+            locationInfoJsonObject = new JSONObject(
+                locationInfoJsonString
+            );
+
+            locationInfo = new LocationInfo(
+                locationInfoJsonObject.getString("name"),
+                locationInfoJsonObject.getString("address"),
+                locationInfoJsonObject.getString("postal_code"),
+                new LatLng(
+                    locationInfoJsonObject.getDouble("latitude"),
+                    locationInfoJsonObject.getDouble("longitude")
+                ),
+                locationInfoJsonObject.getString("google_maps_place_id")
+            );
+        }
+        catch (Exception exception)
+        {
+            LoggerUtility.logInformation(
+                "Error: Exception occurred while attempting to create new JSON object and LocationInfo object."
+            );
+
+            LoggerUtility.logException(exception);
+        }
+
+        return locationInfo;
+    }
+
     public interface OnLocationInfoResultsReadyListener
     {
-        public void onLocationInfoResultsReady(ArrayList<LocationInfo> locationInfoResults);
+        void onLocationInfoResultsReady(ArrayList<LocationInfo> locationInfoResults);
     }
 }

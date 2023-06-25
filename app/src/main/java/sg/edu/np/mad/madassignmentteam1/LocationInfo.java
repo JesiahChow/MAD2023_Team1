@@ -1,28 +1,18 @@
 package sg.edu.np.mad.madassignmentteam1;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
-
 import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.GeoApiContext;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 
 public class LocationInfo
 {
-    private String googleMapsPlaceID = "";
+    public String name;
 
-    public String name = "";
+    public String address;
 
-    public String address = "";
+    public LatLng latLng;
 
-    public LatLng latLng = new LatLng(0, 0);
+    public String postalCode;
 
-    public String postalCode = "";
+    public String googleMapsPlaceID;
 
     public LocationInfo(String locationName, String locationAddress, String locationPostalCode, LatLng locationLatLng)
     {
@@ -31,6 +21,8 @@ public class LocationInfo
         this.address = locationAddress;
 
         this.postalCode = locationPostalCode;
+
+        this.latLng = new LatLng(0, 0);
 
         this.latLng = locationLatLng;
     }
@@ -42,6 +34,8 @@ public class LocationInfo
         this.address = locationAddress;
 
         this.postalCode = locationPostalCode;
+
+        this.latLng = new LatLng(0, 0);
 
         this.latLng = locationLatLng;
 
@@ -56,7 +50,8 @@ public class LocationInfo
     @Override
     public boolean equals(Object object)
     {
-        if (object instanceof LocationInfo == false)
+        // if ((object instanceof LocationInfo) == false)
+        if (!(object instanceof LocationInfo))
         {
             return false;
         }
