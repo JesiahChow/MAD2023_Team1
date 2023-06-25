@@ -31,9 +31,9 @@ public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkV
     public void onBindViewHolder(@NonNull CarParkViewHolder holder, int position) {
         //getCarParkAvailability();
         CarParkAvailability carpark_lots = carParkAvailabilityList.get(position);
-
+        // Set car park description
         holder.CarparkDescription.setText(carpark_lots.Development);
-
+        // Set available lots based on lot type
         if (carpark_lots.LotType.equals("C")) {
             holder.CarLotsAvailable.setText(carpark_lots.AvailableLots);
             holder.MotorLotsAvailable.setText("---");
@@ -53,7 +53,7 @@ public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkV
     public int getItemCount() {
         return carParkAvailabilityList.size();
     }
-
+    //Viewholder class
     public class CarParkViewHolder extends RecyclerView.ViewHolder {
         TextView CarparkDescription;
         TextView CarLotsAvailable;

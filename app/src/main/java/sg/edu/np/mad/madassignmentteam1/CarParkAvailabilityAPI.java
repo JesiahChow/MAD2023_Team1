@@ -15,6 +15,11 @@ import java.util.List;
 public class CarParkAvailabilityAPI {
     private static final String API_URL = "http://datamall2.mytransport.sg/ltaodataservice/CarParkAvailabilityv2";
 
+
+     /* Retrieves car park availability data from the API.
+      @return List of CarParkAvailability objects representing car park availability data.*/
+
+
     public List<CarParkAvailability> getCarParkAvailabilityData() {
         List<CarParkAvailability> carParkAvailabilityList = new ArrayList<>();
 
@@ -39,7 +44,7 @@ public class CarParkAvailabilityAPI {
 
                 JSONObject jsonObject = new JSONObject(response.toString());
                 JSONArray itemsArray = jsonObject.getJSONArray("items");
-
+                //Creating arraylist
                 for (int i = 0; i < itemsArray.length(); i++) {
                     JSONObject itemObject = itemsArray.getJSONObject(i);
                     String carparkID =  itemObject.getString("CarParkID");
