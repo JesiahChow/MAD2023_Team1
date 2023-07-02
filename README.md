@@ -24,6 +24,8 @@ Stage 2 Features:
 - Edison: Bus timing
 - Naveed: Fastest route
 
+Link of our app on Google Play: https://play.google.com/store/apps/details?id=sg.edu.np.mad.madassignmentteam1
+
 Appendices
 <br><br>
 - Login page
