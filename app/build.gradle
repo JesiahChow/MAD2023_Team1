@@ -47,4 +47,6 @@ dependencies {
     // Dependencies for Google Maps Services Java Client library
     implementation 'com.google.maps:google-maps-services:2.2.0'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
+    //Google translate API
+    implementation 'com.google.mlkit:translate:17.0.1'
 }

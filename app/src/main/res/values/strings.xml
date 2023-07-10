@@ -63,4 +63,12 @@
     <string name="carlots">Lots</string>
     <string name="motorlots">Lots</string>
     <string name="trucklots">Lots</string>
+    <string name="language">Language Translator</string>
+    <string name="fastest">Fastest Routes</string>
+    <string name="search">Search for Hotels</string>
+    <string name="bus_timing">Bus Timings</string>
+    <string name="translate_text">Translate</string>
+    <string name="enter_text">Enter text here</string>
+    <string name="source_language">English</string>
+    <string name="destination_language">Chinese</string>
 </resources>

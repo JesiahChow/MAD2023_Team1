@@ -19,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
         CardView recommendations = findViewById(R.id.recommended);
         CardView favourites = findViewById(R.id.favourites);
         CardView busTiming = findViewById(R.id.bus_timings);
+        CardView languageTranslator = findViewById(R.id.language);
         //when user clicks on profile card
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +54,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, CarParkActivity.class);
+                startActivity(intent);
+            }
+        });
+        languageTranslator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, Translator.class);
                 startActivity(intent);
             }
         });
