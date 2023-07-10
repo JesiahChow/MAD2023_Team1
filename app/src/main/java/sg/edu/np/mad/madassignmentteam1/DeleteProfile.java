@@ -96,7 +96,8 @@ private Button authButton, deleteButton;
                                 deleteAuth.setText("You are authenticated. You can delete your profile.");
                                 Toast.makeText(DeleteProfile.this,"Please proceed",Toast.LENGTH_SHORT).show();
                                 //update color of change password button
-                                deleteButton.setBackgroundTintList(ContextCompat.getColorStateList(DeleteProfile.this,R.color.dark_green));
+                                deleteButton.setBackgroundTintList(ContextCompat.getColorStateList(DeleteProfile.this,R.color.blue));
+                                authButton.setBackgroundTintList(ContextCompat.getColorStateList(DeleteProfile.this,R.color.grey));
 
                                 deleteButton.setOnClickListener(new View.OnClickListener() {
                                     @Override

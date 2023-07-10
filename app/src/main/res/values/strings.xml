@@ -7,7 +7,7 @@
     <string name="logout">Logout</string>
     <string name="registration">Registration</string>
     <string name="get_link">Get Link</string>
-    <string name="home_text">Welcome to CityGuidesSG</string>
+    <string name="home_text">Welcome to CityGuideSG</string>
     <string name="btn1">Log in</string>
     <string name="loading">Loading</string>
     <string name="car_park">Carpark Finder</string>
@@ -71,4 +71,5 @@
     <string name="enter_text">Enter text here</string>
     <string name="source_language">English</string>
     <string name="destination_language">Chinese</string>
+    <string name="search_hotel">Search Places/Hotels</string>
 </resources>

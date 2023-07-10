@@ -100,7 +100,8 @@ public class UpdateEmail extends AppCompatActivity {
                                 currentPassword.setEnabled(false);
                                 authenticate.setEnabled(false);
                                 //change color of update email
-                                updateEmail.setBackgroundTintList(ContextCompat.getColorStateList(UpdateEmail.this,R.color.dark_green));
+                                updateEmail.setBackgroundTintList(ContextCompat.getColorStateList(UpdateEmail.this,R.color.blue));
+                                authenticate.setBackgroundTintList(ContextCompat.getColorStateList(UpdateEmail.this,R.color.grey));
                                 //when user clicks update
                                 updateEmail.setOnClickListener(new View.OnClickListener() {
                                     @Override

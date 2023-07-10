@@ -52,6 +52,11 @@ private String destinationLanguageCode = "zh";
         targetButton = findViewById(R.id.targetButton);
         sourceButton = findViewById(R.id.sourceButton);
         backBtn = findViewById(R.id.back);
+        //Translation using ML Kit: The code utilizes the ML Kit Translate API (com.google.mlkit.nl.translate.Translator) to perform text translation.
+        // It creates a translator object, sets the source and target languages, and initiates the translation process when the translate button is clicked.
+
+        //Localization: The code retrieves a list of available languages using TranslateLanguage.getAllLanguages() and displays them in their respective language titles.
+        // It uses the Locale class to obtain the display language for each language code.
 
         loadAvailableLanguages();
         //user clicks back

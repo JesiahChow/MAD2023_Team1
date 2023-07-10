@@ -3,6 +3,7 @@ package sg.edu.np.mad.madassignmentteam1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         mAuth = FirebaseAuth.getInstance();
-        ImageView backButton = findViewById(R.id.back_button);
+        AppCompatButton backButton = findViewById(R.id.back_button);
         TextView name1 = findViewById(R.id.titleName);
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);

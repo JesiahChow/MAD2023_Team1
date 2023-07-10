@@ -18,8 +18,11 @@ public class HomeActivity extends AppCompatActivity {
         CardView profile = findViewById(R.id.profile);
         CardView recommendations = findViewById(R.id.recommended);
         CardView favourites = findViewById(R.id.favourites);
-        CardView busTiming = findViewById(R.id.bus_timings);
+        CardView busTiming = findViewById(R.id.bus_timing);
         CardView languageTranslator = findViewById(R.id.language);
+        CardView fastestRoute = findViewById(R.id.fastest_route);
+        CardView searchHotels = findViewById(R.id.search_places);
+        CardView carparkFinder = findViewById(R.id.carpark_finder);
         //when user clicks on profile card
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +64,27 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, Translator.class);
+                startActivity(intent);
+            }
+        });
+        carparkFinder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,HomeActivity.class );
+                startActivity(intent);
+            }
+        });
+       fastestRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        searchHotels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,HomeActivity.class);
                 startActivity(intent);
             }
         });

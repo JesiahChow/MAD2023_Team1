@@ -98,7 +98,8 @@ private String userPwdCurrent;
                                 authText.setText("You are authenticated. You can change your password.");
                                 Toast.makeText(UpdatePassword.this,"Please enter your new password",Toast.LENGTH_SHORT).show();
                                 //update color of change password button
-                                buttonUpdate.setBackgroundTintList(ContextCompat.getColorStateList(UpdatePassword.this,R.color.dark_green));
+                                buttonUpdate.setBackgroundTintList(ContextCompat.getColorStateList(UpdatePassword.this,R.color.blue));
+                                buttonAuth.setBackgroundTintList(ContextCompat.getColorStateList(UpdatePassword.this,R.color.grey));
 
                                 buttonUpdate.setOnClickListener(new View.OnClickListener() {
                                     @Override

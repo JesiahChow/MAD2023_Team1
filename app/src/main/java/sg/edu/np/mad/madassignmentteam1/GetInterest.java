@@ -1,6 +1,7 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
@@ -23,7 +24,7 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getinterest);
-        ImageView backButton = findViewById(R.id.imageView7);
+        AppCompatButton backButton = findViewById(R.id.backBtn);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
