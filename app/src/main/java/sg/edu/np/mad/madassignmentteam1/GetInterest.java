@@ -89,7 +89,7 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
             Log.v(TAG, "Selected Genres: " + selectedGenres.toString());
             clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(GetInterest.this,R.color.dark_green)); // Change button color to red
         }
-        //The enable
+        //The enable button to make the design more sleek. Disable the view for the done button if not one is selected
         Button doneButton = findViewById(R.id.button6);
         if (selectedGenres.size() >= 1) {
             doneButton.setEnabled(true);
