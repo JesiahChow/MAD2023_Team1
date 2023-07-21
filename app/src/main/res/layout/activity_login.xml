@@ -28,7 +28,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="391dp"
-        android:layout_height="299dp"
+        android:layout_height="292dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/nth"
         android:background="@android:color/transparent"
@@ -70,15 +70,15 @@
         android:id="@+id/editTextTextEmailAddress"
         android:layout_width="309dp"
         android:layout_height="54dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="44dp"
+        android:autofillHints="no"
         android:background="@drawable/edit_text_design"
         android:ems="10"
         android:hint="@string/email"
-        android:autofillHints="no"
-        android:textColorHint="#838282"
         android:inputType="textEmailAddress"
         android:padding="5dp"
         android:textAlignment="center"
+        android:textColorHint="#838282"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -127,5 +127,32 @@
         app:layout_constraintEnd_toEndOf="@+id/editPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
         app:srcCompat="@drawable/passwordhide" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="287dp"
+        android:text="@string/email"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="280dp"
+        android:text="@string/password"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
