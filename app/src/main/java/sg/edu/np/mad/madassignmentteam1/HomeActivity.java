@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         busTiming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CarParkActivity.class);
+                Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         carparkFinder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,HomeActivity.class );
+                Intent intent = new Intent(HomeActivity.this,CarParkActivity.class );
                 startActivity(intent);
             }
         });
