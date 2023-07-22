@@ -1,5 +1,9 @@
 package sg.edu.np.mad.madassignmentteam1;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +35,7 @@ public class CarParkAvailabilityAPI {
             connection.setRequestProperty("accept", "application/json");
 
             int responseCode = connection.getResponseCode();
+            Log.i("responseCode",String.valueOf(responseCode));
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String inputLine;
@@ -43,7 +48,10 @@ public class CarParkAvailabilityAPI {
                 in.close();
 
                 JSONObject jsonObject = new JSONObject(response.toString());
-                JSONArray itemsArray = jsonObject.getJSONArray("items");
+                Log.d(TAG, "getCarParkAvailabilityData: "+jsonObject);
+                Log.i("jsonobject",String.valueOf(jsonObject));
+                JSONArray itemsArray = jsonObject.getJSONArray("value");
+                Log.i("itemarray",String.valueOf(itemsArray));
                 //Creating arraylist
                 for (int i = 0; i < itemsArray.length(); i++) {
                     JSONObject itemObject = itemsArray.getJSONObject(i);

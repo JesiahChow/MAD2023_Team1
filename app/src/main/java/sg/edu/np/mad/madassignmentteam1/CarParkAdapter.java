@@ -23,7 +23,7 @@ public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkV
     @NonNull
     @Override
     public CarParkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = inflater.inflate(R.layout.activity_carpark_layout, parent, false);
+        View item = inflater.inflate(R.layout.car_item, parent, false);
         return new CarParkViewHolder(item);
     }
 
@@ -53,8 +53,9 @@ public class CarParkAdapter extends RecyclerView.Adapter<CarParkAdapter.CarParkV
     public int getItemCount() {
         return carParkAvailabilityList.size();
     }
+
     //Viewholder class
-    public class CarParkViewHolder extends RecyclerView.ViewHolder {
+    class CarParkViewHolder extends RecyclerView.ViewHolder {
         TextView CarparkDescription;
         TextView CarLotsAvailable;
         TextView MotorLotsAvailable;
