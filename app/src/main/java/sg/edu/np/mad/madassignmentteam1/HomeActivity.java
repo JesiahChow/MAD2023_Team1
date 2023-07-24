@@ -74,13 +74,16 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
        fastestRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,HomeActivity.class);
+                Intent intent = new Intent(HomeActivity.this, FastestRouteActivity.class);
+
                 startActivity(intent);
             }
         });
+
         searchHotels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

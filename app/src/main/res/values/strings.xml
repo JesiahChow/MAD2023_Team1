@@ -72,4 +72,5 @@
     <string name="source_language">English</string>
     <string name="destination_language">Chinese</string>
     <string name="search_hotel">Search Places/Hotels</string>
+    <string name="find_directions_button_text">Find Directions</string>
 </resources>

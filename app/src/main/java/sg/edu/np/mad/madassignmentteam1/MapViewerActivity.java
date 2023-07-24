@@ -69,6 +69,8 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
 
     private ImageButton selectedLocationCloseButton = null;
 
+    private AppCompatButton findDirectionsButton = null;
+
     /*
     List of Google Maps APIs required for core functionality (for finalized implementation):
     1. Maps SDK for Android (required for displaying maps on Android devices).
@@ -190,6 +192,22 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                     MapViewerActivity.this.selectedLocationScrollView.setVisibility(
                         View.INVISIBLE
                     );
+                }
+            }
+        );
+
+        this.findDirectionsButton = findViewById(R.id.FindDirectionsButton);
+
+        this.findDirectionsButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(
+                        MapViewerActivity.this,
+                        FastestRouteActivity.class
+                    );
+
+                    MapViewerActivity.this.startActivity(intent);
                 }
             }
         );
