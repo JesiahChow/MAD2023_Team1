@@ -180,6 +180,13 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (selectedLocationInfo.currentGoogleMapsMarker != null)
+                    {
+                        selectedLocationInfo.currentGoogleMapsMarker.remove();
+
+                        selectedLocationInfo.currentGoogleMapsMarker = null;
+                    }
+
                     MapViewerActivity.this.selectedLocationScrollView.setVisibility(
                         View.INVISIBLE
                     );

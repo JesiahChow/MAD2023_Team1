@@ -1,6 +1,7 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 /**
  * The LocationInfo class stores information about a particular location, this information
@@ -18,6 +19,8 @@ public class LocationInfo
     public String postalCode;
 
     public String googleMapsPlaceID;
+
+    public Marker currentGoogleMapsMarker;
 
     public LocationInfo(String locationName, String locationAddress, String locationPostalCode, LatLng locationLatLng)
     {

@@ -13,6 +13,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -67,7 +69,7 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
 
         viewHolder.resultLocationAddressTextView.setText(associatedResultLocationInfo.address);
 
-        viewHolder.resultLocationLatLng = associatedResultLocationInfo.latLng;
+        viewHolder.associatedLocationInfo = associatedResultLocationInfo;
 
         for (int currentListenerIndex = 0; currentListenerIndex < this.onBindViewHolderListeners.size(); currentListenerIndex++)
         {
@@ -92,7 +94,7 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
 
         public TextView resultLocationAddressTextView = null;
 
-        public LatLng resultLocationLatLng = new LatLng(0, 0);
+        public LocationInfo associatedLocationInfo = null;
 
         /**
          * The default constructor method of the SearchBarResultsAdapter.ViewHolder class.
@@ -108,11 +110,19 @@ public class SearchBarResultsAdapter extends RecyclerView.Adapter<SearchBarResul
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        googleMap.animateCamera(
+                        SearchBarResultsAdapter.this.googleMap.animateCamera(
                             CameraUpdateFactory.newCameraPosition(
                                 CameraPosition.builder().target(
-                                    ViewHolder.this.resultLocationLatLng
+                                    ViewHolder.this.associatedLocationInfo.latLng
                                 ).zoom(14).build()
+                            )
+                        );
+
+                        associatedLocationInfo.currentGoogleMapsMarker = SearchBarResultsAdapter.this.googleMap.addMarker(
+                            new MarkerOptions().position(
+                                ViewHolder.this.associatedLocationInfo.latLng
+                            ).title(
+                                ViewHolder.this.resultLocationNameTextView.getText().toString()
                             )
                         );
 
