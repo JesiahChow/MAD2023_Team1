@@ -168,7 +168,7 @@ private String destinationLanguageCode = "zh";
                 sourceLanguageTitle = languageList.get(position).languageTitle;
                 //set the selected language to sourceButton as text and sourceLanguage as hint
                 sourceButton.setText(sourceLanguageTitle);
-                sourceLanguage.setHint("Enter " + sourceLanguageTitle);
+                sourceLanguage.setHint("Enter text in " + sourceLanguageTitle);
 
                 return false;
             }
