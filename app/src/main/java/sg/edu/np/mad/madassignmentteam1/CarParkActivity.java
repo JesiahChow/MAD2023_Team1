@@ -51,7 +51,6 @@ public class CarParkActivity extends AppCompatActivity {
 
         protected List<CarParkAvailability> doInBackground(Void... voids) {
             CarParkAvailabilityAPI carParkAvailabilityAPI = new CarParkAvailabilityAPI();
-            Log.i("carparkapidata", String.valueOf(carParkAvailabilityAPI.getCarParkAvailabilityData()));
             return carParkAvailabilityAPI.getCarParkAvailabilityData();
         }
 

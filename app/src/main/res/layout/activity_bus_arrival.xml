@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarParkActivity">
+    tools:context=".BusArrival">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutheader"
@@ -20,15 +20,15 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/carpark_lots"
-            android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="#fff"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="10dp" />
+            android:text="@string/bus"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -40,7 +40,8 @@
         android:layout_marginTop="80dp"
         >
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/carparkRecyclerView"
+            android:id="@+id/bus_arrivalitem"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"

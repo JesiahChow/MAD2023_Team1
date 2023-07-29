@@ -25,13 +25,14 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:paddingBottom="16dp" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:contentDescription="@string/nth"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/arrow_back" />
+            android:background="@drawable/button_design"
+            android:text="@string/back"
+            android:textColor="@color/white"
+           />
 
     </LinearLayout>
 
