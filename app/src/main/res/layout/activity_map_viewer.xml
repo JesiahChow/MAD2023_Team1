@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapViewerActivity">
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/MainSupportMapFragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -66,7 +64,8 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/SelectedLocationLinearLayout"
@@ -150,6 +149,61 @@
                 </LinearLayout>
             </ScrollView>
 
+            <ScrollView
+                android:id="@+id/FoundRoutesScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/FoundRoutesLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/card_design_settings"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageButton
+                        android:id="@+id/FoundRoutesCloseButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/button_design"
+                        android:contentDescription="This button is a close button. It will close or hide the selected location details card once it is pressed."
+                        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+                    <TextView
+                        android:id="@+id/FoundRoutesHeaderTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:maxLines="100"
+                        android:scrollHorizontally="false"
+                        android:text="@string/found_routes_header_text"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/FoundRoutesRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp" />
+                </LinearLayout>
+            </ScrollView>
+
             <LinearLayout
                 android:id="@+id/ActivityNavigationButtonsLinearLayout"
                 android:layout_width="match_parent"
@@ -168,13 +222,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/white"
                     android:background="@drawable/button_design"
-                    android:text="@string/return_to_favourite_locations_activity_button" />
+                    android:text="@string/return_to_favourite_locations_activity_button"
+                    android:textColor="@color/white" />
             </LinearLayout>
-
         </LinearLayout>
-
     </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
