@@ -72,5 +72,9 @@
     <string name="source_language">English</string>
     <string name="destination_language">Chinese</string>
     <string name="search_hotel">Search Places/Hotels</string>
-    <string name="find_directions_button_text">Find Directions</string>
+    <string name="find_directions_button_text">Find directions</string>
+    <string name="transport_mode_input_field_textview_content">Mode of transport:</string>
+    <string name="origin_location_text_edit_hint">Enter a starting location here...</string>
+    <string name="destination_location_text_edit_hint">Enter a destination location here...</string>
+    <string name="find_route_button_text">Find route</string>
 </resources>
