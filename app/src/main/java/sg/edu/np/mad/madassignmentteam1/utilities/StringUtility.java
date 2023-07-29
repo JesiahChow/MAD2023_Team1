@@ -2,6 +2,8 @@ package sg.edu.np.mad.madassignmentteam1.utilities;
 
 public class StringUtility
 {
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
     public static final StringUtility instance = new StringUtility();
 
     private StringUtility()
