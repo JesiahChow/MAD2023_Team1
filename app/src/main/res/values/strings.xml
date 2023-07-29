@@ -77,4 +77,7 @@
     <string name="origin_location_text_edit_hint">Enter a starting location here...</string>
     <string name="destination_location_text_edit_hint">Enter a destination location here...</string>
     <string name="find_route_button_text">Find route</string>
+    <string name="bus_arrival">Bus Arrival</string>
+    <string name="bus">Bus Timings</string>
+    <string name="carpark_lots">Carpark Lots</string>
 </resources>
