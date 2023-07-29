@@ -47,6 +47,12 @@ public class LocationInfoUtility
      */
     public static ArrayList<LocationInfo> getCorrespondingLocationsForLocationName(String locationName, Context context)
     {
+        /*
+        LoggerUtility.logInformation(
+            "Retrieving corresponding locations for location name: " + locationName + "..."
+        );
+        */
+
         if (googleMapsGeoApiContext == null)
         {
             try
@@ -140,7 +146,11 @@ public class LocationInfoUtility
             }
         }
 
-        // LoggerUtility.logInformation("Finished retrieving corresponding locations successfully.");
+        /*
+        LoggerUtility.logInformation(
+            "Retrieved corresponding locations for location name: " + locationName + "."
+        );
+        */
 
         return locationInfoArrayList;
     }
