@@ -77,4 +77,8 @@
     <string name="origin_location_text_edit_hint">Enter a starting location here...</string>
     <string name="destination_location_text_edit_hint">Enter a destination location here...</string>
     <string name="find_route_button_text">Find route</string>
+    <string name="found_routes_header_text">List of routes found</string>
+    <string name="route_textview_placeholder_text">[Start location name] to [End location name]</string>
+    <string name="route_duration_textview_placeholder_text">32 mins</string>
+    <string name="route_distance_textview_placeholder_text">10 km</string>
 </resources>
