@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import sg.edu.np.mad.madassignmentteam1.utilities.LocationInfoUtility;
 import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
+import sg.edu.np.mad.madassignmentteam1.utilities.NavigationUtility;
 
 public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -211,6 +212,24 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                 }
             }
         );
+
+        Bundle intentExtras = this.getIntent().getExtras();
+
+        if (intentExtras != null)
+        {
+            NavigationUtility.instance.getRoutesAsync(
+                intentExtras.getString("origin_location"),
+                intentExtras.getString("destination_location"),
+                (NavigationUtility.TransportModes) intentExtras.get("transport_mode"),
+                new NavigationUtility.RouteGeneratedListener() {
+                    @Override
+                    public void onRouteGenerated(ArrayList<NavigationUtility.Route> routes) {
+
+                    }
+                },
+                this
+            );
+        }
     }
 
     @Override
