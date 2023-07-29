@@ -1,6 +1,7 @@
 package sg.edu.np.mad.madassignmentteam1.utilities;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -21,10 +22,15 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HttpRequestUtility
 {
-    public static HttpRequestUtility instance = new HttpRequestUtility();
+    private ExecutorService httpRequestExecutorService = Executors.newSingleThreadExecutor();
+
+    public static final HttpRequestUtility instance = new HttpRequestUtility();
 
     /**
      * Reads all characters from an InputStream object and returns the result of doing so as a String
@@ -32,7 +38,7 @@ public class HttpRequestUtility
      * @param inputStream
      * @return A String object.
      */
-    private String ReadStream(InputStream inputStream)
+    private String readStream(InputStream inputStream)
     {
         String text = "";
 
@@ -42,9 +48,13 @@ public class HttpRequestUtility
 
         try
         {
-            while ((currentLine = bufferedReader.readLine()) != null)
+            currentLine = bufferedReader.readLine();
+
+            while (currentLine != null)
             {
                 text += currentLine;
+
+                currentLine = bufferedReader.readLine();
             }
         }
         catch (Exception exception)
@@ -56,125 +66,172 @@ public class HttpRequestUtility
     }
 
     /**
-     * Sends a HTTP/HTTPS request using the specified URL, method (e.g. GET, POST etc) and request
-     * data. Returns the response body of the response received as a String object.
+     * Sends a HTTP/HTTPS request using the specified URL, request method (e.g. GET, POST etc), request
+     * headers, request data and query parameters. The onHttpResponseReceived method of the
+     * httpResponseReceivedListener parameter will then be called once a HTTP/HTTPS response has been
+     * received. This method is executed asynchronously so as to avoid slowing down the main thread.
      * @param url
      * @param method
+     * @param requestHeaders
      * @param requestData
      * @param queryParameters
-     * @return A String object.
+     * @param httpResponseReceivedListener
      */
-    public String SendHttpRequest(String url, String method, Map<String, String> requestData, Map<String, String> queryParameters)
+    public void sendHttpRequestAsync(String url, String method, Map<String, String> requestHeaders, Map<String, String> requestData, Map<String, String> queryParameters, HttpResponseReceivedListener httpResponseReceivedListener)
     {
-        URL urlObj = null;
+        this.httpRequestExecutorService.execute(
+            new HttpRequestRunnable(
+                url,
+                method,
+                requestHeaders,
+                requestData,
+                queryParameters,
+                httpResponseReceivedListener
+            )
+        );
+    }
 
-        try
+    private class HttpRequestRunnable implements Runnable
+    {
+        private String currentUrl = "";
+
+        private String currentMethod = "";
+
+        private Map<String, String> currentRequestHeaders = null;
+
+        private Map<String, String> currentRequestData = null;
+
+        private Map<String, String> currentQueryParameters = null;
+
+        private HttpResponseReceivedListener currentHttpResponseReceivedListener = null;
+
+        public HttpRequestRunnable(String url, String method, Map<String, String> requestHeaders, Map<String, String> requestData, Map<String, String> queryParameters, HttpResponseReceivedListener httpResponseReceivedListener)
         {
-            Uri.Builder uriBuilder = Uri.parse(url).buildUpon();
+            this.currentUrl = url;
 
-            if (queryParameters != null)
+            this.currentMethod = method;
+
+            this.currentRequestHeaders = requestHeaders;
+
+            this.currentRequestData = requestData;
+
+            this.currentQueryParameters = queryParameters;
+
+            this.currentHttpResponseReceivedListener = httpResponseReceivedListener;
+        }
+
+        @Override
+        public void run()
+        {
+            URL urlObj = null;
+
+            try
             {
-                ArrayList<String> queryParameterMapKeys = new ArrayList<>(
-                    queryParameters.keySet()
-                );
+                Uri.Builder uriBuilder = Uri.parse(this.currentUrl).buildUpon();
 
-                for (int currentIndex = 0; currentIndex < queryParameterMapKeys.size(); currentIndex++)
+                if (this.currentQueryParameters != null)
                 {
-                    String currentKey = queryParameterMapKeys.get(currentIndex);
-
-                    uriBuilder.appendQueryParameter(
-                            currentKey,
-                            queryParameters.get(currentKey)
+                    ArrayList<String> queryParameterMapKeys = new ArrayList<>(
+                            this.currentQueryParameters.keySet()
                     );
+
+                    for (int currentIndex = 0; currentIndex < queryParameterMapKeys.size(); currentIndex++)
+                    {
+                        String currentKey = queryParameterMapKeys.get(currentIndex);
+
+                        uriBuilder.appendQueryParameter(
+                                currentKey,
+                                this.currentQueryParameters.get(currentKey)
+                        );
+                    }
                 }
+
+                urlObj = new URL(uriBuilder.build().toString());
             }
-
-            urlObj = new URL(uriBuilder.build().toString());
-        }
-        catch (Exception exception)
-        {
-            LoggerUtility.logException(exception);
-        }
-
-        HttpURLConnection httpURLConnection = null;
-
-        try
-        {
-            httpURLConnection = (HttpURLConnection)urlObj.openConnection();
-
-            httpURLConnection.setRequestMethod(method);
-
-            if (requestData != null && method.equals("GET") == false)
+            catch (Exception exception)
             {
-                OutputStream outputStream = new BufferedOutputStream(
-                    httpURLConnection.getOutputStream()
-                );
-
-                BufferedWriter bufferedWriter = new BufferedWriter(
-                    new OutputStreamWriter(outputStream, "UTF-8")
-                );
-
-                bufferedWriter.write(
-                    new JSONObject(requestData).toString()
-                );
-
-                bufferedWriter.flush();
-
-                bufferedWriter.close();
-
-                outputStream.close();
+                LoggerUtility.logException(exception);
             }
 
-            httpURLConnection.connect();
+            HttpURLConnection httpURLConnection = null;
+
+            try
+            {
+                httpURLConnection = (HttpURLConnection)urlObj.openConnection();
+
+                httpURLConnection.setRequestMethod(this.currentMethod);
+
+                if (this.currentRequestHeaders != null)
+                {
+                    ArrayList<String> requestHeaderKeys = new ArrayList<>(
+                        this.currentRequestHeaders.keySet()
+                    );
+
+                    for (int currentKeyIndex = 0; currentKeyIndex < requestHeaderKeys.size(); currentKeyIndex++)
+                    {
+                        String currentKey = requestHeaderKeys.get(currentKeyIndex);
+
+                        httpURLConnection.setRequestProperty(
+                            currentKey,
+                            this.currentRequestHeaders.get(currentKey)
+                        );
+                    }
+                }
+
+                if (this.currentRequestData != null && this.currentMethod.equals("GET") == false)
+                {
+                    OutputStream outputStream = new BufferedOutputStream(
+                            httpURLConnection.getOutputStream()
+                    );
+
+                    BufferedWriter bufferedWriter = new BufferedWriter(
+                            new OutputStreamWriter(outputStream, "UTF-8")
+                    );
+
+                    bufferedWriter.write(
+                            new JSONObject(this.currentRequestData).toString()
+                    );
+
+                    bufferedWriter.flush();
+
+                    bufferedWriter.close();
+
+                    outputStream.close();
+                }
+
+                httpURLConnection.connect();
+            }
+            catch (Exception exception)
+            {
+                LoggerUtility.logException(exception);
+            }
+
+            InputStream inputStream = null;
+
+            String responseText = "";
+
+            try
+            {
+                inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+
+                responseText = HttpRequestUtility.this.readStream(inputStream);
+            }
+            catch (Exception exception)
+            {
+                LoggerUtility.logException(exception);
+            }
+
+            httpURLConnection.disconnect();
+
+            if (this.currentHttpResponseReceivedListener != null)
+            {
+                this.currentHttpResponseReceivedListener.onHttpResponseReceived(responseText);
+            }
         }
-        catch (Exception exception)
-        {
-            LoggerUtility.logException(exception);
-        }
-
-        InputStream inputStream = null;
-
-        String responseText = "";
-
-        try
-        {
-            inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
-
-            responseText = ReadStream(inputStream);
-        }
-        catch (Exception exception)
-        {
-            LoggerUtility.logException(exception);
-        }
-
-        httpURLConnection.disconnect();
-
-        return responseText;
     }
 
-    /**
-     * Sends a HTTP/HTTPS request using the specified URL and method (e.g. GET, POST etc).
-     * Returns the response body of the response received as a String object.
-     * @param url
-     * @param method
-     * @return A String object.
-     */
-    public String SendHttpRequest(String url, String method)
+    public interface HttpResponseReceivedListener
     {
-        return this.SendHttpRequest(url, method, null, null);
-    }
-
-    /**
-     * Sends a HTTP/HTTPS request using the specified URL, method (e.g. GET, POST etc) and
-     * query parameters.
-     * Returns the response body of the response received as a String object.
-     * @param url
-     * @param method
-     * @param queryParameters
-     * @return A String object.
-     */
-    public String SendHttpRequest(String url, String method, Map<String, String> queryParameters)
-    {
-        return this.SendHttpRequest(url, method, null, queryParameters);
+        void onHttpResponseReceived(String responseBody);
     }
 }
