@@ -31,7 +31,7 @@ public class LoggerUtility
     {
         Log.e(
             applicationName,
-            "Exception thrown. Exception message: " + exception.getMessage()
+            "Exception thrown. Exception type: " + exception.getClass() + ". Exception message: " + exception.getMessage()
         );
     }
 
