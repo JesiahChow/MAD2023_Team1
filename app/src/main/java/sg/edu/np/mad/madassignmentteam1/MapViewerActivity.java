@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import sg.edu.np.mad.madassignmentteam1.utilities.LocationInfoUtility;
 import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 import sg.edu.np.mad.madassignmentteam1.utilities.NavigationUtility;
+import sg.edu.np.mad.madassignmentteam1.utilities.StringUtility;
 
 public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -224,6 +226,17 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                 new NavigationUtility.RouteGeneratedListener() {
                     @Override
                     public void onRouteGenerated(ArrayList<NavigationUtility.Route> routes) {
+                        /*
+                        LoggerUtility.logInformation(
+                            "List of routes found:" + StringUtility.LINE_SEPARATOR
+                        );
+
+                        for (int currentRouteIndex = 0; currentRouteIndex < routes.size(); currentRouteIndex++)
+                        {
+                            routes.get(currentRouteIndex).log();
+                        }
+                        */
+
 
                     }
                 },
