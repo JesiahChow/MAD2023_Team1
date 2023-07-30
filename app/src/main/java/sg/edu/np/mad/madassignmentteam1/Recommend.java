@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
     private ProgrammeAdapter programmeAdapter;
 
     private List<Programme> programmeList;
+
+    private List<String> dataset;
+
 
     // Define the mapping dictionary to associate user-visible categories with backend values
     private final Map<String, String> getdataset = new HashMap<>();
@@ -53,20 +57,52 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
         getdataset.put("Events", "events");
         getdataset.put("Urban Exploration", "walking_trails");
 
+        //Dataset for splitting commas
+        List<String> dataset = new ArrayList<>();
+        // Use a single string to represent the combined backend values
+        StringBuilder rawdataset = new StringBuilder();
+
         // Log selected genres and their corresponding backend values
         for (String genre : selectedGenres) {
             // Get the corresponding backend value from the map
             String backendValue = getdataset.get(genre);
             Log.d("GetInterest", "Genre: " + genre + ", Backend Value: " + backendValue);
-            recyclerView = findViewById(R.id.recommendRecyclerView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            programmeList = new ArrayList<>();
-            programmeAdapter = new ProgrammeAdapter(this,programmeList,this);
-            recyclerView.setAdapter(programmeAdapter);
-            Log.i("Recommend dataset","Running the database");
-            programmeDatabase = new ProgrammeDatabase(this,this,backendValue,"");
+            // Append the backend value to the combined string
+            rawdataset.append(backendValue).append(",");
+        }
+        Log.i("CHEECKKK","dataset value" + rawdataset);
+        // Remove the trailing comma if there are backend values appended
+        if (rawdataset.length() > 0) {
+            rawdataset.deleteCharAt(rawdataset.length() - 1);
         }
 
+        String combinedrawdataset = rawdataset.toString();
+
+
+        Log.i("combine","dataset value" + combinedrawdataset);
+        // Split the string using commas and add its parts to the dataset list
+        String[] backendValuesArray = combinedrawdataset.split(",");
+        dataset.addAll(Arrays.asList(backendValuesArray));
+
+        Log.i("Dataset", "Check dataset: " + dataset);
+
+        recyclerView = findViewById(R.id.recommendRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        programmeList = new ArrayList<>();
+        programmeAdapter = new ProgrammeAdapter(this,programmeList,this);
+        recyclerView.setAdapter(programmeAdapter);
+        Log.i("Recommend dataset","Running the database");
+
+        // Initialize the ProgrammeDatabase instance
+        programmeDatabase = new ProgrammeDatabase(this, this, "", ""); // Pass appropriate arguments here
+
+
+        int limitPerDataset = 2; // Set the limit for records per dataset
+
+        for (String backendValue : dataset) {
+            Log.i("Runns2", "Running this data:" + backendValue);
+            programmeDatabase.getLimitedProgrammes(backendValue, limitPerDataset); // Fetch limited records for each dataset
+        }
     }
 
     // Method for filtering programmes based on GetInterest
@@ -82,7 +118,7 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
 
     @Override
     public void onDataLoaded(List<Programme> programmeList) {
-        this.programmeList.clear(); // Clear the previous data
+        this.programmeList.clear();
         this.programmeList.addAll(programmeList); // Add the fetched data
         programmeAdapter.notifyDataSetChanged();
     }

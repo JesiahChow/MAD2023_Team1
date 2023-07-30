@@ -66,6 +66,16 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Prog
         holder.category.setText(programme.getCategoryDescription());
         holder.ratingBar.setRating(programme.getRating().floatValue());
 
+        // Set the visibility of RatingBar and ratingCount based on rating value
+        if (programme.getRating() > 0) {
+            holder.ratingBar.setVisibility(View.VISIBLE);
+            holder.ratingCount.setVisibility(View.VISIBLE);
+            holder.ratingBar.setRating(programme.getRating().floatValue());
+            holder.ratingCount.setText(String.valueOf(programme.getRating()));
+        } else {
+            holder.ratingBar.setVisibility(View.INVISIBLE);
+            holder.ratingCount.setVisibility(View.INVISIBLE);
+        }
 
         // Check if the URL is directly available in ImageInfo
         ImageInfo imageInfo = programme.getThumbnails().get(0);

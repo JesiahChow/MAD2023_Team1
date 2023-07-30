@@ -1,6 +1,7 @@
 package sg.edu.np.mad.madassignmentteam1;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class DetailedViewActivity extends AppCompatActivity {
          description = findViewById(R.id.description);
          address = findViewById(R.id.address);
 
+
         // Add other views as needed
 
         // Retrieve data passed from SearchPlace
@@ -45,6 +47,14 @@ public class DetailedViewActivity extends AppCompatActivity {
             description.setText(descriptionText);
             category.setText(categoryText);
             address.setText(addressText);
+            // Check if rating is 0 and set the RatingBar's visibility accordingly
+            float ratingValue = Float.parseFloat(ratingText);
+            if (ratingValue == 0) {
+                ratingBar.setVisibility(View.INVISIBLE);
+            } else {
+                ratingBar.setVisibility(View.VISIBLE);
+                ratingBar.setRating(ratingValue);
+            }
             ratingBar.setRating(Float.parseFloat(ratingText));
            //   Toast.makeText(getApplicationContext(),images.length+"",Toast.LENGTH_LONG).show();
             ProgrammeImageAdapter programmeImageAdapter = new ProgrammeImageAdapter(images);

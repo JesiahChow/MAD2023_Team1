@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProgrammeDatabase {
+
     private Context context;
     private List<Programme> programmeList;
     private List<Programme> sortedProgrammes;
@@ -20,11 +22,14 @@ public class ProgrammeDatabase {
     private String tag;
     private String KeyWord;
     final String TAG = "Recommendation";
+
     String apiKey = "h9maakGa0NsA85mqsNTZRGASCRtYwhGs";
     int offset = 0;
     int limit = 50;
     int totalRecords = 0;
     int fetchedRecords = 0;
+
+    private boolean isLoading = false;
 
     // Retrofit instance and API service
     private ProgrammeApiService apiService;
@@ -46,7 +51,7 @@ public class ProgrammeDatabase {
         // Create the API service
         apiService = retrofit.create(ProgrammeApiService.class);
         Log.i(TAG,"Running fetchdata");
-        fetchData(tag,KeyWord,0);
+        fetchData(tag,KeyWord);
         Log.i(TAG,"Completed fetchdata");
     }
 
@@ -56,13 +61,18 @@ public class ProgrammeDatabase {
         void onDataLoadError(Throwable error);
     }
 
-    public void fetchData(String tag, String keyWord, int page) {
+    public void fetchData(String tag, String keyWord) {
         String dataset = tag;
-        int newOffset = page * limit;
-        Call<ProgrammeApiResponse> call = apiService.getProgrammes(dataset, newOffset, limit,keyWord);
+
+        if (isLoading) {
+            return; // Do nothing, as loading is already in progress this helps to optimize getting image done first
+        }
+        isLoading = true;
+        Call<ProgrammeApiResponse> call = apiService.getProgrammes(dataset, offset, limit,keyWord);
         call.enqueue(new Callback<ProgrammeApiResponse>() {
             @Override
             public void onResponse(Call<ProgrammeApiResponse> call, Response<ProgrammeApiResponse> response) {
+                isLoading = false;
                 if (response.isSuccessful() && response.body() != null) {
                     ProgrammeApiResponse apiResponse = response.body();
                     List<Programme> fetchedData = apiResponse.getData();
@@ -87,15 +97,15 @@ public class ProgrammeDatabase {
                     dataLoadListener.onDataLoaded(programmeList);
 
                     // Check if there are more records
-                    //if (fetchedRecords < totalRecords) {
-                      //  offset += limit;
-                        //fetchData(tag, keyWord, page + 1); // Fetch the next page
-                    //} else {
-                         //Data loading is complete, notify the listener
-                      //  if (dataLoadListener != null) {
-                        //    Log.e(TAG, "Successfully fetch all datas" );
-                        //}
-                    //}
+                    if (fetchedRecords < totalRecords) {
+                        offset += limit;
+                        fetchData(tag,keyWord); // Fetch the next page
+                    } else {
+                        //Data loading is complete, notify the listener
+                        if (dataLoadListener != null) {
+                            Log.e(TAG, "Successfully fetch all datas" );
+                        }
+                    }
                 } else {
                     // Handle the error if needed
                     Log.e(TAG, "Failed to fetch data: " + response);
@@ -117,6 +127,59 @@ public class ProgrammeDatabase {
             }
         });
     }
+
+    public void getLimitedProgrammes(String backendValue, int limit) {
+        // Generate a random offset within the valid range
+        int randomOffset = new Random().nextInt(50 - limit + 1);
+        // Perform the database retrieval here with the given backendValue, randomOffset, and limit
+        Call<ProgrammeApiResponse> call = apiService.getProgrammes(backendValue, randomOffset, limit, "");
+        call.enqueue(new Callback<ProgrammeApiResponse>() {
+            @Override
+            public void onResponse(Call<ProgrammeApiResponse> call, Response<ProgrammeApiResponse> response) {
+                isLoading = false;
+                if (response.isSuccessful() && response.body() != null) {
+                    ProgrammeApiResponse apiResponse = response.body();
+                    List<Programme> fetchedData = apiResponse.getData();
+
+                    List<Programme> filteredData = new ArrayList<>();
+                    for (Programme programme : fetchedData) {
+                        if (checkRatings(programme) && hasImages(programme)) {
+                            filteredData.add(programme);
+                            Log.i(TAG, "Thumbnail: " + programme.getThumbnails());
+                        }
+                    }
+
+                    // If there are no images available in the current response,
+                    // recursively call getLimitedProgrammes with a new random offset
+                    if (filteredData.isEmpty()) {
+                        getLimitedProgrammes(backendValue, limit);
+                    } else {
+                        programmeList.addAll(filteredData);
+                        // Pass the data immediately in a way it is following "Pagination"
+                        dataLoadListener.onDataLoaded(programmeList);
+                    }
+                } else {
+                    // Handle the error if needed
+                    Log.e(TAG, "Failed to fetch data: " + response);
+
+                    // Notify the listener of an error
+                    if (dataLoadListener != null) {
+                        dataLoadListener.onDataLoadError(new Throwable(response.message()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProgrammeApiResponse> call, Throwable t) {
+                // Notify the listener of an error
+                if (dataLoadListener != null) {
+                    dataLoadListener.onDataLoadError(t);
+                }
+            }
+        });
+    }
+
+
 
     // Helper method to check if a Programme has ratings
     private boolean checkRatings(Programme programme) {

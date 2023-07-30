@@ -1,4 +1,5 @@
 package sg.edu.np.mad.madassignmentteam1;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,10 +38,6 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
     public SearchView search;
     public String searchCategory;
     public ProgrammeDatabase programmeDatabase;
-    private int currentPage = 0;
-
-    private String query = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,45 +171,28 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         // Assuming you have a TextView with this ID in your layout
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        //searchCategory = "ALL";
-                        SearchPlace.this.query = query;
-                        if(searchCategory.matches("ALL")) {
-                            loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", query);
-                        }
-                        else{
-                            loadData(searchCategory.toLowerCase(), query);
-                        }
-                        return false;
-                    }
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //searchCategory = "ALL";
+                if(searchCategory.matches("ALL")) {
+                    loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", query);
+                }
+                else{
+                    loadData(searchCategory.toLowerCase(), query);
+                }
+                return false;
+            }
 
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        return false;
-                    }
-                });
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
 
         recyclerView = findViewById(R.id.recyclerview);
         searchCategory = "ALL";
         loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails","");
-        // Set up the RecyclerView scroll listener
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                // Check if the user has reached the end of the list
-                if (!recyclerView.canScrollVertically(1)) {
-                    // Increment the current page number
-                    currentPage++;
-
-                    // Load more data for the next page
-                    loadNextPage();
-                }
-            }
-        });
     }
     public void loadData( String tag, String keyword)
     {
@@ -232,13 +212,6 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         Log.i(TAG,"Running the database");
         programmeDatabase = new ProgrammeDatabase(this,this,tag,keyword);
 
-    }
-    private void loadNextPage() {
-        // Call the ProgrammeDatabase to fetch data for the next page
-        currentPage++;
-        // You can pass the searchCategory and query as before
-        // Increment the currentPage value accordingly
-        programmeDatabase.fetchData(searchCategory.toLowerCase(), query, currentPage);
     }
     @SuppressLint("NotifyDataSetChanged")
     public void onDataLoaded(List<Programme> programmeList) {
@@ -265,4 +238,5 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         startActivity(intent);
     }
 }
+
 
