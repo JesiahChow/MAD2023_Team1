@@ -2,6 +2,9 @@ package sg.edu.np.mad.madassignmentteam1.utilities;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -67,31 +70,149 @@ public class HttpRequestUtility
 
     /**
      * Sends a HTTP/HTTPS request using the specified URL, request method (e.g. GET, POST etc), request
-     * headers, request data and query parameters. The onHttpResponseReceived method of the
-     * httpResponseReceivedListener parameter will then be called once a HTTP/HTTPS response has been
-     * received. This method is executed asynchronously so as to avoid slowing down the main thread.
+     * headers, request data and query parameters. This method is executed asynchronously so as to
+     * avoid slowing down the main thread. The onHttpResponseReceived method of the
+     * httpResponseReceivedMainThreadListener will be executed on the main thread once a HTTP/HTTPS
+     * response has been received, this listener can contain code that manipulates the UI. The
+     * onHttpResponseReceived method of the httpResponseReceivedWorkerThreadListener will be executed
+     * on the worker thread (a separate thread from the main thread which is responsible for sending
+     * the HTTP/HTTPS request) once a HTTP/HTTPS response has been received, this listener cannot
+     * contain code that manipulates the UI as it will cause the application to throw an exception
+     * and crash since the UI can only be manipulated in the main thread.
      * @param url
      * @param method
      * @param requestHeaders
      * @param requestData
      * @param queryParameters
-     * @param httpResponseReceivedListener
+     * @param httpResponseReceivedMainThreadListener
+     * @param httpResponseReceivedWorkerThreadListener
      */
-    public void sendHttpRequestAsync(String url, String method, Map<String, String> requestHeaders, Map<String, String> requestData, Map<String, String> queryParameters, HttpResponseReceivedListener httpResponseReceivedListener)
+    public void sendHttpRequestAsync(String url, String method, Map<String, String> requestHeaders, Map<String, String> requestData, Map<String, String> queryParameters, HttpResponseReceivedMainThreadListener httpResponseReceivedMainThreadListener, HttpResponseReceivedWorkerThreadListener httpResponseReceivedWorkerThreadListener)
     {
         this.httpRequestExecutorService.execute(
-            new HttpRequestRunnable(
+            new HttpRequestTask(
                 url,
                 method,
                 requestHeaders,
                 requestData,
                 queryParameters,
-                httpResponseReceivedListener
+                httpResponseReceivedMainThreadListener,
+                httpResponseReceivedWorkerThreadListener
             )
         );
     }
 
-    private class HttpRequestRunnable implements Runnable
+    /**
+     * Sends a HTTP/HTTPS response. This method should not be run on the main thread so as to prevent
+     * exceptions from being thrown and unintended behaviour from occurring.
+     * @return The body of the response received as a result of sending the HTTP/HTTPS request.
+     */
+    public String sendHttpRequest(String url, String method, Map<String, String> requestHeaders, Map<String, String> requestQueryParameters, Map<String, String> requestBody)
+    {
+        URL urlObj = null;
+
+        try
+        {
+            Uri.Builder uriBuilder = Uri.parse(url).buildUpon();
+
+            if (requestQueryParameters != null)
+            {
+                ArrayList<String> queryParameterMapKeys = new ArrayList<>(
+                    requestQueryParameters.keySet()
+                );
+
+                for (int currentIndex = 0; currentIndex < queryParameterMapKeys.size(); currentIndex++)
+                {
+                    String currentKey = queryParameterMapKeys.get(currentIndex);
+
+                    uriBuilder.appendQueryParameter(
+                        currentKey,
+                        requestQueryParameters.get(currentKey)
+                    );
+                }
+            }
+
+            urlObj = new URL(uriBuilder.build().toString());
+        }
+        catch (Exception exception)
+        {
+            LoggerUtility.logException(exception);
+        }
+
+        HttpURLConnection httpURLConnection = null;
+
+        try
+        {
+            httpURLConnection = (HttpURLConnection)urlObj.openConnection();
+
+            httpURLConnection.setRequestMethod(method);
+
+            if (requestHeaders != null)
+            {
+                ArrayList<String> requestHeaderKeys = new ArrayList<>(
+                    requestHeaders.keySet()
+                );
+
+                for (int currentKeyIndex = 0; currentKeyIndex < requestHeaderKeys.size(); currentKeyIndex++)
+                {
+                    String currentKey = requestHeaderKeys.get(currentKeyIndex);
+
+                    httpURLConnection.setRequestProperty(
+                        currentKey,
+                        requestHeaders.get(currentKey)
+                    );
+                }
+            }
+
+            if (requestBody != null && method.equals("GET") == false)
+            {
+                OutputStream outputStream = new BufferedOutputStream(
+                    httpURLConnection.getOutputStream()
+                );
+
+                BufferedWriter bufferedWriter = new BufferedWriter(
+                    new OutputStreamWriter(outputStream, "UTF-8")
+                );
+
+                bufferedWriter.write(
+                    new JSONObject(requestBody).toString()
+                );
+
+                bufferedWriter.flush();
+
+                bufferedWriter.close();
+
+                outputStream.close();
+            }
+
+            httpURLConnection.connect();
+        }
+        catch (Exception exception)
+        {
+            LoggerUtility.logException(exception);
+        }
+
+        InputStream inputStream = null;
+
+        String responseText = "";
+
+        try
+        {
+            inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+
+            responseText = HttpRequestUtility.this.readStream(inputStream);
+        }
+        catch (Exception exception)
+        {
+            LoggerUtility.logException(exception);
+        }
+
+        httpURLConnection.disconnect();
+
+        return responseText;
+    }
+
+    private class HttpRequestTask implements Runnable
     {
         private String currentUrl = "";
 
@@ -103,9 +224,20 @@ public class HttpRequestUtility
 
         private Map<String, String> currentQueryParameters = null;
 
-        private HttpResponseReceivedListener currentHttpResponseReceivedListener = null;
+        private HttpResponseReceivedMainThreadListener currentHttpResponseReceivedMainThreadListener = null;
 
-        public HttpRequestRunnable(String url, String method, Map<String, String> requestHeaders, Map<String, String> requestData, Map<String, String> queryParameters, HttpResponseReceivedListener httpResponseReceivedListener)
+        private HttpResponseReceivedWorkerThreadListener currentHttpResponseReceivedWorkerThreadListener = null;
+
+        private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+
+        protected void executeOnMainThread(Runnable runnable)
+        {
+            this.mainThreadHandler.post(
+                runnable
+            );
+        }
+
+        public HttpRequestTask(String url, String method, Map<String, String> requestHeaders, Map<String, String> requestData, Map<String, String> queryParameters, HttpResponseReceivedMainThreadListener httpResponseReceivedMainThreadListener, HttpResponseReceivedWorkerThreadListener httpResponseReceivedWorkerThreadListener)
         {
             this.currentUrl = url;
 
@@ -117,120 +249,75 @@ public class HttpRequestUtility
 
             this.currentQueryParameters = queryParameters;
 
-            this.currentHttpResponseReceivedListener = httpResponseReceivedListener;
+            this.currentHttpResponseReceivedMainThreadListener = httpResponseReceivedMainThreadListener;
+
+            this.currentHttpResponseReceivedWorkerThreadListener = httpResponseReceivedWorkerThreadListener;
         }
 
         @Override
         public void run()
         {
-            URL urlObj = null;
+            String responseText = HttpRequestUtility.this.sendHttpRequest(
+                this.currentUrl,
+                this.currentMethod,
+                this.currentRequestHeaders,
+                this.currentQueryParameters,
+                this.currentRequestData
+            );
 
-            try
+            if (this.currentHttpResponseReceivedWorkerThreadListener != null)
             {
-                Uri.Builder uriBuilder = Uri.parse(this.currentUrl).buildUpon();
-
-                if (this.currentQueryParameters != null)
-                {
-                    ArrayList<String> queryParameterMapKeys = new ArrayList<>(
-                            this.currentQueryParameters.keySet()
-                    );
-
-                    for (int currentIndex = 0; currentIndex < queryParameterMapKeys.size(); currentIndex++)
-                    {
-                        String currentKey = queryParameterMapKeys.get(currentIndex);
-
-                        uriBuilder.appendQueryParameter(
-                                currentKey,
-                                this.currentQueryParameters.get(currentKey)
-                        );
-                    }
-                }
-
-                urlObj = new URL(uriBuilder.build().toString());
-            }
-            catch (Exception exception)
-            {
-                LoggerUtility.logException(exception);
+                this.currentHttpResponseReceivedWorkerThreadListener.onHttpResponseReceived(responseText);
             }
 
-            HttpURLConnection httpURLConnection = null;
+            this.executeOnMainThread(
+                new HttpResponseMainThreadHandlerTask(
+                    this.currentHttpResponseReceivedMainThreadListener,
+                    responseText
+                )
+            );
+        }
+    }
 
-            try
+    private class HttpResponseMainThreadHandlerTask implements Runnable
+    {
+        private HttpResponseReceivedMainThreadListener currentHttpResponseReceivedMainThreadListener = null;
+
+        private String currentResponseBody = "";
+
+        public HttpResponseMainThreadHandlerTask(HttpResponseReceivedMainThreadListener httpResponseReceivedMainThreadListener, String responseBody)
+        {
+            this.currentHttpResponseReceivedMainThreadListener = httpResponseReceivedMainThreadListener;
+
+            this.currentResponseBody = responseBody;
+        }
+
+        @Override
+        public void run()
+        {
+            if (this.currentHttpResponseReceivedMainThreadListener != null)
             {
-                httpURLConnection = (HttpURLConnection)urlObj.openConnection();
-
-                httpURLConnection.setRequestMethod(this.currentMethod);
-
-                if (this.currentRequestHeaders != null)
-                {
-                    ArrayList<String> requestHeaderKeys = new ArrayList<>(
-                        this.currentRequestHeaders.keySet()
-                    );
-
-                    for (int currentKeyIndex = 0; currentKeyIndex < requestHeaderKeys.size(); currentKeyIndex++)
-                    {
-                        String currentKey = requestHeaderKeys.get(currentKeyIndex);
-
-                        httpURLConnection.setRequestProperty(
-                            currentKey,
-                            this.currentRequestHeaders.get(currentKey)
-                        );
-                    }
-                }
-
-                if (this.currentRequestData != null && this.currentMethod.equals("GET") == false)
-                {
-                    OutputStream outputStream = new BufferedOutputStream(
-                            httpURLConnection.getOutputStream()
-                    );
-
-                    BufferedWriter bufferedWriter = new BufferedWriter(
-                            new OutputStreamWriter(outputStream, "UTF-8")
-                    );
-
-                    bufferedWriter.write(
-                            new JSONObject(this.currentRequestData).toString()
-                    );
-
-                    bufferedWriter.flush();
-
-                    bufferedWriter.close();
-
-                    outputStream.close();
-                }
-
-                httpURLConnection.connect();
-            }
-            catch (Exception exception)
-            {
-                LoggerUtility.logException(exception);
-            }
-
-            InputStream inputStream = null;
-
-            String responseText = "";
-
-            try
-            {
-                inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
-
-                responseText = HttpRequestUtility.this.readStream(inputStream);
-            }
-            catch (Exception exception)
-            {
-                LoggerUtility.logException(exception);
-            }
-
-            httpURLConnection.disconnect();
-
-            if (this.currentHttpResponseReceivedListener != null)
-            {
-                this.currentHttpResponseReceivedListener.onHttpResponseReceived(responseText);
+                this.currentHttpResponseReceivedMainThreadListener.onHttpResponseReceived(
+                    this.currentResponseBody
+                );
             }
         }
     }
 
-    public interface HttpResponseReceivedListener
+    /**
+     * This interface contains methods that will be called on the main thread once a HTTP/HTTPS
+     * response has been received.
+     */
+    public interface HttpResponseReceivedMainThreadListener
+    {
+        void onHttpResponseReceived(String responseBody);
+    }
+
+    /**
+     * This interface contains methods that will be called on a separate thread from the main thread
+     * (referred to as a worker thread in this case) once a HTTP/HTTPS response has been received.
+     */
+    public interface HttpResponseReceivedWorkerThreadListener
     {
         void onHttpResponseReceived(String responseBody);
     }
