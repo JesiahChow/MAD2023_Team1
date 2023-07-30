@@ -5,9 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapViewerActivity">
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/MainSupportMapFragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -37,11 +41,11 @@
                 android:autofillHints="postalAddress"
                 android:background="@drawable/edit_text_design"
                 android:ems="10"
-                android:textColorHint="#838282"
                 android:hint="@string/map_viewer_activity_search_bar_hint_text"
+                android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:textAlignment="center"
-                android:imeOptions="actionSearch"/>
+                android:textColorHint="#838282" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/SearchBarResultsRecyclerView"
@@ -65,7 +69,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/SelectedLocationLinearLayout"
@@ -177,7 +181,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/button_design"
-                        android:contentDescription="This button is a close button. It will close or hide the selected location details card once it is pressed."
+                        android:contentDescription="@string/close_button_content_description"
                         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
                     <TextView
@@ -197,6 +201,61 @@
                         android:id="@+id/FoundRoutesRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <ScrollView
+                android:id="@+id/RouteDetailsScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/RouteDetailsLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/card_design_settings"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageButton
+                        android:id="@+id/RouteDetailsCloseButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/button_design"
+                        android:contentDescription="@string/close_button_content_description"
+                        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+                    <TextView
+                        android:id="@+id/RouteDetailsHeaderTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:maxLines="100"
+                        android:scrollHorizontally="false"
+                        android:text="@string/route_textview_placeholder_text"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/RouteInstructionsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
@@ -226,6 +285,8 @@
                     android:text="@string/return_to_favourite_locations_activity_button"
                     android:textColor="@color/white" />
             </LinearLayout>
+
         </LinearLayout>
+
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
