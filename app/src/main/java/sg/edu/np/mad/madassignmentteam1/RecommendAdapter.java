@@ -35,10 +35,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String TAG = "Check Image";
         Programme programme = programmes.get(position);
-
         holder.descriptionTextView.setText(programme.getDescription());
-
-
     }
 
     @Override
