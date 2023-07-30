@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +28,7 @@ public class BusArrival extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_arrival);
-        ImageView backButton = findViewById(R.id.back_button);
+        AppCompatButton backButton = findViewById(R.id.back_button);
         busModelArrayList = new ArrayList<>();
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Fetching data, please wait");

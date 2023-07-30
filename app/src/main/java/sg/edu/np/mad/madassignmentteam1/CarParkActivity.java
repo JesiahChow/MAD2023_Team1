@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +24,7 @@ public class CarParkActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carpark_layout);
-        ImageView backButton = findViewById(R.id.back_button);
+        AppCompatButton backButton = findViewById(R.id.back_button);
         // Initialize car park availability list and adapter
         carParkAvailabilityList = new ArrayList<>();
 
