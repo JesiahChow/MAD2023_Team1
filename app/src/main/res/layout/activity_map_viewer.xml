@@ -60,6 +60,11 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8" />
+
             <ScrollView
                 android:id="@+id/SelectedLocationScrollView"
                 android:layout_width="match_parent"
@@ -156,7 +161,7 @@
             <ScrollView
                 android:id="@+id/FoundRoutesScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="40dp"
@@ -217,13 +222,13 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:visibility="visible">
+                android:scrollbars="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/RouteDetailsLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:background="@drawable/card_design_settings"
                     android:orientation="vertical"
                     android:visibility="visible">
