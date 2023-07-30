@@ -46,6 +46,24 @@ Appendices
 ![home](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/0b938777-94d7-4ab1-9631-b8eb8c239db0)
 <br><br>
 <b>Stage 2</b>
+<br><br>
+- Login page
+![login_page](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/7a871bd5-5178-407f-ab4e-4652f9c97489)
+<br><br>
+Home page
+<br><br>
+![home_page](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/58dceeaf-5387-41dc-a352-57186dde5b0c)
+<br><br>
+Search for Places/Hotels
+<br><br>
+![search_places](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/a8795558-99da-4475-99cd-7602338dc68f)
+<br><br>
+Language translator
+<br><br>
+![language_translator](https://github.com/JesiahChow/MAD2023_Team1/assets/116005452/19c6dc74-6610-4cfd-b664-55224b237c0e)
+
+
+
 
 
 
