@@ -24,7 +24,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/carpark_lots"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"

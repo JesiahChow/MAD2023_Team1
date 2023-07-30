@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#fff"
+            android:textColor="#000"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/bus"
             android:layout_marginTop="10dp"
@@ -39,6 +39,7 @@
         app:layout_constraintBaseline_toBottomOf="parent"
         android:layout_marginTop="80dp"
         >
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bus_arrivalitem"
 
