@@ -6,6 +6,7 @@
     <string name="change_pwd">Change Password</string>
     <string name="logout">Logout</string>
     <string name="registration">Registration</string>
+    <string name="confirm_new_password">Confirm new password</string>
     <string name="get_link">Get Link</string>
     <string name="home_text">Welcome to CityGuideSG</string>
     <string name="btn1">Log in</string>
