@@ -82,7 +82,7 @@ public class GetInterest extends AppCompatActivity implements View.OnClickListen
         } else if (selectedGenres.contains(genre)) {
             // Remove genres that are selected
             selectedGenres.remove(genre);
-            clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(GetInterest.this,R.color.red));
+            clickedButton.setBackgroundTintList(ContextCompat.getColorStateList(GetInterest.this,R.color.blue));
         } else {
             // Genre not selected, add it
             selectedGenres.add(genre);

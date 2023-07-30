@@ -12,13 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Recommend extends AppCompatActivity implements RecommendViewInterface {
     private List<String> selectedGenres;
     private ProgrammeDatabase programmeDatabase;
     private RecyclerView recyclerView;
     private RecommendAdapter programmeAdapter;
+
+    // Define the mapping dictionary to associate user-visible categories with backend values
+    private final Map<String, String> getdataset = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,37 +41,33 @@ public class Recommend extends AppCompatActivity implements RecommendViewInterfa
 
         // Retrieve selected genres from the intent
         selectedGenres = getIntent().getStringArrayListExtra("selectedGenres");
+        //convert the genres to dataset
+        // Initialize the mapping dictionary
+        getdataset.put("Shows & Entertainment", "attractions,events");
+        getdataset.put("Sightseeing & Tours", "tours,precincts");
+        getdataset.put("Food & Dining", "food_beverages");
+        getdataset.put("Outdoor Exploration", "walking_trails");
+
+
 
         // Initialize ProgrammeDatabase
-        programmeDatabase = new ProgrammeDatabase();
+
 
         // Log selected genres
         for (String genre : selectedGenres) {
-            Log.d("GetInterest", "Selected Genre: " + genre);
+            Log.d("GetInterest", "These databases: " + genre);
         }
 
         // Set up RecyclerView
         recyclerView = findViewById(R.id.recommendRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Programme> filteredProgrammes = filterProgrammesByGenre(programmeDatabase.getProgrammes(), selectedGenres);
 
-        programmeAdapter = new RecommendAdapter(filteredProgrammes, this);
+        //programmeAdapter = new RecommendAdapter(filteredProgrammes, this);
         recyclerView.setAdapter(programmeAdapter);
     }
 
     // Method for filtering programmes based on GetInterest
-    private List<Programme> filterProgrammesByGenre(List<Programme> programmes, List<String> selectedGenres) {
-        List<Programme> filteredProgrammes = new ArrayList<>();
-        for (Programme programme : programmes) {
-            //Loop to run through all programmes in the database for comparison.
-            if (selectedGenres.contains(programme.getCategory())) {
-                //Add programmes into filteredProgrammes if selectedGenres matches the programmes in database.
-                filteredProgrammes.add(programme);
-            }
-        }
-        return filteredProgrammes;
-    }
 
     @Override
     public void onItemClick(int position) {

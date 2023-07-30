@@ -75,6 +75,9 @@
             android:name=".RecommendDetails"
             android:label="RecommendDetails" />
         <activity
+            android:name=".SearchPlace"
+            android:label="SearchPlace" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -35,12 +35,9 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String TAG = "Check Image";
         Programme programme = programmes.get(position);
-        holder.titleTextView.setText(programme.getTitle());
+
         holder.descriptionTextView.setText(programme.getDescription());
 
-        int imageResourceId = context.getResources().getIdentifier(programme.getImageFileName(), "drawable", context.getPackageName());
-        holder.imageView.setImageResource(imageResourceId);
-        Log.d(TAG, "onBindViewHolder: " + imageResourceId);
 
     }
 
@@ -73,9 +70,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
 
                 // Create an intent to start the RecommendDetails activity
                 Intent intent = new Intent(context, RecommendDetails.class);
-                intent.putExtra("title", selectedProgramme.getTitle());
                 intent.putExtra("description", selectedProgramme.getDescription());
-                intent.putExtra("imageFileName", selectedProgramme.getImageFileName());
 
                 // Start the RecommendDetails activity
                 context.startActivity(intent);
