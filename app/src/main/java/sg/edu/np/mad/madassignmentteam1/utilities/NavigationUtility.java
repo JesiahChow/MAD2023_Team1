@@ -216,6 +216,7 @@ public class NavigationUtility
 
         LatLng destinationLatLng = destinationLocationInfoArrayList.get(0).latLng;
 
+        /*
         LoggerUtility.logInformation(
                 "Origin latitude and longitude: " + originLatLng.latitude + "," + originLatLng.longitude
         );
@@ -231,6 +232,7 @@ public class NavigationUtility
         LoggerUtility.logInformation(
                 "API key: " + TIH_API_KEY
         );
+        */
 
         this.executorService.execute(
             new RouteFinderHttpRequestTask(
