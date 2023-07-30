@@ -78,6 +78,10 @@
             android:name=".SearchPlace"
             android:label="SearchPlace" />
         <activity
+            android:name=".DetailedViewActivity"
+            android:label="Detailed View"
+        />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

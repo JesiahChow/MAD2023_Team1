@@ -46,7 +46,7 @@ public class ProgrammeDatabase {
         // Create the API service
         apiService = retrofit.create(ProgrammeApiService.class);
         Log.i(TAG,"Running fetchdata");
-        fetchData(tag,KeyWord);
+        fetchData(tag,KeyWord,0);
         Log.i(TAG,"Completed fetchdata");
     }
 
@@ -56,10 +56,10 @@ public class ProgrammeDatabase {
         void onDataLoadError(Throwable error);
     }
 
-    public void fetchData(String tag, String keyWord) {
+    public void fetchData(String tag, String keyWord, int page) {
         String dataset = tag;
-
-        Call<ProgrammeApiResponse> call = apiService.getProgrammes(dataset, offset, limit,keyWord);
+        int newOffset = page * limit;
+        Call<ProgrammeApiResponse> call = apiService.getProgrammes(dataset, newOffset, limit,keyWord);
         call.enqueue(new Callback<ProgrammeApiResponse>() {
             @Override
             public void onResponse(Call<ProgrammeApiResponse> call, Response<ProgrammeApiResponse> response) {
@@ -87,15 +87,15 @@ public class ProgrammeDatabase {
                     dataLoadListener.onDataLoaded(programmeList);
 
                     // Check if there are more records
-                    if (fetchedRecords < totalRecords) {
-                        offset += limit;
-                        fetchData(tag,keyWord); // Fetch the next page
-                    } else {
+                    //if (fetchedRecords < totalRecords) {
+                      //  offset += limit;
+                        //fetchData(tag, keyWord, page + 1); // Fetch the next page
+                    //} else {
                          //Data loading is complete, notify the listener
-                        if (dataLoadListener != null) {
-                            Log.e(TAG, "Successfully fetch all datas" );
-                        }
-                    }
+                      //  if (dataLoadListener != null) {
+                        //    Log.e(TAG, "Successfully fetch all datas" );
+                        //}
+                    //}
                 } else {
                     // Handle the error if needed
                     Log.e(TAG, "Failed to fetch data: " + response);
