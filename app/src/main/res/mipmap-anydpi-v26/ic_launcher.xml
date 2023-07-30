@@ -5,7 +5,7 @@
     <monochrome android:drawable="@drawable/ic_launcher_foreground" />
 </adaptive-icon>-->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-<background android:drawable="@drawable/guide" />
-<foreground android:drawable="@drawable/guide" />
-<monochrome android:drawable="@drawable/guide" />
+<background android:drawable="@drawable/app_launch" />
+<foreground android:drawable="@drawable/app_launch" />
+<monochrome android:drawable="@drawable/app_launch" />
 </adaptive-icon>
