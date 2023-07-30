@@ -74,6 +74,20 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
 
     private AppCompatButton findDirectionsButton = null;
 
+    private ScrollView foundRoutesScrollView = null;
+
+    private ImageButton foundRoutesCloseButton = null;
+
+    private RecyclerView foundRoutesRecyclerView = null;
+
+    private FoundRoutesAdapter foundRoutesAdapter = null;
+
+    private ScrollView routeDetailsScrollView = null;
+
+    private ImageButton routeDetailsCloseButton = null;
+
+    private RecyclerView routeInstructionsRecyclerView = null;
+
     /*
     List of Google Maps APIs required for core functionality (for finalized implementation):
     1. Maps SDK for Android (required for displaying maps on Android devices).
@@ -124,7 +138,7 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
         this.selectedLocationScrollView = findViewById(R.id.SelectedLocationScrollView);
 
         this.selectedLocationScrollView.setVisibility(
-            View.INVISIBLE
+            View.GONE
         );
 
         this.toggleLocationFavouriteStatusButton = findViewById(R.id.ToggleLocationFavouriteStatusButton);
@@ -193,7 +207,7 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                     }
 
                     MapViewerActivity.this.selectedLocationScrollView.setVisibility(
-                        View.INVISIBLE
+                        View.GONE
                     );
                 }
             }
@@ -215,6 +229,52 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
             }
         );
 
+        this.foundRoutesScrollView = this.findViewById(R.id.FoundRoutesScrollView);
+
+        this.foundRoutesScrollView.setVisibility(View.GONE);
+
+        this.foundRoutesCloseButton = this.findViewById(R.id.FoundRoutesCloseButton);
+
+        this.foundRoutesCloseButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MapViewerActivity.this.foundRoutesScrollView.setVisibility(
+                        View.GONE
+                    );
+                }
+            }
+        );
+
+        this.foundRoutesRecyclerView = this.findViewById(R.id.FoundRoutesRecyclerView);
+
+        this.foundRoutesRecyclerView.setLayoutManager(
+            new LinearLayoutManager(this)
+        );
+
+        this.routeDetailsScrollView = this.findViewById(R.id.RouteDetailsScrollView);
+
+        this.routeDetailsScrollView.setVisibility(View.GONE);
+
+        this.routeDetailsCloseButton = this.findViewById(R.id.RouteDetailsCloseButton);
+
+        this.routeDetailsCloseButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MapViewerActivity.this.routeDetailsScrollView.setVisibility(
+                        View.GONE
+                    );
+                }
+            }
+        );
+
+        this.routeInstructionsRecyclerView = this.findViewById(R.id.RouteInstructionsRecyclerView);
+
+        this.routeInstructionsRecyclerView.setLayoutManager(
+            new LinearLayoutManager(this)
+        );
+
         Bundle intentExtras = this.getIntent().getExtras();
 
         if (intentExtras != null)
@@ -223,21 +283,39 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                 intentExtras.getString("origin_location"),
                 intentExtras.getString("destination_location"),
                 (NavigationUtility.TransportModes) intentExtras.get("transport_mode"),
-                new NavigationUtility.RouteGeneratedListener() {
+                new NavigationUtility.RoutesFoundListener() {
                     @Override
-                    public void onRouteGenerated(ArrayList<NavigationUtility.Route> routes) {
-                        /*
-                        LoggerUtility.logInformation(
-                            "List of routes found:" + StringUtility.LINE_SEPARATOR
+                    public void onRoutesFound(ArrayList<NavigationUtility.Route> routes) {
+
+                    }
+
+                    @Override
+                    public void onRoutesFoundMainThread(ArrayList<NavigationUtility.Route> routes) {
+                        MapViewerActivity.this.foundRoutesAdapter = new FoundRoutesAdapter(
+                            routes,
+                            new FoundRoutesAdapter.RouteSelectedListener() {
+                                @Override
+                                public void onRouteSelected(NavigationUtility.Route selectedRoute) {
+                                    MapViewerActivity.this.routeInstructionsRecyclerView.setAdapter(
+                                        new RouteInstructionsAdapter(selectedRoute)
+                                    );
+
+                                    MapViewerActivity.this.foundRoutesScrollView.setVisibility(
+                                        View.GONE
+                                    );
+
+                                    MapViewerActivity.this.routeDetailsScrollView.setVisibility(
+                                        View.VISIBLE
+                                    );
+                                }
+                            }
                         );
 
-                        for (int currentRouteIndex = 0; currentRouteIndex < routes.size(); currentRouteIndex++)
-                        {
-                            routes.get(currentRouteIndex).log();
-                        }
-                        */
+                        MapViewerActivity.this.foundRoutesRecyclerView.setAdapter(
+                            MapViewerActivity.this.foundRoutesAdapter
+                        );
 
-
+                        MapViewerActivity.this.foundRoutesScrollView.setVisibility(View.VISIBLE);
                     }
                 },
                 this
