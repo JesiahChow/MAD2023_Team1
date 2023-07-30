@@ -85,4 +85,6 @@
     <string name="route_textview_placeholder_text">[Start location name] to [End location name]</string>
     <string name="route_duration_textview_placeholder_text">32 mins</string>
     <string name="route_distance_textview_placeholder_text">10 km</string>
+    <string name="close_button_content_description">This button is a close button. It will close or hide the selected location details card once it is pressed.</string>
+    <string name="placeholder_route_instruction">Route instruction goes here.</string>
 </resources>
