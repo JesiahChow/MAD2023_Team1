@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,9 +26,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
@@ -38,6 +43,10 @@ import sg.edu.np.mad.madassignmentteam1.utilities.StringUtility;
 
 public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
+    private static final int DEFAULT_GOOGLE_MAP_POLYLINE_WIDTH = 12;
+
+    private static final int DEFAULT_GOOGLE_MAP_POLYLINE_COLOR = Color.BLUE;
 
     private final LatLng SINGAPORE_CENTER_LATLNG = new LatLng(
         1.3521,
@@ -87,6 +96,14 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
     private ImageButton routeDetailsCloseButton = null;
 
     private RecyclerView routeInstructionsRecyclerView = null;
+
+    private TextView routeDetailsHeaderTextView = null;
+
+    private Marker selectedRouteOriginLocationMarker = null;
+
+    private Marker selectedRouteDestinationLocationMarker = null;
+
+    private Polyline selectedRoutePolyline = null;
 
     /*
     List of Google Maps APIs required for core functionality (for finalized implementation):
@@ -275,6 +292,8 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
             new LinearLayoutManager(this)
         );
 
+        this.routeDetailsHeaderTextView = this.findViewById(R.id.RouteDetailsHeaderTextView);
+
         Bundle intentExtras = this.getIntent().getExtras();
 
         if (intentExtras != null)
@@ -300,6 +319,10 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                                         new RouteInstructionsAdapter(selectedRoute)
                                     );
 
+                                    MapViewerActivity.this.routeDetailsHeaderTextView.setText(
+                                        selectedRoute.startLocationName + " to " + selectedRoute.endLocationName
+                                    );
+
                                     MapViewerActivity.this.foundRoutesScrollView.setVisibility(
                                         View.GONE
                                     );
@@ -307,6 +330,81 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
                                     MapViewerActivity.this.routeDetailsScrollView.setVisibility(
                                         View.VISIBLE
                                     );
+
+                                    if (selectedRoute.routeSteps.size() > 0)
+                                    {
+                                        MarkerOptions originLocationMarkerOptions = new MarkerOptions();
+
+                                        originLocationMarkerOptions.position(
+                                            selectedRoute.routeSteps.get(0).startLocationLatLng
+                                        );
+
+                                        originLocationMarkerOptions.title(
+                                            selectedRoute.startLocationName
+                                        );
+
+                                        originLocationMarkerOptions.icon(
+                                            BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+                                        );
+
+                                        MapViewerActivity.this.selectedRouteOriginLocationMarker = MapViewerActivity.this.googleMap.addMarker(
+                                            originLocationMarkerOptions
+                                        );
+
+                                        MarkerOptions destinationLocationMarkerOptions = new MarkerOptions();
+
+                                        destinationLocationMarkerOptions.position(
+                                            selectedRoute.routeSteps.get(
+                                                selectedRoute.routeSteps.size() - 1
+                                            ).endLocationLatLng
+                                        );
+
+                                        destinationLocationMarkerOptions.title(
+                                            selectedRoute.endLocationName
+                                        );
+
+                                        destinationLocationMarkerOptions.icon(
+                                            BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+                                        );
+
+                                        MapViewerActivity.this.selectedRouteDestinationLocationMarker = MapViewerActivity.this.googleMap.addMarker(
+                                            destinationLocationMarkerOptions
+                                        );
+
+                                        PolylineOptions routePolylineOptions = new PolylineOptions();
+
+                                        routePolylineOptions.add(
+                                            selectedRoute.routeSteps.get(0).startLocationLatLng
+                                        );
+
+                                        for (int currentRouteStepIndex = 0; currentRouteStepIndex < selectedRoute.routeSteps.size(); currentRouteStepIndex++)
+                                        {
+                                            routePolylineOptions.add(
+                                                selectedRoute.routeSteps.get(currentRouteStepIndex).endLocationLatLng
+                                            );
+                                        }
+
+                                        routePolylineOptions.width(DEFAULT_GOOGLE_MAP_POLYLINE_WIDTH);
+
+                                        routePolylineOptions.color(DEFAULT_GOOGLE_MAP_POLYLINE_COLOR);
+
+                                        routePolylineOptions.geodesic(true);
+
+                                        MapViewerActivity.this.selectedRoutePolyline = MapViewerActivity.this.googleMap.addPolyline(
+                                            routePolylineOptions
+                                        );
+
+                                        MapViewerActivity.this.googleMap.moveCamera(
+                                            CameraUpdateFactory.newCameraPosition(
+                                                new CameraPosition(
+                                                    MapViewerActivity.this.selectedRouteOriginLocationMarker.getPosition(),
+                                                    10,
+                                                    0,
+                                                    0
+                                                )
+                                            )
+                                        );
+                                    }
                                 }
                             }
                         );
@@ -339,6 +437,8 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap)
     {
         this.googleMap = googleMap;
+
+        this.googleMap.getUiSettings().setZoomGesturesEnabled(true);
 
         this.searchBarResultsRecyclerView = (RecyclerView) findViewById(
                 R.id.SearchBarResultsRecyclerView
