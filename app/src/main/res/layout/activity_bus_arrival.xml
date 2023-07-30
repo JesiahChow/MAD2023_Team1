@@ -20,15 +20,28 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/bus"
+            android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#000"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/bus"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            />
+            tools:layout_editor_absoluteX="9dp" />
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="88dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:contentDescription="@string/nth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/arrow_back" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -48,6 +61,7 @@
             android:scrollbars="vertical"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

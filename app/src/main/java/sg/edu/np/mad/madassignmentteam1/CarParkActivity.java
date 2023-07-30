@@ -1,8 +1,10 @@
 package sg.edu.np.mad.madassignmentteam1;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,9 +23,15 @@ public class CarParkActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carpark_layout);
-
+        ImageView backButton = findViewById(R.id.back_button);
         // Initialize car park availability list and adapter
         carParkAvailabilityList = new ArrayList<>();
+
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CarParkActivity.this,HomeActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

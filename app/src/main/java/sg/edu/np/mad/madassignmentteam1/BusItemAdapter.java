@@ -9,14 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BusItemAdapter extends RecyclerView.Adapter<BusItemAdapter.busitem_adapterViewHolder> {
 
     private List<BusModel> busModelList;
+    private List<BusStopModel> busStopModelList;
     private LayoutInflater inflater;
+
+    public void setFilteredList(List<BusStopModel> filteredList){
+        this.busStopModelList = filteredList;
+        notifyDataSetChanged();
+    }
+
     public BusItemAdapter(BusArrival context, List<BusModel> busModelList) {
         this.busModelList = busModelList;
+        this.busStopModelList = new ArrayList<>();
         inflater = LayoutInflater.from(context);
     }
     @NonNull
