@@ -1,11 +1,13 @@
 package sg.edu.np.mad.madassignmentteam1.utilities;
 
 import android.content.Context;
+import android.os.Looper;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -14,6 +16,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import android.os.Handler;
+
+import androidx.core.text.HtmlCompat;
 
 import sg.edu.np.mad.madassignmentteam1.LocationInfo;
 
@@ -23,6 +31,8 @@ public class NavigationUtility
 
     // TODO: Move the API key to the AndroidManifest.xml file to be fetched from there at runtime.
     private static final String TIH_API_KEY = "ikZE4eCj4SNqUVtit6CL2R7NDcsT0rA6";
+
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public static final NavigationUtility instance = new NavigationUtility();
 
@@ -63,19 +73,29 @@ public class NavigationUtility
                     ).getDouble("longitude")
             );
 
-            routeStep.instruction = routeStepJsonObject.getString(
+            routeStep.instruction = HtmlCompat.fromHtml(
+                routeStepJsonObject.getString(
                     "htmlInstructions"
+                ),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            ).toString().replace(
+                StringUtility.LINE_SEPARATOR,
+                ""
             );
 
             routeStep.travelMode = this.getAsTransportModesEnum(
                     routeStepJsonObject.getString(
-                            "travelMode"
+                        "travelMode"
                     )
             );
 
             routeStep.polylineString = routeStepJsonObject.getJSONObject(
                     "polyline"
             ).getString("points");
+
+            routeStep.startAddress = routeStepJsonObject.getString("startAddress");
+
+            routeStep.endAddress = routeStepJsonObject.getString("endAddress");
         }
         catch (Exception exception)
         {
@@ -89,7 +109,7 @@ public class NavigationUtility
         return routeStep;
     }
 
-    private ArrayList<Route> getRoutesFromJSONString(String jsonString)
+    private ArrayList<Route> getRoutesFromJSONString(String jsonString, String originLocationName, String destinationLocationName)
     {
         ArrayList<Route> routes = new ArrayList<>();
 
@@ -120,6 +140,10 @@ public class NavigationUtility
                     for (int currentRouteIndex = 0; currentRouteIndex < routesJsonArray.length(); currentRouteIndex++)
                     {
                         Route route = new Route();
+
+                        route.startLocationName = originLocationName;
+
+                        route.endLocationName = destinationLocationName;
 
                         route.distance = currentDataDistance;
 
@@ -166,65 +190,7 @@ public class NavigationUtility
         return routes;
     }
 
-    public void getRoutesAsync(LatLng originLatLng, LatLng destinationLatLng, TransportModes transportMode, RouteGeneratedListener routeGeneratedListener)
-    {
-        LoggerUtility.logInformation(
-            "Origin latitude and longitude: " + originLatLng.latitude + "," + originLatLng.longitude
-        );
-
-        LoggerUtility.logInformation(
-            "Destination latitude and longitude: " + destinationLatLng.latitude + "," + destinationLatLng.longitude
-        );
-
-        LoggerUtility.logInformation(
-            "Mode of transport: " + StringUtility.instance.getAsCapitalizedString(transportMode.toString())
-        );
-
-        LoggerUtility.logInformation(
-            "API key: " + TIH_API_KEY
-        );
-
-        HashMap<String, String> requestHeaders = new HashMap<>();
-
-        requestHeaders.put(
-            "X-API-Key",
-            TIH_API_KEY
-        );
-
-        HashMap<String, String> requestQueryParameters = new HashMap<>();
-
-        requestQueryParameters.put("origin", originLatLng.latitude + "," + originLatLng.longitude);
-
-        requestQueryParameters.put(
-            "destination",
-            destinationLatLng.latitude + "," + destinationLatLng.longitude
-        );
-
-        HttpRequestUtility.instance.sendHttpRequestAsync(
-            ROUTE_FINDER_RESOURCE_URL + transportMode.toString().toLowerCase(Locale.ROOT),
-            "GET",
-            requestHeaders,
-            null,
-            requestQueryParameters,
-            new HttpRequestUtility.HttpResponseReceivedListener() {
-                @Override
-                public void onHttpResponseReceived(String responseBody) {
-                    LoggerUtility.logInformation("Response received. Response body:");
-
-                    LoggerUtility.logInformation(responseBody);
-
-                    ArrayList<Route> routes = NavigationUtility.this.getRoutesFromJSONString(responseBody);
-
-                    if (routeGeneratedListener != null)
-                    {
-                        routeGeneratedListener.onRouteGenerated(routes);
-                    }
-                }
-            }
-        );
-    }
-
-    public void getRoutesAsync(String originLocationName, String destinationLocationName, TransportModes transportMode, RouteGeneratedListener routeGeneratedListener, Context context)
+    public void getRoutesAsync(String originLocationName, String destinationLocationName, TransportModes transportMode, RoutesFoundListener routesFoundListener, Context context)
     {
         ArrayList<LocationInfo> originLocationInfoArrayList = LocationInfoUtility.getCorrespondingLocationsForLocationName(
             originLocationName,
@@ -246,11 +212,35 @@ public class NavigationUtility
             return;
         }
 
-        this.getRoutesAsync(
-            originLocationInfoArrayList.get(0).latLng,
-            destinationLocationInfoArrayList.get(0).latLng,
-            transportMode,
-            routeGeneratedListener
+        LatLng originLatLng = originLocationInfoArrayList.get(0).latLng;
+
+        LatLng destinationLatLng = destinationLocationInfoArrayList.get(0).latLng;
+
+        LoggerUtility.logInformation(
+                "Origin latitude and longitude: " + originLatLng.latitude + "," + originLatLng.longitude
+        );
+
+        LoggerUtility.logInformation(
+                "Destination latitude and longitude: " + destinationLatLng.latitude + "," + destinationLatLng.longitude
+        );
+
+        LoggerUtility.logInformation(
+                "Mode of transport: " + StringUtility.instance.getAsCapitalizedString(transportMode.toString())
+        );
+
+        LoggerUtility.logInformation(
+                "API key: " + TIH_API_KEY
+        );
+
+        this.executorService.execute(
+            new RouteFinderHttpRequestTask(
+                originLocationName,
+                destinationLocationName,
+                originLatLng,
+                destinationLatLng,
+                transportMode,
+                routesFoundListener
+            )
         );
     }
 
@@ -287,11 +277,6 @@ public class NavigationUtility
         WALKING
     }
 
-    public interface RouteGeneratedListener
-    {
-        void onRouteGenerated(ArrayList<Route> routes);
-    }
-
     public class Route
     {
         public ArrayList<RouteStep> routeSteps = new ArrayList<>();
@@ -301,6 +286,10 @@ public class NavigationUtility
         public int distance = 0;
 
         public int duration = 0;
+
+        public String startLocationName = "[Start location name]";
+
+        public String endLocationName = "[End location name]";
 
         public Route()
         {
@@ -326,6 +315,14 @@ public class NavigationUtility
 
             stringBuilder.append(
                 "Route overview polyline: " + this.overviewPolylinePointsString + StringUtility.LINE_SEPARATOR
+            );
+
+            stringBuilder.append(
+                "Start location name: " + this.startLocationName
+            );
+
+            stringBuilder.append(
+                "End location name: " + this.endLocationName
             );
 
             if (this.routeSteps.size() > 0)
@@ -378,6 +375,10 @@ public class NavigationUtility
 
         public ArrayList<RouteStep> routeSteps = new ArrayList<>();
 
+        public String startAddress = "[Start address]";
+
+        public String endAddress = "[End address]";
+
         public RouteStep()
         {
 
@@ -428,6 +429,14 @@ public class NavigationUtility
                 "Polyline: " + this.polylineString + StringUtility.LINE_SEPARATOR
             );
 
+            stringBuilder.append(
+                "Start address: " + this.startAddress
+            );
+
+            stringBuilder.append(
+                "End address: " + this.endAddress
+            );
+
             if (this.routeSteps.size() > 0)
             {
                 stringBuilder.append(
@@ -460,5 +469,113 @@ public class NavigationUtility
                 LoggerUtility.logInformation(toStringComponents[currentComponentIndex]);
             }
         }
+    }
+
+    private class RouteFinderHttpRequestTask implements Runnable
+    {
+        private String currentOriginLocationName = "[Origin location name]";
+
+        private String currentDestinationLocationName = "[Destination location name]";
+
+        private LatLng currentOriginLocationLatLng = new LatLng(0, 0);
+
+        private LatLng currentDestinationLocationLatLng = new LatLng(0, 0);
+
+        private TransportModes currentTransportMode = TransportModes.DEFAULT;
+
+        private RoutesFoundListener currentRoutesFoundListener = null;
+
+        private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+
+        public RouteFinderHttpRequestTask(String originLocationName, String destinationLocationName, LatLng originLocationLatLng, LatLng destinationLocationLatLng, TransportModes transportMode, RoutesFoundListener routesFoundListener)
+        {
+            this.currentOriginLocationName = originLocationName;
+
+            this.currentDestinationLocationName = destinationLocationName;
+
+            this.currentOriginLocationLatLng = originLocationLatLng;
+
+            this.currentDestinationLocationLatLng = destinationLocationLatLng;
+
+            this.currentTransportMode = transportMode;
+
+            this.currentRoutesFoundListener = routesFoundListener;
+        }
+
+        @Override
+        public void run()
+        {
+            HashMap<String, String> requestHeaders = new HashMap<>();
+
+            requestHeaders.put(
+                    "X-API-Key",
+                    TIH_API_KEY
+            );
+
+            HashMap<String, String> requestQueryParameters = new HashMap<>();
+
+            requestQueryParameters.put("origin", this.currentOriginLocationLatLng.latitude + "," + this.currentOriginLocationLatLng.longitude);
+
+            requestQueryParameters.put(
+                    "destination",
+                    this.currentDestinationLocationLatLng.latitude + "," + this.currentDestinationLocationLatLng.longitude
+            );
+
+            String responseBody = HttpRequestUtility.instance.sendHttpRequest(
+                ROUTE_FINDER_RESOURCE_URL + this.currentTransportMode.toString().toLowerCase(),
+                "GET",
+                requestHeaders,
+                requestQueryParameters,
+                null
+            );
+
+            ArrayList<Route> routes = NavigationUtility.this.getRoutesFromJSONString(
+                responseBody,
+                this.currentOriginLocationName,
+                this.currentDestinationLocationName
+            );
+
+            if (this.currentRoutesFoundListener != null)
+            {
+                this.currentRoutesFoundListener.onRoutesFound(routes);
+            }
+
+            this.mainThreadHandler.post(
+                new RoutesFoundMainThreadHandlerTask(
+                    this.currentRoutesFoundListener,
+                    routes
+                )
+            );
+        }
+    }
+
+    private class RoutesFoundMainThreadHandlerTask implements Runnable
+    {
+        private RoutesFoundListener currentRoutesFoundListener = null;
+
+        private ArrayList<Route> currentFoundRoutes = new ArrayList<>();
+
+        public RoutesFoundMainThreadHandlerTask(RoutesFoundListener routesFoundListener, ArrayList<Route> foundRoutes)
+        {
+            this.currentRoutesFoundListener = routesFoundListener;
+
+            this.currentFoundRoutes = foundRoutes;
+        }
+
+        @Override
+        public void run()
+        {
+            if (this.currentRoutesFoundListener != null)
+            {
+                this.currentRoutesFoundListener.onRoutesFoundMainThread(this.currentFoundRoutes);
+            }
+        }
+    }
+
+    public interface RoutesFoundListener
+    {
+        void onRoutesFound(ArrayList<Route> routes);
+
+        void onRoutesFoundMainThread(ArrayList<Route> routes);
     }
 }
