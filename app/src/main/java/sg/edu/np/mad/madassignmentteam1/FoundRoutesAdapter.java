@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
@@ -19,18 +20,20 @@ public class FoundRoutesAdapter extends RecyclerView.Adapter<FoundRoutesAdapter.
 {
     private ArrayList<NavigationUtility.Route> routes = new ArrayList<>();
 
-    public FoundRoutesAdapter(ArrayList<NavigationUtility.Route> routes)
+    private RouteSelectedListener routeSelectedListener = null;
+
+    public FoundRoutesAdapter(ArrayList<NavigationUtility.Route> routes, RouteSelectedListener routeSelectedListener)
     {
         this.routes = routes;
+
+        this.routeSelectedListener = routeSelectedListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-
         return new ViewHolder(
-            layoutInflater.inflate(
+                LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.found_route_element,
                 parent,
                 false
@@ -41,7 +44,29 @@ public class FoundRoutesAdapter extends RecyclerView.Adapter<FoundRoutesAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
+        NavigationUtility.Route route = this.routes.get(position);
 
+        holder.routeTextView.setText(
+            route.startLocationName + " to " + route.endLocationName
+        );
+
+        // TODO: Confirm the measurement units being used for duration and distance respectively.
+        if (route.duration != 1)
+        {
+            holder.routeDurationTextView.setText(
+                route.duration + " mins"
+            );
+        }
+        else
+        {
+            holder.routeDurationTextView.setText(
+                route.duration + " min"
+            );
+        }
+
+        holder.routeDistanceTextView.setText(
+            route.distance + " km"
+        );
     }
 
     @Override
@@ -58,6 +83,8 @@ public class FoundRoutesAdapter extends RecyclerView.Adapter<FoundRoutesAdapter.
 
         public TextView routeDistanceTextView = null;
 
+        public CardView mainCardView = null;
+
         public ViewHolder(View itemView)
         {
             super(itemView);
@@ -67,6 +94,29 @@ public class FoundRoutesAdapter extends RecyclerView.Adapter<FoundRoutesAdapter.
             this.routeDurationTextView = itemView.findViewById(R.id.RouteDurationTextView);
 
             this.routeDistanceTextView = itemView.findViewById(R.id.RouteDistanceTextView);
+
+            this.mainCardView = itemView.findViewById(R.id.MainCardView);
+
+            this.mainCardView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (FoundRoutesAdapter.this.routeSelectedListener != null)
+                        {
+                            FoundRoutesAdapter.this.routeSelectedListener.onRouteSelected(
+                                FoundRoutesAdapter.this.routes.get(
+                                    ViewHolder.this.getAdapterPosition()
+                                )
+                            );
+                        }
+                    }
+                }
+            );
         }
+    }
+
+    public interface RouteSelectedListener
+    {
+        void onRouteSelected(NavigationUtility.Route selectedRoute);
     }
 }
