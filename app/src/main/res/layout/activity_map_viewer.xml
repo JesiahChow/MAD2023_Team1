@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
+            <SearchView
                 android:id="@+id/SearchBar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -39,13 +39,13 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="40dp"
                 android:autofillHints="postalAddress"
-                android:background="@drawable/edit_text_design"
-                android:ems="10"
-                android:hint="@string/map_viewer_activity_search_bar_hint_text"
+                android:background="@drawable/search_view_bg"
+                android:iconifiedByDefault="false"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
-                android:textAlignment="center"
-                android:textColorHint="#838282" />
+                android:queryBackground="@android:color/transparent"
+                android:queryHint="@string/map_viewer_activity_search_bar_hint_text"
+                android:textAlignment="center" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/SearchBarResultsRecyclerView"
@@ -56,7 +56,8 @@
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="10dp"
+                android:visibility="visible">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -182,12 +183,22 @@
                         android:id="@+id/FoundRoutesCloseButton"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
                         android:background="@drawable/button_design"
                         android:contentDescription="@string/close_button_content_description"
-                        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+                        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/LoadingRoutesTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center"
+                        android:text="@string/loading_found_routes_list_text"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/FoundRoutesHeaderTextView"
@@ -217,13 +228,13 @@
                 android:id="@+id/RouteDetailsScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="0dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:scrollbars="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/RouteDetailsLinearLayout"
@@ -233,29 +244,53 @@
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <ImageButton
-                        android:id="@+id/RouteDetailsCloseButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/button_design"
-                        android:contentDescription="@string/close_button_content_description"
-                        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/ReturnToFoundRoutesCardButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/button_design"
+                            android:contentDescription="@string/return_to_found_routes_card_button_content_description"
+                            app:srcCompat="?attr/actionModeCloseDrawable"
+                            app:tint="@color/white" />
+
+                        <ImageButton
+                            android:id="@+id/RouteDetailsCloseButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/button_design"
+                            android:contentDescription="@string/close_button_content_description"
+                            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/RouteDetailsHeaderTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="0dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="10dp"
                         android:maxLines="100"
                         android:scrollHorizontally="false"
-                        android:text="@string/route_textview_placeholder_text"
-                        android:textAlignment="center"
+                        android:text="@string/route_details_header_text"
+                        android:textAlignment="viewStart"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="visible" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/RouteInstructionsRecyclerView"
@@ -264,7 +299,9 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="0dp"
+                        android:paddingBottom="10dp"
+                        android:visibility="visible" />
                 </LinearLayout>
             </ScrollView>
 
@@ -282,12 +319,12 @@
                 android:paddingEnd="10dp">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/ReturnToFavouriteLocationsActivityButton"
+                    android:id="@+id/ReturnToHomeActivityButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_design"
-                    android:text="@string/return_to_favourite_locations_activity_button"
+                    android:text="@string/return_to_home_activity_button_text"
                     android:textColor="@color/white" />
             </LinearLayout>
 
