@@ -1,7 +1,9 @@
 package sg.edu.np.mad.madassignmentteam1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -29,6 +31,16 @@ public class DetailedViewActivity extends AppCompatActivity {
          category = findViewById(R.id.category);
          description = findViewById(R.id.description);
          address = findViewById(R.id.address);
+        Button backButton = findViewById(R.id.back_btn);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailedViewActivity.this, Recommend.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         // Add other views as needed

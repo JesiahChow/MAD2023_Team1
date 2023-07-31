@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +59,16 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         count = findViewById(R.id.count);
         categoryName = findViewById(R.id.categoryName);
         search = findViewById(R.id.Searchicon);
+        Button backButton = findViewById(R.id.back_btn);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchPlace.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         accommodation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,6 +7,7 @@
     android:background="#F5F5F5"
     tools:context=".SearchPlace">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -24,13 +25,18 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:orientation="vertical">
-            <TextView
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                />
+                android:background="@drawable/button_design"
+                android:text="@string/back"
+                android:textColor="@color/white"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"/>
+
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/Searchicon"
                 android:layout_width="match_parent"
@@ -526,11 +532,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoryName" />
 
