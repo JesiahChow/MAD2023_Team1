@@ -3,14 +3,18 @@ package sg.edu.np.mad.madassignmentteam1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.widget.SearchView;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import sg.edu.np.mad.madassignmentteam1.utilities.LoggerUtility;
 import sg.edu.np.mad.madassignmentteam1.utilities.NavigationUtility;
 import sg.edu.np.mad.madassignmentteam1.utilities.StringUtility;
 
@@ -23,9 +27,13 @@ public class FastestRouteActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> transportModeArrayAdapter = null;
 
-    private EditText originLocationTextEdit = null;
+    private SearchView originLocationSearchView = null;
 
-    private EditText destinationLocationTextEdit = null;
+    private SearchView destinationLocationSearchView = null;
+
+    private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+
+    private ProgressDialog findRoutesLoadingProgressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +49,23 @@ public class FastestRouteActivity extends AppCompatActivity {
 
         this.transportModeSpinner = this.findViewById(R.id.TransportModeSpinner);
 
-        this.originLocationTextEdit = this.findViewById(R.id.OriginLocationTextEdit);
+        this.originLocationSearchView = this.findViewById(R.id.OriginLocationSearchView);
 
-        this.destinationLocationTextEdit = this.findViewById(R.id.DestinationLocationTextEdit);
+        this.destinationLocationSearchView = this.findViewById(R.id.DestinationLocationSearchView);
 
         this.findRouteButton.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    FastestRouteActivity.this.mainThreadHandler.post(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                FastestRouteActivity.this.findRoutesLoadingProgressDialog.show();
+                            }
+                        }
+                    );
+
                     Intent intent = new Intent(
                         FastestRouteActivity.this,
                         MapViewerActivity.class
@@ -56,12 +73,12 @@ public class FastestRouteActivity extends AppCompatActivity {
 
                     intent.putExtra(
                         "origin_location",
-                        FastestRouteActivity.this.originLocationTextEdit.getText().toString()
+                        FastestRouteActivity.this.originLocationSearchView.getQuery().toString()
                     );
 
                     intent.putExtra(
                         "destination_location",
-                        FastestRouteActivity.this.destinationLocationTextEdit.getText().toString()
+                        FastestRouteActivity.this.destinationLocationSearchView.getQuery().toString()
                     );
 
                     intent.putExtra(
@@ -70,6 +87,8 @@ public class FastestRouteActivity extends AppCompatActivity {
                             FastestRouteActivity.this.transportModeSpinner.getSelectedItem().toString()
                         )
                     );
+
+                    FastestRouteActivity.this.findRoutesLoadingProgressDialog.dismiss();
 
                     FastestRouteActivity.this.startActivity(intent);
                 }
@@ -104,5 +123,28 @@ public class FastestRouteActivity extends AppCompatActivity {
         }
 
         this.transportModeSpinner.setAdapter(this.transportModeArrayAdapter);
+
+        this.findRoutesLoadingProgressDialog = new ProgressDialog(this);
+
+        this.findRoutesLoadingProgressDialog.setMessage("Finding routes for you. Please wait...");
+
+        this.findRoutesLoadingProgressDialog.setCancelable(false);
+
+        Bundle intentExtras = this.getIntent().getExtras();
+
+        if (intentExtras != null)
+        {
+            String selectedDestinationLocationName = intentExtras.getString(
+                "selected_destination_location_name"
+            );
+
+            if (selectedDestinationLocationName != null)
+            {
+                this.destinationLocationSearchView.setQuery(
+                    selectedDestinationLocationName,
+                    false
+                );
+            }
+        }
     }
 }
