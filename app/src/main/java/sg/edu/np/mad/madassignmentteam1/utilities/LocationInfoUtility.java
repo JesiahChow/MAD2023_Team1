@@ -210,9 +210,11 @@ public class LocationInfoUtility
      */
     public static LocationInfo getLocationInfoFromJsonString(String locationInfoJsonString)
     {
+        /*
         LoggerUtility.logInformation(
             "Currently in getLocationInfoFromJsonString method."
         );
+        */
 
         JSONObject locationInfoJsonObject;
 
