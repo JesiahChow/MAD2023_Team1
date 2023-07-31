@@ -32,6 +32,8 @@ public class NavigationUtility
     // TODO: Move the API key to the AndroidManifest.xml file to be fetched from there at runtime.
     private static final String TIH_API_KEY = "ikZE4eCj4SNqUVtit6CL2R7NDcsT0rA6";
 
+    private static final ArrayList<Route> EMPTY_ROUTE_ARRAY_LIST = new ArrayList<>();
+
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public static final NavigationUtility instance = new NavigationUtility();
@@ -51,8 +53,10 @@ public class NavigationUtility
                     "distance"
             );
 
-            routeStep.duration = routeStepJsonObject.getInt(
+            routeStep.duration = Math.round(
+                routeStepJsonObject.getInt(
                     "duration"
+                ) / 60.0f
             );
 
             routeStep.startLocationLatLng = new LatLng(
@@ -73,15 +77,30 @@ public class NavigationUtility
                     ).getDouble("longitude")
             );
 
-            routeStep.instruction = HtmlCompat.fromHtml(
-                routeStepJsonObject.getString(
-                    "htmlInstructions"
-                ),
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            ).toString().replace(
-                StringUtility.LINE_SEPARATOR,
-                ""
+            routeStep.instruction = routeStepJsonObject.getString(
+                "htmlInstructions"
             );
+
+            if (routeStep.instruction.length() > 0)
+            {
+                int instructionSubStringEndIndex = routeStep.instruction.indexOf("<div");
+
+                if (instructionSubStringEndIndex != -1)
+                {
+                    routeStep.instruction = routeStep.instruction.substring(
+                        0,
+                        instructionSubStringEndIndex
+                    );
+                }
+            }
+
+            /*
+            LoggerUtility.logInformation(
+                "htmlInstructions value: " + routeStepJsonObject.getString(
+                    "htmlInstructions"
+                )
+            );
+            */
 
             routeStep.travelMode = this.getAsTransportModesEnum(
                     routeStepJsonObject.getString(
@@ -93,9 +112,11 @@ public class NavigationUtility
                     "polyline"
             ).getString("points");
 
+            /*
             routeStep.startAddress = routeStepJsonObject.getString("startAddress");
 
             routeStep.endAddress = routeStepJsonObject.getString("endAddress");
+            */
         }
         catch (Exception exception)
         {
@@ -147,7 +168,7 @@ public class NavigationUtility
 
                         route.distance = currentDataDistance;
 
-                        route.duration = currentDataDuration;
+                        route.duration = Math.round(currentDataDuration / 60.0f);
 
                         JSONObject routeJsonObject = routesJsonArray.getJSONObject(
                             currentRouteIndex
@@ -199,6 +220,10 @@ public class NavigationUtility
 
         if (originLocationInfoArrayList.size() == 0)
         {
+            routesFoundListener.onRoutesFound(EMPTY_ROUTE_ARRAY_LIST);
+
+            routesFoundListener.onRoutesFoundMainThread(EMPTY_ROUTE_ARRAY_LIST);
+
             return;
         }
 
@@ -209,6 +234,10 @@ public class NavigationUtility
 
         if (destinationLocationInfoArrayList.size() == 0)
         {
+            routesFoundListener.onRoutesFound(EMPTY_ROUTE_ARRAY_LIST);
+
+            routesFoundListener.onRoutesFoundMainThread(EMPTY_ROUTE_ARRAY_LIST);
+
             return;
         }
 
