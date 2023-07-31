@@ -59,7 +59,7 @@
     <string name="image_description">image description</string>
     <string name="title_text">title</string>
     <string name="description_text">description</string>
-    <string name="return_to_home_activity_button_text">Return to homepage</string>
+    <string name="return_to_home_activity_button_text">Return to home</string>
     <string name="car_park_description">Description</string>
     <string name="carlots">Lots</string>
     <string name="motorlots">Lots</string>
@@ -82,9 +82,14 @@
     <string name="bus">Bus Timings</string>
     <string name="carpark_lots">Carpark Lots</string>
     <string name="found_routes_header_text">List of routes found</string>
-    <string name="route_textview_placeholder_text">[Start location name] to [End location name]</string>
+    <string name="route_details_header_text">Steps</string>
     <string name="route_duration_textview_placeholder_text">32 mins</string>
     <string name="route_distance_textview_placeholder_text">10 km</string>
     <string name="close_button_content_description">This button is a close button. It will close or hide the selected location details card once it is pressed.</string>
     <string name="placeholder_route_instruction">Route instruction goes here.</string>
+    <string name="placeholder_route_name">[Start location name] to [End location name]</string>
+    <string name="finding_routes_text">Finding routes for you. Please wait...</string>
+    <string name="loading_found_routes_list_text">Loading routes. Please wait...</string>
+    <string name="no_routes_found_text">No routes were found.</string>
+    <string name="return_to_found_routes_card_button_content_description">A button which can be pressed to return to the list of routes found.</string>
 </resources>
