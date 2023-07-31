@@ -1,5 +1,6 @@
 package sg.edu.np.mad.madassignmentteam1;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,22 @@ public class RouteInstructionsAdapter extends RecyclerView.Adapter<RouteInstruct
     {
         NavigationUtility.RouteStep routeStep = this.route.routeSteps.get(position);
 
-        holder.routeInstructionTextView.setText(routeStep.instruction);
+        if (routeStep.duration != 1)
+        {
+            holder.routeInstructionTextView.setText(
+                Html.fromHtml(
+                    routeStep.instruction + " (" + routeStep.distance + " m, " + routeStep.duration + " mins)"
+                )
+            );
+        }
+        else
+        {
+            holder.routeInstructionTextView.setText(
+                Html.fromHtml(
+                    routeStep.instruction + " (" + routeStep.distance + " m, " + routeStep.duration + " min)"
+                )
+            );
+        }
     }
 
     @Override
