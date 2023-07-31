@@ -71,7 +71,7 @@ public class FavouriteLocations {
      */
     private ArrayList<LocationInfo> getFavouriteLocationsFromJsonString(String favouriteLocationsJsonString)
     {
-        LoggerUtility.logInformation("Currently in getFavouriteLocationsFromJsonString method");
+        // LoggerUtility.logInformation("Currently in getFavouriteLocationsFromJsonString method");
 
         ArrayList<LocationInfo> favouriteLocations = new ArrayList<>();
 
