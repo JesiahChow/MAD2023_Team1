@@ -50,7 +50,6 @@ public class FoundRoutesAdapter extends RecyclerView.Adapter<FoundRoutesAdapter.
             route.startLocationName + " to " + route.endLocationName
         );
 
-        // TODO: Confirm the measurement units being used for duration and distance respectively.
         if (route.duration != 1)
         {
             holder.routeDurationTextView.setText(
@@ -65,7 +64,7 @@ public class FoundRoutesAdapter extends RecyclerView.Adapter<FoundRoutesAdapter.
         }
 
         holder.routeDistanceTextView.setText(
-            route.distance + " km"
+            route.distance + " m"
         );
     }
 
