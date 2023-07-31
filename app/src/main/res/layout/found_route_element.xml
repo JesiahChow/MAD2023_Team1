@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="@string/route_textview_placeholder_text"
+            android:text="@string/placeholder_route_name"
             android:textSize="16sp" />
 
         <TextView
