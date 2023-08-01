@@ -31,16 +31,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.ProgrammeViewHolder> {
 
-    private final ItemViewInterface itemViewInterface;
     private Context context;
     private List<Programme> programmeList;
     private ThumbnailApiService thumbnailApiService;
 
-
-    public ProgrammeAdapter(Context context, List<Programme> programmeList, ItemViewInterface itemViewInterface) {
+    public ProgrammeAdapter(Context context, List<Programme> programmeList) {
         this.context = context;
         this.programmeList = programmeList;
-        this.itemViewInterface = itemViewInterface;
+
 
         // Create the Retrofit instance for fetching thumbnail URLs
         Retrofit retrofit = new Retrofit.Builder()
@@ -55,7 +53,7 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Prog
     @Override
     public ProgrammeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.thumbnail, parent, false);
-        return new ProgrammeViewHolder(view, itemViewInterface);
+        return new ProgrammeViewHolder(view);
     }
 
     @Override
@@ -93,6 +91,7 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Prog
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("PROGRAMMEADAPTER", "THis file Triumps");
                 Intent intent = new Intent(context.getApplicationContext(), DetailedViewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("title",programme.getName());
@@ -123,16 +122,16 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Prog
         ImageView imageView;
         TextView programmeTitle, ratingCount, category;
         RatingBar ratingBar;
+        ItemViewInterface itemViewInterface;
 
 
-        public ProgrammeViewHolder(@NonNull View itemView, ItemViewInterface itemViewInterface) {
+        public ProgrammeViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             programmeTitle = itemView.findViewById(R.id.programmeTitle);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             ratingCount = itemView.findViewById(R.id.ratingCount);
             category = itemView.findViewById(R.id.category);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

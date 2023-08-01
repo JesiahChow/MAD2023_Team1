@@ -72,9 +72,6 @@
             android:name=".Recommend"
             android:exported="false" />
         <activity
-            android:name=".RecommendDetails"
-            android:label="RecommendDetails" />
-        <activity
             android:name=".SearchPlace"
             android:label="SearchPlace" />
         <activity

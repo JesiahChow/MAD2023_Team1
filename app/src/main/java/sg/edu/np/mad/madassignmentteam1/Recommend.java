@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Recommend extends AppCompatActivity implements ProgrammeDatabase.DataLoadListener, ItemViewInterface {
+public class Recommend extends AppCompatActivity implements ProgrammeDatabase.DataLoadListener {
     private List<String> selectedGenres;
     private ProgrammeDatabase programmeDatabase;
     private RecyclerView recyclerView;
@@ -89,7 +89,7 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
         recyclerView = findViewById(R.id.recommendRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         programmeList = new ArrayList<>();
-        programmeAdapter = new ProgrammeAdapter(this,programmeList,this);
+        programmeAdapter = new ProgrammeAdapter(this,programmeList);
         recyclerView.setAdapter(programmeAdapter);
         Log.i("Recommend dataset","Running the database");
 
@@ -108,15 +108,6 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
     // Method for filtering programmes based on GetInterest
 
     @Override
-    public void onItemClick(int position) {
-
-        // Start RecommendDetails activity
-        Intent intent = new Intent(Recommend.this, RecommendDetails.class);
-        // Pass any necessary data to RecommendDetails activity
-        startActivity(intent);
-    }
-
-    @Override
     public void onDataLoaded(List<Programme> programmeList) {
         this.programmeList.clear();
         this.programmeList.addAll(programmeList); // Add the fetched data
@@ -125,6 +116,6 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
 
     @Override
     public void onDataLoadError(Throwable error) {
-
+        Log.d("MissingImage", "Error above occurred due to data record not having images since i implemented randomisation :)");
     }
 }

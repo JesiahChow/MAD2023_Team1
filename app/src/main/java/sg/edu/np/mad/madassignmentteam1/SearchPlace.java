@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.DataLoadListener, ItemViewInterface {
+public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.DataLoadListener {
     private static final String TAG = "Recommendation";
     public TextView count;
     public TextView categoryName;
@@ -217,7 +217,7 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         count.setText("Total Records: ");
         categoryName.setText("Category: ");
         programmeList = new ArrayList<>();
-        programmeAdapter = new ProgrammeAdapter(this, programmeList, this);
+        programmeAdapter = new ProgrammeAdapter(this, programmeList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(programmeAdapter);
         Log.i(TAG,"Running the database");
@@ -229,7 +229,7 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         // Update the RecyclerView with the new data
 
         this.programmeList = programmeList;
-        programmeAdapter = new ProgrammeAdapter(this, programmeList, this);
+        programmeAdapter = new ProgrammeAdapter(this, programmeList);
         recyclerView.setAdapter(programmeAdapter);
         programmeAdapter.notifyDataSetChanged();
         count.setText("Total Records: " + programmeList.size());
@@ -241,13 +241,6 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
 
     }
 
-
-    @Override
-    public void onItemClick(int position) {
-        Intent intent = new Intent(SearchPlace.this, DetailedViewActivity.class);
-
-        startActivity(intent);
-    }
 }
 
 
