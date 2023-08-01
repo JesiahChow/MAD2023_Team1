@@ -124,6 +124,22 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
 
     private ArrayList<Circle> selectedRouteWaypointCircles = new ArrayList<>();
 
+    private void onRouteDeselected()
+    {
+        this.selectedRouteOriginLocationMarker.remove();
+
+        this.selectedRouteDestinationLocationMarker.remove();
+
+        this.selectedRoutePolyline.remove();
+
+        for (int currentWaypointCircleIndex = 0; currentWaypointCircleIndex < this.selectedRouteWaypointCircles.size(); currentWaypointCircleIndex++)
+        {
+            this.selectedRouteWaypointCircles.get(
+                currentWaypointCircleIndex
+            ).remove();
+        }
+    }
+
     /*
     List of Google Maps APIs required for core functionality (for finalized implementation):
     1. Maps SDK for Android (required for displaying maps on Android devices).
@@ -311,18 +327,7 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MapViewerActivity.this.selectedRouteOriginLocationMarker.remove();
-
-                    MapViewerActivity.this.selectedRouteDestinationLocationMarker.remove();
-
-                    MapViewerActivity.this.selectedRoutePolyline.remove();
-
-                    for (int currentWaypointCircleIndex = 0; currentWaypointCircleIndex < MapViewerActivity.this.selectedRouteWaypointCircles.size(); currentWaypointCircleIndex++)
-                    {
-                        MapViewerActivity.this.selectedRouteWaypointCircles.get(
-                            currentWaypointCircleIndex
-                        ).remove();
-                    }
+                    MapViewerActivity.this.onRouteDeselected();
 
                     MapViewerActivity.this.routeDetailsScrollView.setVisibility(
                         View.GONE
@@ -341,6 +346,8 @@ public class MapViewerActivity extends AppCompatActivity implements OnMapReadyCa
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MapViewerActivity.this.onRouteDeselected();
+
                     MapViewerActivity.this.routeDetailsScrollView.setVisibility(
                         View.GONE
                     );
