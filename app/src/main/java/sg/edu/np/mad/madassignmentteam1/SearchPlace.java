@@ -1,9 +1,9 @@
 package sg.edu.np.mad.madassignmentteam1;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,9 +14,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.DataLoadListener {
     private static final String TAG = "Recommendation";
@@ -25,43 +26,30 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
     public List<Programme> programmeList;
     public ProgrammeAdapter programmeAdapter;
     public RecyclerView recyclerView;
-    public CardView accommodation;
-    public CardView attractions;
-    public CardView barclub;
-    public CardView cruises;
-    public CardView events;
-    public CardView food;
-    public CardView precincts;
-    public CardView shops;
-    public CardView tours;
-    public CardView venues;
-    public CardView walking;
-    public CardView all;
     public SearchView search;
     public String searchCategory;
     public ProgrammeDatabase programmeDatabase;
+    private static final Map<Integer, Pair<String, String>> cardViewMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        accommodation = findViewById(R.id.accommodation);
-        attractions = findViewById(R.id.attractions);
-        barclub = findViewById(R.id.barclub);
-        cruises = findViewById(R.id.cruises);
-        events = findViewById(R.id.events);
-        food = findViewById(R.id.food);
-        precincts = findViewById(R.id.precincts);
-        shops = findViewById(R.id.shops);
-        tours = findViewById(R.id.tours);
-        venues = findViewById(R.id.venues);
-        walking = findViewById(R.id.walking);
-        all = findViewById(R.id.all);
+
+        // Initialize views
         count = findViewById(R.id.count);
         categoryName = findViewById(R.id.categoryName);
         search = findViewById(R.id.Searchicon);
         Button backButton = findViewById(R.id.back_btn);
+        recyclerView = findViewById(R.id.recyclerview);
 
+        // Set up the card view map
+        setupCardViewMap();
+
+        // Set click listeners for category card views
+        setupCategoryClickListeners();
+
+        // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,126 +58,14 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
                 finish();
             }
         });
-        accommodation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                loadData("accommodation","");
-                searchCategory = "Accomodation";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        attractions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("attractions","");
-                searchCategory = "Attractions";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        barclub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("bars_clubs","");
-                searchCategory = "Bars_Clubs";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        cruises.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("cruises","");
-                searchCategory = "Cruises";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        events.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("events","");
-                searchCategory = "Events";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        food.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("food_beverages","");
-                searchCategory = "Food_Beverages";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        shops.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("shops","");
-                searchCategory = "Shops";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        venues.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("venues","");
-                searchCategory = "Venues";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        walking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("walking_trails","");
-                searchCategory = "Walking_trails";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        tours.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("tours","");
-                searchCategory = "Tours";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        precincts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadData("precincts","");
-                searchCategory = "Precincts";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails","");
-                searchCategory = "ALL";
-                search.clearFocus();
-                search.setQuery("",false);
-            }
-        });
-        // Assuming you have a TextView with this ID in your layout
-
+        // Set search query listener
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //searchCategory = "ALL";
-                if(searchCategory.matches("ALL")) {
+                if (searchCategory.matches("ALL")) {
                     loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", query);
-                }
-                else{
+                } else {
                     loadData(searchCategory.toLowerCase(), query);
                 }
                 return false;
@@ -201,15 +77,56 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
             }
         });
 
-
-        recyclerView = findViewById(R.id.recyclerview);
+        // Load initial data for "ALL" category
         searchCategory = "ALL";
-        loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails","");
+        loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", "");
     }
-    public void loadData( String tag, String keyword)
-    {
-        if(programmeList!=null && programmeAdapter!=null)
-        {
+
+    // Set up the card view map with IDs and their corresponding tags and categories
+    private void setupCardViewMap() {
+        cardViewMap.put(R.id.accommodation, new Pair<>("accommodation", "Accommodation"));
+        cardViewMap.put(R.id.attractions, new Pair<>("attractions", "Attractions"));
+        cardViewMap.put(R.id.barclub, new Pair<>("bars_clubs", "Bars_Clubs"));
+        cardViewMap.put(R.id.cruises, new Pair<>("cruises", "Cruises"));
+        cardViewMap.put(R.id.events, new Pair<>("events", "Events"));
+        cardViewMap.put(R.id.food, new Pair<>("food_beverages", "Food_Beverages"));
+        cardViewMap.put(R.id.precincts, new Pair<>("precincts", "Precincts"));
+        cardViewMap.put(R.id.shops, new Pair<>("shops", "Shops"));
+        cardViewMap.put(R.id.tours, new Pair<>("tours", "Tours"));
+        cardViewMap.put(R.id.venues, new Pair<>("venues", "Venues"));
+        cardViewMap.put(R.id.walking, new Pair<>("walking_trails", "Walking_trails"));
+        cardViewMap.put(R.id.all, new Pair<>("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", "ALL"));
+    }
+
+    private View.OnClickListener categoryClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int viewId = view.getId();
+            Pair<String, String> tagCategoryPair = cardViewMap.get(viewId);
+
+            // Extract the tag and category from the map entry
+            String tag = tagCategoryPair.first;
+            String category = tagCategoryPair.second;
+
+            // Make the new API call for the selected category
+            loadData(tag, "");
+            searchCategory = category;
+            search.clearFocus();
+            search.setQuery("", false);
+        }
+    };
+
+    // Set click listeners for all category card views
+    private void setupCategoryClickListeners() {
+        for (int cardViewId : cardViewMap.keySet()) {
+            CardView cardView = findViewById(cardViewId);
+            cardView.setOnClickListener(categoryClickListener);
+        }
+    }
+
+    // Load data from the database
+    public void loadData(String tag, String keyword) {
+        if (programmeList != null && programmeAdapter != null) {
             programmeList.clear();
             programmeAdapter.notifyDataSetChanged();
             recyclerView.stopScroll();
@@ -219,19 +136,18 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         programmeAdapter = new ProgrammeAdapter(this, programmeList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(programmeAdapter);
-        Log.i(TAG,"Running the database");
-        programmeDatabase = new ProgrammeDatabase(this,this,tag,keyword);
-
+        Log.i(TAG, "Running the database");
+        programmeDatabase = new ProgrammeDatabase(this, this, tag, keyword);
     }
-    @SuppressLint("NotifyDataSetChanged")
+
     public void onDataLoaded(List<Programme> programmeList) {
         // Update the RecyclerView with the new data
-
         this.programmeList = programmeList;
         programmeAdapter = new ProgrammeAdapter(this, programmeList);
         recyclerView.setAdapter(programmeAdapter);
-        programmeAdapter.notifyDataSetChanged();// Get the string resources
+        programmeAdapter.notifyDataSetChanged();
 
+        // Get the string resources
         String totalRecordsText = getString(R.string.total_records, programmeList.size());
         String categoryText = getString(R.string.category, searchCategory);
         count.setText(totalRecordsText);
@@ -240,9 +156,7 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
 
     @Override
     public void onDataLoadError(Throwable error) {
-
+        // Handle error if necessary
+        Log.e(TAG, "Error loading data: " + error.getMessage());
     }
-
 }
-
-

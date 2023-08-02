@@ -8,6 +8,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.viewpager2.widget.ViewPager2;
 
 import me.relex.circleindicator.CircleIndicator3;
@@ -31,7 +32,7 @@ public class DetailedViewActivity extends AppCompatActivity {
          category = findViewById(R.id.category);
          description = findViewById(R.id.description);
          address = findViewById(R.id.address);
-        Button backButton = findViewById(R.id.back_btn);
+        AppCompatImageButton backButton = findViewById(R.id.back_btn);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
