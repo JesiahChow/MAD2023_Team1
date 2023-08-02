@@ -31,9 +31,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.ProgrammeViewHolder> {
 
-    private Context context;
-    private List<Programme> programmeList;
-    private ThumbnailApiService thumbnailApiService;
+    private final Context context;
+    private final List<Programme> programmeList;
+    private final ThumbnailApiService thumbnailApiService;
 
     public ProgrammeAdapter(Context context, List<Programme> programmeList) {
         this.context = context;
@@ -168,7 +168,7 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Prog
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 // Handle the error if needed
                 Log.e("ProgrammeAdapter", "Error fetching thumbnail image: " + t.getMessage());
             }

@@ -50,455 +50,396 @@
                 android:padding="0dp"
                 android:scrollbars="horizontal">
                 <GridLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:columnCount="6"
                     android:layout_margin="0dp"
                     >
+                    <!-- Accommodation Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/accommodation"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/accomodation"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/accomodation" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:text="Accomodation"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Attraction Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/attractions"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/attractions"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/attractions" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Attractions"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/attractions"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- BarClub Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/barclub"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/barclub"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/barclub" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="BarClubs"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/barclubs"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Cruises Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cruises"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/cruises"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/cruises" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Cruises"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/cruises"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Events Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/events"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/events"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/events" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Events"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/events"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Food Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/food"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/food_beverages"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/food_beverages" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Food"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/restaurant"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Precincts Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/precincts"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/precincts"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/precincts" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Precints"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/precincts"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Shops Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/shops"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/shops"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/shops" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Shops"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/shops"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Tours Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/tours"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/tours"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/tours" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tours"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/tours"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Venues Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/venues"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/venues"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/venues" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Venues"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/venues"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- Walking Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/walking"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/walking"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/walking" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Walking"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/walking"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
+                    <!-- All Card -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/all"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_margin="2dp"
                         app:cardElevation="7dp"
-                        app:cardCornerRadius="10dp"
+                        app:cardCornerRadius="10dp">
 
-
-                        >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_margin="2dp"
-                            android:padding="2dp"
-                            >
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/all"
-                                android:layout_gravity="center_horizontal|center_vertical"
-
-                                />
+                                android:layout_gravity="center"
+                                android:src="@drawable/all" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="All"
-                                android:textSize="8sp"
-                                android:layout_gravity="center_horizontal"
-                                android:textStyle="bold"
-                                />
+                                android:layout_gravity="center"
+                                android:text="@string/all"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+
                 </GridLayout>
             </HorizontalScrollView>
 
@@ -511,21 +452,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        android:text="Total Records: 0"
+        android:text="@string/total_records_text"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
     <TextView
         android:id="@+id/count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="220dp"
         android:layout_marginTop="10dp"
-        android:text="Total Records: 0"
+        android:text="@string/total_records_text"
         android:textStyle="bold"
         android:textSize="16sp"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 

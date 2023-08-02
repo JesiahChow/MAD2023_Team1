@@ -92,4 +92,24 @@
     <string name="loading_found_routes_list_text">Loading routes. Please wait...</string>
     <string name="no_routes_found_text">No routes were found.</string>
     <string name="return_to_found_routes_card_button_content_description">A button which can be pressed to return to the list of routes found.</string>
+    <string name="total_records">Total Records: %1$d</string>
+    <string name="category">Category: %1$s</string>
+    <string name="back_button_text">Back</string>
+    <string name="search_hint">Search Here...</string>
+    <string name="total_records_text">Total Records: %1$d</string>
+    <string name="attractions">Attractions</string>
+    <string name="barclubs">BarClubs</string>
+    <string name="cruises">Cruises</string>
+    <string name="events">Events</string>
+    <string name="restaurant">Restaurants</string>
+    <string name="precincts">Precincts</string>
+    <string name="shops">Shops</string>
+    <string name="tours">Tours</string>
+    <string name="venues">Venues</string>
+    <string name="walking">WalkingTrails</string>
+    <string name="all">All</string>
+
+
+
+
 </resources>

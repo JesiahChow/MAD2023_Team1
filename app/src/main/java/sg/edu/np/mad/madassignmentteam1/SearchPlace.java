@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -214,8 +215,6 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
             recyclerView.stopScroll();
         }
 
-        count.setText("Total Records: ");
-        categoryName.setText("Category: ");
         programmeList = new ArrayList<>();
         programmeAdapter = new ProgrammeAdapter(this, programmeList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -231,9 +230,12 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         this.programmeList = programmeList;
         programmeAdapter = new ProgrammeAdapter(this, programmeList);
         recyclerView.setAdapter(programmeAdapter);
-        programmeAdapter.notifyDataSetChanged();
-        count.setText("Total Records: " + programmeList.size());
-        categoryName.setText("Category: "+searchCategory);
+        programmeAdapter.notifyDataSetChanged();// Get the string resources
+
+        String totalRecordsText = getString(R.string.total_records, programmeList.size());
+        String categoryText = getString(R.string.category, searchCategory);
+        count.setText(totalRecordsText);
+        categoryName.setText(categoryText);
     }
 
     @Override

@@ -36,8 +36,7 @@ public class DetailedViewActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailedViewActivity.this, Recommend.class);
-                startActivity(intent);
+                //Updated to only close the current page so that it won't call the api again
                 finish();
             }
         });

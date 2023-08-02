@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +25,6 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
 
     private List<Programme> programmeList;
 
-    private List<String> dataset;
 
 
     // Define the mapping dictionary to associate user-visible categories with backend values
@@ -70,7 +69,7 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
             // Append the backend value to the combined string
             rawdataset.append(backendValue).append(",");
         }
-        Log.i("CHEECKKK","dataset value" + rawdataset);
+        Log.i("Switch value","dataset value" + rawdataset);
         // Remove the trailing comma if there are backend values appended
         if (rawdataset.length() > 0) {
             rawdataset.deleteCharAt(rawdataset.length() - 1);
@@ -96,9 +95,7 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
         // Initialize the ProgrammeDatabase instance
         programmeDatabase = new ProgrammeDatabase(this, this, "", ""); // Pass appropriate arguments here
 
-
         int limitPerDataset = 2; // Set the limit for records per dataset
-
         for (String backendValue : dataset) {
             Log.i("Runns2", "Running this data:" + backendValue);
             programmeDatabase.getLimitedProgrammes(backendValue, limitPerDataset); // Fetch limited records for each dataset
