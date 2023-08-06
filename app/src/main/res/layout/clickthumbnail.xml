@@ -8,23 +8,24 @@
     android:orientation="vertical"
     tools:context=".DetailedViewActivity"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/blue">
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
         android:layout_gravity="start"
         android:layout_marginTop="8dp"
         android:src="@drawable/arrow_back" />
 
     <!-- Add ScrollView to allow scrolling if needed -->
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:padding="16dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Description\n\nUsers' Ratings"
-            android:textSize="16sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/address"

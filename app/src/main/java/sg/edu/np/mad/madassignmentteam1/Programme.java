@@ -6,16 +6,15 @@ import java.util.List;
 
 public class Programme {
 
-    private String name, type, description, body, dataset, categoryDescription;
+    private String name, type, description, body, dataset, categoryDescription, officialWebsite;
     private List<String> tags;
     private Double rating;
     private Address address;
     private List<ImageInfo> images, thumbnails;
-    private List<JSONObject> reviews;
 
 
     // Constructor
-    public Programme(String name, String type, List<String> tags, String description, String body, Address address, String dataset, String categoryDescription, Double rating, List<ImageInfo> images, List<ImageInfo> thumbnails, List<JSONObject> reviews) {
+    public Programme(String name, String type, List<String> tags, String description, String body, Address address, String dataset, String categoryDescription,String officialWebsite, Double rating, List<ImageInfo> images, List<ImageInfo> thumbnails) {
         this.name = name;
         this.type = type;
         this.tags = tags;
@@ -24,16 +23,11 @@ public class Programme {
         this.address = address;
         this.dataset = dataset;
         this.categoryDescription = categoryDescription;
+        this.officialWebsite = officialWebsite;
         this.rating = rating;
         this.images = images;
         this.thumbnails = thumbnails;
-        this.reviews=reviews;
     }
-    public int getReviews()
-    {
-        return this.reviews.size();
-    }
-    // Getters and Setters
 
     public String getName() {
         return name;
@@ -99,6 +93,13 @@ public class Programme {
         this.categoryDescription = categoryDescription;
     }
 
+    public String getOfficialWebsite() {
+        return officialWebsite;
+    }
+
+    public void setOfficialWebsite(String officialWebsite) {
+        this.officialWebsite = officialWebsite;
+    }
 
     public Double getRating() {
         return rating;

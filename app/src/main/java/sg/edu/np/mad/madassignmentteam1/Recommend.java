@@ -93,7 +93,7 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
         Log.i("Recommend dataset","Running the database");
 
         // Initialize the ProgrammeDatabase instance
-        programmeDatabase = new ProgrammeDatabase(this, this, "", ""); // Pass appropriate arguments here
+        programmeDatabase = new ProgrammeDatabase(this, this, "", "",0,10); // Pass appropriate arguments here
 
         int limitPerDataset = 2; // Set the limit for records per dataset
         for (String backendValue : dataset) {
@@ -104,8 +104,9 @@ public class Recommend extends AppCompatActivity implements ProgrammeDatabase.Da
 
     // Method for filtering programmes based on GetInterest
 
+
     @Override
-    public void onDataLoaded(List<Programme> programmeList) {
+    public void onDataLoaded(List<Programme> programmeList, int offset) {
         this.programmeList.clear();
         this.programmeList.addAll(programmeList); // Add the fetched data
         programmeAdapter.notifyDataSetChanged();

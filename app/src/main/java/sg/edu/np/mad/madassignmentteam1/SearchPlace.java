@@ -6,8 +6,10 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.DataLoadListener {
-    private static final String TAG = "Recommendation";
+    private static final String TAG = "SearchPlace";
     public TextView count;
     public TextView categoryName;
     public List<Programme> programmeList;
@@ -29,7 +31,20 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
     public SearchView search;
     public String searchCategory;
     public ProgrammeDatabase programmeDatabase;
+    private ProgressBar progressBar;
+    private boolean isLoadingData = false;
+
     private static final Map<Integer, Pair<String, String>> cardViewMap = new HashMap<>();
+
+    // Pagination variables
+    private int offset = 0;
+    private int limit = 10; // Number of records to fetch per page
+
+    private int currentPage = 0;
+    private int totalRecords = 0;
+    private String currentDataset = "accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +57,7 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         search = findViewById(R.id.Searchicon);
         Button backButton = findViewById(R.id.back_btn);
         recyclerView = findViewById(R.id.recyclerview);
+        progressBar = findViewById(R.id.progressBar);
 
         // Set up the card view map
         setupCardViewMap();
@@ -63,10 +79,14 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                programmeList.clear();
                 if (searchCategory.matches("ALL")) {
-                    loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", query);
+                    currentDataset = "accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails";
+                    // When searching in "ALL" category, pass all tags to the loadData method
+                    loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", query,0);
                 } else {
-                    loadData(searchCategory.toLowerCase(), query);
+                    // Pass the selected category's tag to the loadData method
+                    loadData(searchCategory.toLowerCase(), query,0);
                 }
                 return false;
             }
@@ -79,7 +99,10 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
 
         // Load initial data for "ALL" category
         searchCategory = "ALL";
-        loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", "");
+        loadData("accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails", "",0);
+
+        // Set up RecyclerView scroll listener
+        setupRecyclerViewScrollListener();
     }
 
     // Set up the card view map with IDs and their corresponding tags and categories
@@ -109,12 +132,19 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
             String category = tagCategoryPair.second;
 
             // Make the new API call for the selected category
-            loadData(tag, "");
+            if (category.equals("ALL")) {
+                currentDataset = "accommodation,attractions,bars_clubs,cruises,events,food_beverages,precincts,shops,tours,venues,walking_trails";
+            } else {
+                currentDataset = category.toLowerCase();
+            }
+            loadData(tag, "", 0);
             searchCategory = category;
             search.clearFocus();
             search.setQuery("", false);
+            programmeList.clear();
         }
     };
+
 
     // Set click listeners for all category card views
     private void setupCategoryClickListeners() {
@@ -125,26 +155,58 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
     }
 
     // Load data from the database
-    public void loadData(String tag, String keyword) {
-        if (programmeList != null && programmeAdapter != null) {
-            programmeList.clear();
-            programmeAdapter.notifyDataSetChanged();
-            recyclerView.stopScroll();
+    public void loadData(String tag, String keyword, int offset) {
+        // Check if the programmeList is null or empty to determine whether to create a new instance of the adapter
+        if (programmeList == null || programmeList.isEmpty()) {
+            programmeList = new ArrayList<>();
+            programmeAdapter = new ProgrammeAdapter(this, programmeList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(programmeAdapter);
         }
 
-        programmeList = new ArrayList<>();
-        programmeAdapter = new ProgrammeAdapter(this, programmeList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(programmeAdapter);
+        // Notify the adapter of data changes before fetching new data
+        programmeAdapter.notifyDataSetChanged();
+        recyclerView.stopScroll();
+
         Log.i(TAG, "Running the database");
-        programmeDatabase = new ProgrammeDatabase(this, this, tag, keyword);
+        programmeDatabase = new ProgrammeDatabase(this, this, currentDataset, keyword, offset, limit);
     }
 
-    public void onDataLoaded(List<Programme> programmeList) {
-        // Update the RecyclerView with the new data
-        this.programmeList = programmeList;
-        programmeAdapter = new ProgrammeAdapter(this, programmeList);
-        recyclerView.setAdapter(programmeAdapter);
+
+
+    // Set up RecyclerView scroll listener to load more data when reaching the end
+    private void setupRecyclerViewScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // Check if more data can be loaded
+                    if (!isLoadingData && programmeList.size() < totalRecords) {
+                        isLoadingData = true;
+                        int nextPage = currentPage + 1;
+                        // Calculate the new offset based on the current page and limit
+                        int newOffset = nextPage * limit;
+                        Log.d("currentpage","the offset that is use after reach the bottom and start new data"+ newOffset);
+                        Log.d("Newoffset","the offset that is use after reach the bottom and start new data"+ newOffset);
+                        loadData(searchCategory.toLowerCase(), "", newOffset);
+                    }
+                }
+            }
+        });
+    }
+
+
+    public void onDataLoaded(List<Programme> newData, int offset) {
+        // Update the current page and total records
+        this.currentPage = offset / limit;
+        this.totalRecords = programmeDatabase.getTotalRecords();
+
+        // Update the existing programmeList with the new data
+
+        this.programmeList.addAll(newData);
+
+        // Notify the adapter of data changes
         programmeAdapter.notifyDataSetChanged();
 
         // Get the string resources
@@ -152,11 +214,16 @@ public class SearchPlace extends AppCompatActivity implements ProgrammeDatabase.
         String categoryText = getString(R.string.category, searchCategory);
         count.setText(totalRecordsText);
         categoryName.setText(categoryText);
+
+        progressBar.setVisibility(View.GONE);
+        isLoadingData = false; // Reset the flag when data loading is complete
     }
+
+
 
     @Override
     public void onDataLoadError(Throwable error) {
         // Handle error if necessary
-        Log.e(TAG, "Error loading data: " + error.getMessage());
+        Log.e(TAG, "Error loading data: " + error);
     }
 }

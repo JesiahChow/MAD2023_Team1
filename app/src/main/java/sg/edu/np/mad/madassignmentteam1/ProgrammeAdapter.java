@@ -91,12 +91,13 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Prog
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("PROGRAMMEADAPTER", "THis file Triumps");
+                Log.d("PROGRAMMEADAPTER", "brings file to clickthumbnail");
                 Intent intent = new Intent(context.getApplicationContext(), DetailedViewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("title",programme.getName());
                 bundle.putString("description",programme.getDescription());
                 bundle.putString("category",programme.getCategoryDescription());
+                bundle.putString("website",programme.getOfficialWebsite());
                 if (programme.getAddress()  != null){
                     bundle.putString("address", programme.getAddress().toString());
                 }
@@ -174,4 +175,6 @@ public class ProgrammeAdapter extends RecyclerView.Adapter<ProgrammeAdapter.Prog
             }
         });
     }
+
+
 }
